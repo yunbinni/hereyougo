@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'gsans';
+    src: url('/font/GmarketSansTTFMedium.woff2') format('woff2'),
+        url('/font/GmarketSansTTFMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gsans-light';
+    src: url('/font/GmarketSansTTFLight.woff2') format('woff2'),
+        url('/font/GmarketSansTTFLight.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'gsans';
+}
+
+body > p {
+    font-family: 'gsans-light';
+}

@@ -1,4 +1,4 @@
-package io.k2c1.hereyougo.domain;
+package io.k2c1.hereyougo.constant;
 
 public enum Basic {
     종로구,

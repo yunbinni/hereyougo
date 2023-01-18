@@ -1,0 +1,38 @@
+<html lang="en", xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="join_form_container">
+    <div id ="root">
+        <div class="logo-title">여기있소👋</div>
+        <div class="sub-title">이메일로 가입하기</div>
+
+        <form role="form" th:action="@{/}" th:object="${joinForm}" method="post">
+            <div class="mb-3">
+                <label th:for="email" class="form-label">이메일 주소</label>
+                <input type="text" class="form-control" th:field="*{email}" placeholder="">
+            </div>
+            <div class="mb-3">
+                <label th:for="password" class="form-label">비밀번호</label>
+                <input type="text" class="form-control" th:field="*{password}" placeholder="6자이상 입력하세요">
+            </div>
+            <div class="mb-3">
+                <label th:for="confirmPassword" class="form-label">비밀번호 확인</label>
+                <input type="text" class="form-control" th:field="*{confirmPassword}" placeholder="">
+            </div>
+
+            <div class="mb-3">
+                <label th:for="type" class="form-label">업종</label>
+                <input type="text" class="form-control" th:field="*{type}" placeholder="업종을 입력하세요">
+            </div>
+
+            <div class="mb-3">
+                <label th:for="address" class="form-label">주소</label>
+                <input type="text" class="form-control" th:field="*{address}" placeholder="주소를 입력하세요">
+                <input type="text" class="form-control" th:field="*{detailAddress}" placeholder="상세주소를 입력하세요">
+            </div>
+
+            <button type="submit" class="btn btn-primary">회원가입</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

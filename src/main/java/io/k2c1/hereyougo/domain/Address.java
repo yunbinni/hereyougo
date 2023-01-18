@@ -1,5 +1,8 @@
 package io.k2c1.hereyougo.domain;
 
+import io.k2c1.hereyougo.constant.Basic;
+import io.k2c1.hereyougo.constant.Region;
+
 public class Address
 {
     private Long id;

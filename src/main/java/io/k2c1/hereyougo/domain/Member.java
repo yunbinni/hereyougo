@@ -10,7 +10,7 @@ public class Member
     private String email;
     private String password;
     private String nickname;
-    private Address address;
+    private List<Address> addresses;
     private List<Post> posts;
     private List<Appointment> appointments;
 }

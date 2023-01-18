@@ -1,0 +1,35 @@
+<html lang="en", xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="login_form_container">
+    <div id ="root">
+        <div class="logo-title">여기있소👋</div>
+
+        <form role="form" th:action="@{/}" th:object="${loginForm}" method="post">
+            <div class="mb-3">
+                <label th:for="email" class="form-label">이메일</label>
+                <input type="text" class="form-control" th:field="*{email}" placeholder="">
+            </div>
+            <div class="mb-3">
+                <label th:for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" th:field="*{password}" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </form>
+
+        <div class="sns_container">
+            <div class="sns_title">SNS 로그인</div>
+            <div class="sns_box">
+                <div class="sns_item kakao"><a href="/">카카오 로그인</a></div>
+                <div class="sns_item naver"><a href="/">네이버 로그인</a></div>
+                <div class="sns_item google"><a href="/">구글 로그인</a></div>
+                <div class="sns_item facebook"><a href="/">페이스북 로그인</a></div>
+            </div>
+        </div>
+
+        <div class="joinInfo_container">
+            <div>아직 여기있소 회원이 아니세요?</div>
+            <div class="joinText">회원가입 하기</div>
+        </div>
+    </div>
+</div>

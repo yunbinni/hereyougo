@@ -1,0 +1,112 @@
+
+@font-face {
+    font-family: 'gsans';
+    src: url('/font/GmarketSansTTFMedium.woff2') format('woff2'),
+        url('/font/GmarketSansTTFMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gsans-light';
+    src: url('/font/GmarketSansTTFLight.woff2') format('woff2'),
+        url('/font/GmarketSansTTFLight.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+
+}
+
+body{
+ font-family: gsans;
+}
+
+/* 로고 타이틀 */
+.logo-title{
+    text-align : center;
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+/* 로그인 폼 전체 */
+.login_form_container {
+     display: grid;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+}
+
+div#root {
+    display: grid;
+    align-content: center;
+    align-self: center;
+}
+
+input::placeholder {
+    font-size: 12px;
+}
+
+/* 로그인 버튼 */
+button.btn.btn-primary {
+    width: 100%;
+    background: black;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* SNS 로그인 전체 */
+.sns_container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.sns_title{
+    text-align : center;
+}
+
+.sns_box {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin-top: 15px;
+}
+
+/* SNS 로그인 아이콘 */
+.sns-item.kakao a{
+    background: #fee500 url(https://accounts-front.stunning.kr/assets/img/login/ico-kakao.png) 50% 50% no-repeat;
+    background-size: 24px;
+}
+.sns-item.naver a{
+    background: #1ec800 url(https://accounts-front.stunning.kr/assets/img/login/ico-naver.png) 50% 50% no-repeat;
+        background-size: 24px
+ }
+
+.sns-item.google a{
+    background: #f8f9fd url(https://accounts-front.stunning.kr/assets/img/login/ico-google.png) 50% 50% no-repeat;
+    background-size: 24px;
+}
+.sns-item.facebook a{
+    background: url(https://accounts-front.stunning.kr/assets/img/login/ic-join-facebook-new.png) 50% 50% no-repeat;
+        background-size: 48px 48px;
+}
+
+/* 회원가입 안내문구 전체*/
+.joinInfo_container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    font-family : gsans-light;
+    font-weight : 600;
+    color : #161616;
+}
+
+.joinInfo_container .joinText{
+    justify-self: end;
+    border-bottom: 1px solid #333;
+}

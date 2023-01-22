@@ -1,19 +1,23 @@
 package io.k2c1.hereyougo.domain;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
 public class Appointment
 {
-    private Post post;
-    private Member supplier; // 공급자
-    private Member demand; // 수요자
-    private LocalDateTime timestamp;
-    private Address address;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "appointment_id")
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "supplier_id")
+    private Member supplier;
+
+    @ManyToOne
+    @JoinColumn(name = "demand_id")
+    private Member demand;
+
+    private LocalDateTime timestamp;
 }

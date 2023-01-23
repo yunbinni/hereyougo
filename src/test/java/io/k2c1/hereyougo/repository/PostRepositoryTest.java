@@ -49,17 +49,7 @@ class PostRepositoryTest {
     public void 게시글수정(){
 //      given
         Member member = 회원생성();
-        Post post = new Post();
-        post.setTitle("게시글 제목");
-        post.setContent("게시글 내용");
-        post.setWriter(member);
-        post.setWidth(10);
-        post.setHeight(20);
-        post.setDepth(3);
-        post.setTimestamp(LocalDateTime.now());
-        post.setAddress("서울 마포구 양화로23길 20 1층");
-
-        Post savedPost = postRepository.save(post);
+        Post savedPost = 게시물생성();
 
 //      when
         savedPost.setContent("게시글 내용 수정");
@@ -77,12 +67,7 @@ class PostRepositoryTest {
     public void 게시글조회(){
 //      given
         Member member = 회원생성();
-        Post post = new Post();
-        post.setTitle("게시글 제목");
-        post.setContent("게시글 내용");
-        post.setWriter(member);
-
-        postRepository.save(post);
+        Post post = 게시물생성();
 
 //      when
         Post result = postRepository.findById(1L).get();
@@ -121,6 +106,7 @@ class PostRepositoryTest {
 //      given
         Member member = 회원생성();
 
+//      회원 1명이 게시글 5개 등록
         List<Post> posts = new ArrayList<>();
         for(int i = 0; i < 5; i++){
             Post post = new Post();
@@ -132,6 +118,7 @@ class PostRepositoryTest {
         }
 
 //      when
+//      멤버 id를 통해 게시물 목록 조회
         List<Post> result = postRepository.findByWriter_Id(member.getId());
 
 //      then
@@ -148,5 +135,23 @@ class PostRepositoryTest {
         memberRepository.save(member);
 
         return member;
+    }
+
+    public Post 게시물생성(){
+        Post post = new Post();
+        Member member = 회원생성();
+
+        post.setTitle("게시글 제목");
+        post.setContent("게시글 내용");
+        post.setWriter(member);
+        post.setWidth(10);
+        post.setHeight(20);
+        post.setDepth(3);
+        post.setTimestamp(LocalDateTime.now());
+        post.setAddress("서울 마포구 양화로23길 20 1층");
+
+        postRepository.save(post);
+
+        return post;
     }
 }

@@ -31,7 +31,5 @@ public class Post
     @ColumnDefault("0")
     private int views; // 조회수
 
-    private String address;
-
     private LocalDateTime timestamp; // 작성일/시각
 }

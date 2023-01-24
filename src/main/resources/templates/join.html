@@ -19,7 +19,7 @@
         <form role="form" th:action="@{/}" th:object="${joinForm}" method="post">
             <div class="mb-3">
                 <label th:for="email" class="form-label">이메일 주소</label>
-                <input type="text" class="form-control" th:field="*{email}" placeholder="">
+                <input type="text" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요.">
             </div>
             <div class="mb-3">
                 <label th:for="password" class="form-label">비밀번호</label>
@@ -27,12 +27,12 @@
             </div>
             <div class="mb-3">
                 <label th:for="confirmPassword" class="form-label">비밀번호 확인</label>
-                <input type="text" class="form-control" th:field="*{confirmPassword}" placeholder="">
+                <input type="text" class="form-control" th:field="*{confirmPassword}" placeholder="다시 한번 입력해주세요">
             </div>
 
             <div class="mb-3">
                 <label th:for="type" class="form-label">업종</label>
-                <input type="text" class="form-control" th:field="*{type}" placeholder="업종을 입력하세요">
+                <input type="text" class="form-control" th:field="*{businessType}" placeholder="업종을 입력하세요">
             </div>
 
             <div class="mb-3">

@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -20,13 +19,12 @@ public class Appointment
     @Column(name = "appointment_id")
     private Long id;
 
+    /**
+     * TODO JoinColumn의 name에 관해서 자세한 구글링을 해봐야 할듯해요! 😉
+     */
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
-    private Member supplier;
-
-    @ManyToOne
-    @JoinColumn(name = "demand_id")
-    private Member demand;
+    @JoinColumn(name = "wanted_id")
+    private Member wanted;
 
     private LocalDateTime timestamp;
 }

@@ -59,13 +59,13 @@ class AppointmentServiceTest
         postRepository.findByWriter_Id(supplier.getId());
 
         // when
-        Appointment appointment = new Appointment(0L, supplier, demand, LocalDateTime.now());
+        Appointment appointment = new Appointment(0L, demand, LocalDateTime.now());
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
         // then
         assertThat(appointmentRepository.count()).isEqualTo(1L);
-        assertThat(savedAppointment.getSupplier()).usingRecursiveComparison().isEqualTo(supplier);
-        assertThat(savedAppointment.getDemand()).usingRecursiveComparison().isEqualTo(demand);
+//        assertThat(savedAppointment.getSupplier()).usingRecursiveComparison().isEqualTo(supplier);
+        assertThat(savedAppointment.getWanted()).usingRecursiveComparison().isEqualTo(demand);
     }
 
     @Test
@@ -74,7 +74,7 @@ class AppointmentServiceTest
         // given
         Member supplier = memberRepository.findByEmail("supplier@example.com");
         Member demand = memberRepository.findByEmail("demand@example.com");
-        appointmentRepository.save(new Appointment(0L, supplier, demand, LocalDateTime.now()));
+        appointmentRepository.save(new Appointment(0L, demand, LocalDateTime.now()));
 
         // when
         Appointment suppliersAppointment = appointmentRepository.findBySupplier_Id(supplier.getId());
@@ -90,12 +90,12 @@ class AppointmentServiceTest
         // given
         Member supplier = memberRepository.findByEmail("supplier@example.com");
         Member demand = memberRepository.findByEmail("demand@example.com");
-        Appointment beforeAppointment = new Appointment(0L, supplier, demand, LocalDateTime.of(2010, 1, 1, 1, 0, 0));
+        Appointment beforeAppointment = new Appointment(0L, demand, LocalDateTime.of(2010, 1, 1, 1, 0, 0));
         appointmentRepository.save(beforeAppointment);
 
         // when
         Appointment findAppointment = appointmentRepository.findById(0L).get();
-        Appointment afterAppointment = new Appointment(0L, supplier, demand, LocalDateTime.of(2020, 1, 1, 0, 0, 0));
+        Appointment afterAppointment = new Appointment(0L, demand, LocalDateTime.of(2020, 1, 1, 0, 0, 0));
         appointmentRepository.deleteById(findAppointment.getId());
         appointmentRepository.save(afterAppointment);
 
@@ -112,7 +112,7 @@ class AppointmentServiceTest
         // given
         Member supplier = memberRepository.findByEmail("supplier@example.com");
         Member demand = memberRepository.findByEmail("demand@example.com");
-        Appointment savedAppointment = appointmentRepository.save(new Appointment(0L, supplier, demand, LocalDateTime.now()));
+        Appointment savedAppointment = appointmentRepository.save(new Appointment(0L, demand, LocalDateTime.now()));
 
         // when
         appointmentRepository.deleteById(savedAppointment.getId());

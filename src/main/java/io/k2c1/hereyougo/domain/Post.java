@@ -1,6 +1,8 @@
 package io.k2c1.hereyougo.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -8,6 +10,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "post")
 public class Post

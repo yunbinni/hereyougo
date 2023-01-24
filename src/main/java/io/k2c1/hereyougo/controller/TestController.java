@@ -6,6 +6,7 @@ import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.LoginForm;
 import io.k2c1.hereyougo.repository.MemberRepository;
+import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +27,7 @@ import java.util.Optional;
 public class TestController {
 
     @Autowired
-    private final MemberService memberService;
-
-    @Autowired
-    private final MemberRepository memberRepository;
+    private final PostRepository postRepository;
 
     @GetMapping("/")
     public String home() {
@@ -46,20 +44,20 @@ public class TestController {
     @GetMapping("/join")
     public String join(@ModelAttribute("joinForm") JoinForm joinForm) {
         // TODO : 회원가입 검증로직도 추가해야함 (Service에서)
-        memberService.join(joinForm);
+//        memberService.join(joinForm);
         return "join";
     }
 
     @GetMapping("/post/{postId}")
-    public String postForDevelopment(@PathVariable("postId") String postId, Model model)
+    public String postForDevelopment(@PathVariable("postId") Long postId, Model model)
     {
         /**
          * TODO
          * 현재 임시로 SampleDataInit을 사용중
          * 나중에 실제 Production 용으로 변환하기
          */
-        Member samplePost = SampleDataInit.createNewMember(); // ID : 0
-        model.addAttribute("post", samplePost);
+        Post findPost = postRepository.findById(postId).get();
+        model.addAttribute("post", findPost);
         return "post";
     }
 }

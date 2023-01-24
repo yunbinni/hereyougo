@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo;
 
+import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.repository.MemberRepository;
@@ -26,41 +27,38 @@ public class SampleDataInit {
     @Autowired
     private final PostRepository postRepository;
 
+    private static long MEMBER_LID = 0L;
+    private static long POST_LID = 0L;
+
     @PostConstruct
     public void init()
     {
-        log.info("SAMPLE MEMBER SAVED IN REPO");
         memberRepository.save(createNewMember());
+        log.info("SAMPLE MEMBER SAVED IN REPO");
 
-        log.info("SAMPLE POST SAVED IN REPO");
         postRepository.save(createNewPost());
+        log.info("SAMPLE POST SAVED IN REPO");
     }
 
-    public static Member createNewMember() {
-        Member sampleMember = new Member();
-
-        sampleMember.setId(0L);
-        sampleMember.setEmail("test@naver.com");
-        sampleMember.setPassword("1234");
-        sampleMember.setNickname("test");
-        sampleMember.setBusinessType("요식업");
-
-        return sampleMember;
+    public static Member createNewMember()
+    {
+        return new Member(MEMBER_LID++, "test@naver.com", "1234", "test", "요식업");
     }
 
 
-    public static Post createNewPost() {
-        Post samplePost = new Post();
-
-        samplePost.setId(0L);
-        samplePost.setTitle("게시글 제목");
-        samplePost.setContent("게시글 내용");
-        samplePost.setWidth(10);
-        samplePost.setHeight(20);
-        samplePost.setDepth(3);
-        samplePost.setTimestamp(LocalDateTime.now());
-        samplePost.setAddress("서울 마포구 양화로23길 20 1층");
-
-        return samplePost;
+    public static Post createNewPost()
+    {
+        return new Post(
+                POST_LID++,
+                null,
+                "테스트 제목",
+                "테스트 내용",
+                10,
+                20,
+                3,
+                0,
+                "서울 마포구 양화로23길 20 1층",
+                LocalDateTime.now()
+        );
     }
 }

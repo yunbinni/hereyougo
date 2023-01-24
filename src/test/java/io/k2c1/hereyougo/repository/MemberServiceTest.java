@@ -1,6 +1,5 @@
 package io.k2c1.hereyougo.repository;
 
-import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Member;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import java.util.List;
 
 
 @SpringBootTest
-class MemberRepositoryTest {
+class MemberServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;

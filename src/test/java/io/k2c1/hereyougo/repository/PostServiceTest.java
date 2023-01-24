@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sound.midi.MetaMessage;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-class PostRepositoryTest {
+class PostServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -27,7 +25,8 @@ class PostRepositoryTest {
     private PostRepository postRepository;
 
     @Test
-    public void 게시글등록(){
+    public void 게시글등록()
+    {
         Member member = 회원생성();
 
         Post post = new Post();
@@ -57,6 +56,7 @@ class PostRepositoryTest {
         savedPost.setDepth(5);
 
         Post result = postRepository.findById(1L).get();
+
 //      then
         assertEquals(savedPost.getContent(), result.getContent());
         assertEquals(savedPost.getAddress(), result.getAddress());

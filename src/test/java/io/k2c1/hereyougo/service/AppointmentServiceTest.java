@@ -1,8 +1,11 @@
-package io.k2c1.hereyougo.repository;
+package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Appointment;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.repository.AppointmentRepository;
+import io.k2c1.hereyougo.repository.MemberRepository;
+import io.k2c1.hereyougo.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

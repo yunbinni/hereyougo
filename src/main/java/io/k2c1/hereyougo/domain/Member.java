@@ -14,8 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "member")
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -24,7 +23,7 @@ public class Member {
     private String nickname;
     private String businessType; // 업종
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "wanted")
     private List<Appointment> appointments = new ArrayList<>();
 
     public Member(Long id, String email, String password, String nickname, String businessType) {

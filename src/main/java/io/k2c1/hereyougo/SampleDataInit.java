@@ -23,9 +23,9 @@ import java.time.LocalDateTime;
 public class SampleDataInit {
 
     @Autowired
-    private final MemberRepository memberRepository;
+    public final MemberRepository memberRepository;
     @Autowired
-    private final PostRepository postRepository;
+    public final PostRepository postRepository;
 
     private static long MEMBER_LID = 0L;
     private static long POST_LID = 0L;
@@ -40,19 +40,19 @@ public class SampleDataInit {
         log.info("SAMPLE POST SAVED IN REPO");
     }
 
-    public static Member createNewMember()
+    public Member createNewMember()
     {
-        return new Member(MEMBER_LID++, "test@naver.com", "1234", "test", "요식업");
+        return new Member(MEMBER_LID++, "test@naver.com", "1234", "testNickname", "요식업");
     }
 
 
-    public static Post createNewPost()
+    public Post createNewPost()
     {
         return new Post(
                 POST_LID++,
-                null,
-                "테스트 제목",
-                "테스트 내용",
+                createNewMember(),
+                "테스트 게시글 제목",
+                "테스트 게시글 내용",
                 10,
                 20,
                 3,

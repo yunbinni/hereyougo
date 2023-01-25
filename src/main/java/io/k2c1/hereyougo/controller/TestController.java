@@ -22,6 +22,8 @@ import java.util.Optional;
 /**
  * TODO 나중에 Controller가 비대해지면, 분류합시다!
  */
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class TestController {
@@ -57,6 +59,7 @@ public class TestController {
          * 나중에 실제 Production 용으로 변환하기
          */
         Post findPost = postRepository.findById(postId).get();
+        log.info("findPost - ID: {}, TITLE : {}", findPost.getId(), findPost.getTitle());
         model.addAttribute("post", findPost);
         return "post";
     }

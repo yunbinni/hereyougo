@@ -40,13 +40,13 @@ public class SampleDataInit {
         log.info("SAMPLE POST SAVED IN REPO");
     }
 
-    public Member createNewMember()
+    public static Member createNewMember()
     {
         return new Member(MEMBER_LID++, "test@naver.com", "1234", "testNickname", "요식업");
     }
 
 
-    public Post createNewPost()
+    public static Post createNewPost()
     {
         return new Post(
                 POST_LID++,
@@ -55,8 +55,9 @@ public class SampleDataInit {
                 "테스트 게시글 내용",
                 10,
                 20,
-                3,
+                30,
                 0,
+                3,
                 "서울 마포구 양화로23길 20 1층",
                 LocalDateTime.now()
         );

@@ -37,8 +37,8 @@ class AppointmentServiceTest
         memberRepository.save(demand);
 
         // supplier가 게시글 작성 후 리포에 저장
-        Post post = new Post(0L, supplier, "제목", "내용", 10, 20, 3, 0, "서울 마포구 양화로23길 20 1층", LocalDateTime.now());
-        postRepository.save(post);
+//        Post post = new Post(0L, supplier, "제목", "내용", 10, 20, 3, 0, "서울 마포구 양화로23길 20 1층", LocalDateTime.now());
+//        postRepository.save(post);
     }
 
     @AfterEach

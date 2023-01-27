@@ -49,18 +49,4 @@ public class TestController {
 //        memberService.join(joinForm);
         return "join";
     }
-
-    @GetMapping("/post/{postId}")
-    public String postForDevelopment(@PathVariable("postId") Long postId, Model model)
-    {
-        /**
-         * TODO
-         * 현재 임시로 SampleDataInit을 사용중
-         * 나중에 실제 Production 용으로 변환하기
-         */
-        Post findPost = postRepository.findById(postId).get();
-        log.info("findPost - ID: {}, TITLE : {}", findPost.getId(), findPost.getTitle());
-        model.addAttribute("post", findPost);
-        return "post";
-    }
 }

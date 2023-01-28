@@ -1,4 +1,4 @@
-package io.k2c1.hereyougo.service;
+package io.k2c1.hereyougo.repository;
 
 import io.k2c1.hereyougo.domain.Member;
 import static org.assertj.core.api.Assertions.*;
@@ -10,10 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
-class MemberServiceTest {
+class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -54,10 +55,10 @@ class MemberServiceTest {
         memberRepository.save(member);
 
 //      when
-        Member result = memberRepository.findByEmail(email);
+        Optional<Member> result = memberRepository.findByEmail(email);
 
 //      then
-        assertThat(result).usingRecursiveComparison().isEqualTo(member);
+        assertThat(result.get()).usingRecursiveComparison().isEqualTo(member);
     }
 
     @Test
@@ -70,9 +71,9 @@ class MemberServiceTest {
         memberRepository.save(member);
 
 //      when
-        Member result = memberRepository.findByEmail(email);
+        Optional<Member> result = memberRepository.findByEmail(email);
 
-        if(result != null){
+        if(result.isPresent()){
             isExist = true;
         }else{
             isExist = false;

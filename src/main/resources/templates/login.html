@@ -15,7 +15,7 @@
     <div id ="root">
         <div class="logo-title">여기있소👋</div>
 
-        <form role="form" th:action="@{/}" th:object="${loginForm}" method="post">
+        <form role="form" th:action th:object="${loginForm}" method="post">
             <div class="mb-3">
                 <label th:for="email" class="form-label">이메일</label>
                 <input type="text" class="form-control" th:field="*{email}" placeholder="">

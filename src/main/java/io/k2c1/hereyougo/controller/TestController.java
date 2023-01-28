@@ -36,13 +36,6 @@ public class TestController {
         return "home";
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        LoginForm loginForm = new LoginForm();
-        model.addAttribute("loginForm", loginForm);
-        return "login";
-    }
-
     @GetMapping("/join")
     public String join(@ModelAttribute("joinForm") JoinForm joinForm) {
         // TODO : 회원가입 검증로직도 추가해야함 (Service에서)

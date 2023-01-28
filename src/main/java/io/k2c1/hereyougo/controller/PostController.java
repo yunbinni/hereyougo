@@ -1,6 +1,7 @@
 package io.k2c1.hereyougo.controller;
 
 import io.k2c1.hereyougo.SampleDataInit;
+import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
 import io.k2c1.hereyougo.repository.PostRepository;
@@ -26,9 +27,9 @@ public class PostController
     @GetMapping("/{postId}")
     public String getPost(@PathVariable("postId") Long postId, Model model)
     {
-        Post findPost = postRepository.findById(postId).get();
-        log.info("findPost - ID: {}, TITLE : {}", findPost.getId(), findPost.getTitle());
-        model.addAttribute("post", findPost);
+        Post getPost = postRepository.findById(postId).get();
+        log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
+        model.addAttribute("post", getPost);
         return "post/post";
     }
 

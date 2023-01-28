@@ -1,0 +1,135 @@
+
+@font-face {
+    font-family: 'gsans';
+    src: url('/font/GmarketSansTTFMedium.woff2') format('woff2'),
+        url('/font/GmarketSansTTFMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gsans-light';
+    src: url('/font/GmarketSansTTFLight.woff2') format('woff2'),
+        url('/font/GmarketSansTTFLight.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+
+}
+
+body{
+ font-family: gsans;
+}
+
+/* 페이지 타이틀 */
+.page-title{
+    text-align : center;
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+/* 마이페이지 전체 */
+.mypage-container{
+     display: grid;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+}
+
+div#root {
+    display: grid;
+    align-content: center;
+    align-self: center;
+    width: 50vw;
+}
+
+/* 소제목 */
+.sub-title {
+    font-size: 1.1em;
+    margin-bottom: 2vh;
+}
+/* 닉네임 + 프로필 수정 버튼 컨테이너 */
+.profile-container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    margin-bottom : 3vh;
+}
+
+.nickname{
+    align-self: center;
+}
+
+.nickname span{
+    font-size : 1.2em;
+}
+
+span.greeting {
+    font-size: 0.8em;
+    font-family: 'gsans-light';
+    font-weight: 600;
+    margin-left: 5px;
+}
+/* 프로필 수정 버튼 */
+button.editBtn {
+    background: transparent;
+    border: 1px solid #acacac;
+    padding: 0.5vw 1vw;
+}
+
+/* 키워드 목록 */
+.keywordList {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+}
+
+.keyword-item {
+    border: 1px solid #acacac;
+    text-align: center;
+    border-radius: 50px;
+    width: 80%;
+    padding: 0.5vw;
+    font-size: 0.9em;
+}
+
+.keyword-item button{
+    background : transparent;
+}
+
+.keyword-item i{
+    color : #ff5959;
+}
+
+.delete-btn{
+    margin-left : 10px;
+}
+
+button.btn.btn-primary {
+    width: 100%;
+    background: black;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* 약속 목록, 내가 쓴 글 목록 */
+.appointments-container, .posts-container {
+    margin-top: 5vh;
+}
+
+.appointments-container th, .posts-container th{
+    text-align : center;
+}
+
+.appointments-container td, .posts-container td{
+    font-size : 0.9em;
+    font-family: gsans-light;
+    font-weight: 600;
+    text-align : center;
+}

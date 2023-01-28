@@ -11,33 +11,44 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class LoginController
-{
+public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm)
-    {
+    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm) {
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult)
-    {
+    public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, HttpServletResponse response) {
         Member loginMember = loginService.login(loginForm);
 
-        log.info("Login email : {} | Password : {}", loginMember.getEmail(), loginMember.getPassword());
+        log.info("Login : {}", loginMember);
 
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "login";
         }
 
+        // 쿠키
+        Cookie loginCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
+        response.addCookie(loginCookie);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("memberId", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         return "redirect:/";
     }
 }

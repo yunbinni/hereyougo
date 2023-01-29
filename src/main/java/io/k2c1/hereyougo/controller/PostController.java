@@ -4,6 +4,7 @@ import io.k2c1.hereyougo.SampleDataInit;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
+import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/post")
 public class PostController
 {
+    @Autowired
+    private final MemberRepository memberRepository;
     @Autowired
     private final PostRepository postRepository;
 
@@ -52,7 +55,8 @@ public class PostController
 
         // 성공 로직 TODO TypeConverter 적용?
         Post post = new Post();
-//        post.setWriter(); // TODO
+//        Member findMember = memberRepository.findById(1L).get();
+//        post.setWriter(findMember); // TODO
         post.setTitle(postSaveForm.getTitle());
         post.setContent(postSaveForm.getContent());
         post.setWidth(postSaveForm.getWidth());

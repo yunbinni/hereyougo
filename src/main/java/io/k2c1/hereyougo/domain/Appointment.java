@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo.domain;
 
+import io.k2c1.hereyougo.constant.Progress;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,10 @@ public class Appointment
     @JoinColumn(name = "wanted_id")
     private Member wanted;
 
-    private LocalDateTime timestamp;
+    @OneToOne
+    private Post post;
+
+    private LocalDateTime timestamp; // 약속한 일/시
+
+    private Progress progress;
 }

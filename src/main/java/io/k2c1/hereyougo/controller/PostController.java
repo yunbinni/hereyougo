@@ -1,6 +1,6 @@
 package io.k2c1.hereyougo.controller;
 
-import io.k2c1.hereyougo.SampleDataInit;
+import io.k2c1.hereyougo.constant.SessionConst;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
@@ -28,8 +28,13 @@ public class PostController
     private final PostRepository postRepository;
 
     @GetMapping("/{postId}")
-    public String getPost(@PathVariable("postId") Long postId, Model model)
+    public String getPost(
+            @PathVariable("postId") Long postId,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
     {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
         Post getPost = postRepository.findById(postId).get();
         log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
         model.addAttribute("post", getPost);
@@ -37,14 +42,22 @@ public class PostController
     }
 
     @GetMapping("/add")
-    public String addForm(Model model)
+    public String addForm(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
     {
+        if (loginMember != null) model.addAttribute("member", loginMember);
         model.addAttribute("post", new Post());
         return "post/addPost";
     }
 
     @PostMapping("/add")
-    public String addPost(@Validated @ModelAttribute("post") PostSaveForm postSaveForm, BindingResult bindingResult, RedirectAttributes redirectAttributes)
+    public String addPost(
+            @Validated @ModelAttribute("post") PostSaveForm form,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    )
     {
 //        redirectAttributes.addAttribute("postId", );
 
@@ -55,21 +68,46 @@ public class PostController
 
         // 성공 로직 TODO TypeConverter 적용?
         Post post = new Post();
-//        Member findMember = memberRepository.findById(1L).get();
-//        post.setWriter(findMember); // TODO
-        post.setTitle(postSaveForm.getTitle());
-        post.setContent(postSaveForm.getContent());
-        post.setWidth(postSaveForm.getWidth());
-        post.setDepth(postSaveForm.getDepth());
-        post.setHeight(postSaveForm.getHeight());
+        post.setWriter(loginMember);
+        post.setTitle(form.getTitle());
+        post.setContent(form.getContent());
+        post.setWidth(form.getWidth());
+        post.setDepth(form.getDepth());
+        post.setHeight(form.getHeight());
         post.setViews(0);
-        post.setQuantity(postSaveForm.getQuantity());
-        post.setAddress(postSaveForm.getAddress());
+        post.setQuantity(form.getQuantity());
+        post.setAddress(form.getAddress());
 
         Post savedPost = postRepository.save(post);
         log.info("id : {}", savedPost.getId());
         redirectAttributes.addAttribute("postId", savedPost.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/post/{postId}";
+    }
+
+    @GetMapping("/{postId}/edit")
+    public String editForm(
+            @PathVariable Long postId,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
+        Post post = postRepository.findById(postId).get();
+        model.addAttribute("post", post);
+        return "post/editPost";
+    }
+
+    @PostMapping("/{postId}/edit")
+    public String editPost(@PathVariable Long postId, @ModelAttribute Post post)
+    {
+        return "redirect:/post/{postId}";
+    }
+
+    @PostMapping("/{postId}/delete")
+    public String deletePost(@PathVariable Long postId)
+    {
+        postRepository.deleteById(postId);
+        return "redirect:/";
     }
 }

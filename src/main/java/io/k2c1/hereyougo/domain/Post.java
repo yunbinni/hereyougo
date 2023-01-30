@@ -25,15 +25,15 @@ public class Post
     private Member writer; // 작성자
 
     private String title;
-
     private String content;
-
     private Integer width;
     private Integer depth;
     private Integer height;
 
     @ColumnDefault("0")
     private int views; // 조회수
+
+    private Integer quantity; // 남은 수량
 
     private String address;
 

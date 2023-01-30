@@ -139,7 +139,8 @@ class PostServiceTest {
         return member;
     }
 
-    public Post 게시물생성(){
+    public Post 게시물생성()
+    {
         Post post = new Post();
         Member member = 회원생성();
 

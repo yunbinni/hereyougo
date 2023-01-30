@@ -15,7 +15,7 @@
     <div id ="root">
         <div class="logo-title">여기있소👋</div>
 
-        <form role="form" th:action="@{/}" th:object="${loginForm}" method="post">
+        <form role="form" th:action="@{/login}" th:object="${loginForm}" method="post">
             <div class="mb-3">
                 <label th:for="email" class="form-label">이메일</label>
                 <input type="text" class="form-control" th:field="*{email}" placeholder="">
@@ -39,7 +39,7 @@
 
         <div class="joinInfo_container">
             <div>아직 여기있소 회원이 아니세요?</div>
-            <div class="joinText">회원가입 하기</div>
+            <div class="joinText"><a href="/join">회원가입 하기</a></div>
         </div>
     </div>
 </div>

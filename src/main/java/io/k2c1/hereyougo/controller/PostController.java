@@ -1,0 +1,75 @@
+package io.k2c1.hereyougo.controller;
+
+import io.k2c1.hereyougo.SampleDataInit;
+import io.k2c1.hereyougo.domain.Member;
+import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.dto.PostSaveForm;
+import io.k2c1.hereyougo.repository.MemberRepository;
+import io.k2c1.hereyougo.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Slf4j
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/post")
+public class PostController
+{
+    @Autowired
+    private final MemberRepository memberRepository;
+    @Autowired
+    private final PostRepository postRepository;
+
+    @GetMapping("/{postId}")
+    public String getPost(@PathVariable("postId") Long postId, Model model)
+    {
+        Post getPost = postRepository.findById(postId).get();
+        log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
+        model.addAttribute("post", getPost);
+        return "post/post";
+    }
+
+    @GetMapping("/add")
+    public String addForm(Model model)
+    {
+        model.addAttribute("post", new Post());
+        return "post/addPost";
+    }
+
+    @PostMapping("/add")
+    public String addPost(@Validated @ModelAttribute("post") PostSaveForm postSaveForm, BindingResult bindingResult, RedirectAttributes redirectAttributes)
+    {
+//        redirectAttributes.addAttribute("postId", );
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "post/addPost";
+        }
+
+        // 성공 로직 TODO TypeConverter 적용?
+        Post post = new Post();
+//        Member findMember = memberRepository.findById(1L).get();
+//        post.setWriter(findMember); // TODO
+        post.setTitle(postSaveForm.getTitle());
+        post.setContent(postSaveForm.getContent());
+        post.setWidth(postSaveForm.getWidth());
+        post.setDepth(postSaveForm.getDepth());
+        post.setHeight(postSaveForm.getHeight());
+        post.setViews(0);
+        post.setQuantity(postSaveForm.getQuantity());
+        post.setAddress(postSaveForm.getAddress());
+
+        Post savedPost = postRepository.save(post);
+        log.info("id : {}", savedPost.getId());
+        redirectAttributes.addAttribute("postId", savedPost.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/post/{postId}";
+    }
+}

@@ -6,6 +6,7 @@ import lombok.Data;
 public class JoinForm {
     private String email;
     private String password;
+    private String confirmPassword;
     private String nickname;
     private String businessType;
     private String address;

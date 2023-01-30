@@ -25,16 +25,14 @@ public class LoginCheckFilter implements Filter
         try
         {
             log.info("인증 체크 필터 시작 {}", requestURI);
+            HttpSession session = httpRequest.getSession(false);
 
             if(isLoginCheckPath(requestURI))
             {
-                log.info("인증 체크 로직 실행 {}", requestURI);
-                HttpSession session = httpRequest.getSession(false);
-
+                // 로그인이 안된 사용자가 접속하는 경우
                 if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null)
                 {
                     log.info("미인증 사용자 요청 {}", requestURI);
-                    // 로그인으로 redirect
                     httpResponse.sendRedirect("/login?redirectURL=" + requestURI);
                     return;
                 }

@@ -16,7 +16,7 @@
         <div class="logo-title">여기있소👋</div>
         <div class="sub-title">이메일로 가입하기</div>
 
-        <form role="form" th:action="@{/members}" th:object="${joinForm}" method="post">
+        <form role="form" th:action="@{/members/join}" th:object="${joinForm}" method="post">
             <div class="mb-3">
                 <label th:for="email" class="form-label">이메일 주소</label>
                 <input type="text" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요.">

@@ -4,22 +4,23 @@ import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
+import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.MemberService;
+import io.k2c1.hereyougo.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/members")
 @Controller
 public class MemberController {
 
     private MemberService memberService;
+    private PostService postService;
 
-    public MemberController(MemberService memberService){
+    public MemberController(MemberService memberService, PostService postService){
         this.memberService = memberService;
+        this.postService = postService;
     }
 
     /***
@@ -71,5 +72,21 @@ public class MemberController {
         MyPageForm memberInfo = memberService.mypage(memberId);
         model.addAttribute("mypage", memberInfo);
         return "member/myPage";
+    }
+
+    /***
+     * 회원탈퇴
+     * @DeleteMapping은 a태그를 url로 접근하는걸 지원안해서 @GetMapping으로 변경
+     * input hidden을 통해 보내는 방법이 있지만 잘 사용안한다고 함
+     * cascade 사용하는 것보다 따로 remove 호출하는게 낫다고 하여 따로 호출
+     * www.inflearn.com/questions/141700/
+     */
+//    @DeleteMapping("/delete/{memberId}")
+    @GetMapping("/delete/{memberId}")
+    public String deleteMember(@PathVariable("memberId") Long memberId){
+        postService.deleteByWriter(memberId);
+        memberService.deleteMember(memberService.findMember(memberId));
+
+        return "redirect:/";
     }
 }

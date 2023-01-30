@@ -62,3 +62,17 @@ button.btn.btn-primary {
     padding: 10px;
     margin-top: 20px;
 }
+
+/* 회원 탈퇴 링크 */
+p.withdrawal-btn {
+    text-align: end;
+    margin-top: 5vh;
+    font-family: gsans-light;
+    font-weight: 600;
+    font-size: 0.8em;
+}
+
+p.withdrawal-btn a {
+    color: gray;
+    margin-left: 10px;
+}

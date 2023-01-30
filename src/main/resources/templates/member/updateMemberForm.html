@@ -14,29 +14,35 @@
 <div class="updateForm-container">
     <div id ="root">
         <h2 class="page-title">프로필 정보</h2>
-        <form role="form" th:action="@{/members/edit}" th:object="${updateForm}" method="post">
-            <div class="mb-3">
-                <input type="hidden" class="form-control" th:field="*{id}" id="id">
-            </div>
-            <div class="mb-3">
-                <label th:for="email" class="form-label">이메일</label>
-                <input type="text" class="form-control" th:field="*{email}" value="*{email}" placeholder="" disabled>
-            </div>
-            <div class="mb-3">
-                <label th:for="password" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" th:field="*{password}" placeholder="">
-            </div>
+            <form role="form" th:action="@{/members/edit}" th:object="${updateForm}"  method="post">
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" th:field="*{id}" id="id">
+                </div>
+                <div class="mb-3">
+                    <label th:for="email" class="form-label">이메일</label>
+                    <input type="text" class="form-control" th:field="*{email}" value="*{email}" placeholder="" disabled>
+                </div>
+                <div class="mb-3">
+                    <label th:for="password" class="form-label">비밀번호</label>
+                    <input type="password" class="form-control" th:field="*{password}" placeholder="">
+                </div>
 
-            <div class="mb-3">
-                <label th:for="nickname" class="form-label">닉네임</label>
-                <input type="text" class="form-control" th:field="*{nickname}" value="*{nickname}" placeholder="">
-            </div>
-            <div class="mb-3">
-                <label th:for="businessType" class="form-label">업종</label>
-                <input type="text" class="form-control" th:field="*{businessType}" value="*{businessType}" placeholder="">
-            </div>
-            <button type="submit" class="btn btn-primary">수정</button>
-        </form>
+                <div class="mb-3">
+                    <label th:for="nickname" class="form-label">닉네임</label>
+                    <input type="text" class="form-control" th:field="*{nickname}" value="*{nickname}" placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label th:for="businessType" class="form-label">업종</label>
+                    <input type="text" class="form-control" th:field="*{businessType}" value="*{businessType}" placeholder="">
+                </div>
+                <button type="submit" class="btn btn-primary">수정</button>
+            </form>
+            <p class="withdrawal-btn">정말 탈퇴하실건가요?ㅠㅠ<a th:href="@{/members/delete/{memberId}(memberId = ${updateForm.id})}">회원 탈퇴</a></p>
+
+<!--            <form id="delete-form" th:action="@{'/members/delete?id=' + ${updateForm.id}}" method="post">-->
+<!--                <input type="hidden" name="_method" value="delete"/>-->
+<!--                <button id="delete-btn">삭제</button>-->
+<!--            </form>-->
     </div>
 </div>
 </body>

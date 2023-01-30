@@ -157,4 +157,40 @@ class PostServiceTest {
 
         return post;
     }
+
+    @Test
+    public void 게시물여러개삭제(){
+        Member member = 회원생성();
+        List<Post> posts = 게시글목록반환(member);
+
+        postRepository.deleteByWriter(member);
+
+        assertEquals(1, postRepository.findAll().size());
+    }
+
+    public List<Post> 게시글목록반환(Member member){
+        List<Post> posts = new ArrayList<>();
+        for(int i = 0; i < 5; i++){
+            Post post = new Post();
+            post.setTitle("제목"+i);
+            post.setContent("내용"+i);
+            post.setWriter(member);
+            postRepository.save(post);
+            posts.add(post);
+        }
+
+        Member member2 = new Member();
+        member2.setEmail("test2@naver.com");
+        member2.setPassword("123456");
+        memberRepository.save(member2);
+
+        Post post2 = new Post();
+        post2.setTitle("test");
+        post2.setContent("test content");
+        post2.setWriter(member2);
+        postRepository.save(post2);
+        posts.add(post2);
+
+        return posts;
+    }
 }

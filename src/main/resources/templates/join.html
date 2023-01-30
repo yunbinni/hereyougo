@@ -16,18 +16,27 @@
         <div class="logo-title">여기있소👋</div>
         <div class="sub-title">이메일로 가입하기</div>
 
-        <form role="form" th:action="@{/}" th:object="${joinForm}" method="post">
+        <form role="form" th:action="@{/members}" th:object="${joinForm}" method="post">
             <div class="mb-3">
                 <label th:for="email" class="form-label">이메일 주소</label>
                 <input type="text" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요.">
             </div>
             <div class="mb-3">
                 <label th:for="password" class="form-label">비밀번호</label>
-                <input type="text" class="form-control" th:field="*{password}" placeholder="6자이상 입력하세요">
+                <input type="password" class="form-control" th:field="*{password}" placeholder="6자이상 입력하세요">
             </div>
+
+<!--         비밀번호 확인은 프론트 단에서 검증하기
+             비밀번호가 일치하지않으면, 회원가입 버튼 비활성화
+   -->
             <div class="mb-3">
                 <label th:for="confirmPassword" class="form-label">비밀번호 확인</label>
-                <input type="text" class="form-control" th:field="*{confirmPassword}" placeholder="다시 한번 입력해주세요">
+                <input type="password" class="form-control" name="confirmPassword" placeholder="다시 한번 더 입력하세요">
+            </div>
+
+            <div class="mb-3">
+                <label th:for="type" class="form-label">닉네임</label>
+                <input type="text" class="form-control" th:field="*{nickname}" placeholder="닉네임을 입력하세요">
             </div>
 
             <div class="mb-3">

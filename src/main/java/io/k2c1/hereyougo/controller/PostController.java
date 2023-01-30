@@ -1,6 +1,5 @@
 package io.k2c1.hereyougo.controller;
 
-import io.k2c1.hereyougo.SampleDataInit;
 import io.k2c1.hereyougo.constant.SessionConst;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
@@ -55,6 +54,7 @@ public class PostController
     @PostMapping("/add")
     public String addPost(
             @Validated @ModelAttribute("post") PostSaveForm form,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     )
@@ -68,8 +68,7 @@ public class PostController
 
         // 성공 로직 TODO TypeConverter 적용?
         Post post = new Post();
-//        Member findMember = memberRepository.findById(1L).get();
-//        post.setWriter(findMember); // TODO
+        post.setWriter(loginMember);
         post.setTitle(form.getTitle());
         post.setContent(form.getContent());
         post.setWidth(form.getWidth());
@@ -84,5 +83,31 @@ public class PostController
         redirectAttributes.addAttribute("postId", savedPost.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/post/{postId}";
+    }
+
+    @GetMapping("/{postId}/edit")
+    public String editForm(
+            @PathVariable Long postId,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
+        Post post = postRepository.findById(postId).get();
+        model.addAttribute("post", post);
+        return "post/editPost";
+    }
+
+    @PostMapping("/{postId}/edit")
+    public String editPost(@PathVariable Long postId, @ModelAttribute Post post)
+    {
+        return "redirect:/post/{postId}";
+    }
+
+    @PostMapping("/{postId}/delete")
+    public String deletePost(@PathVariable Long postId)
+    {
+        postRepository.deleteById(postId);
+        return "redirect:/";
     }
 }

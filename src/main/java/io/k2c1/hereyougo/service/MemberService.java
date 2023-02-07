@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo.service;
 
+import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Appointment;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
@@ -40,6 +41,14 @@ public class MemberService {
         member.setPassword(joinForm.getPassword());
         member.setNickname(joinForm.getNickname());
         member.setBusinessType(joinForm.getBusinessType());
+
+        Address address = new Address();
+        address.setDoro(joinForm.getRoadFullAddr());
+        address.setJibun(joinForm.getJibunAddr());
+        address.setRegion(joinForm.getSiNm());
+        address.setBasic(joinForm.getSggNm());
+        address.setZipNo(joinForm.getZipNo());
+        member.setAddress(address);
 
         isDuplicateMember(member); // 회원 이메일 중복 검사
         memberRepository.save(member);

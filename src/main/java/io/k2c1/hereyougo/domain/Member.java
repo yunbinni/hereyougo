@@ -23,6 +23,9 @@ public class Member {
     private String nickname;
     private String businessType; // 업종
 
+    @OneToOne
+    private Address address;
+
     @OneToMany(mappedBy = "wanted")
     private List<Appointment> appointments = new ArrayList<>();
 

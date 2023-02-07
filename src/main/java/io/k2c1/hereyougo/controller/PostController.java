@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController
 {
     @Autowired
@@ -38,7 +38,7 @@ public class PostController
         Post getPost = postRepository.findById(postId).get();
         log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
         model.addAttribute("post", getPost);
-        return "post/post";
+        return "posts/post";
     }
 
     @GetMapping("/add")
@@ -48,7 +48,7 @@ public class PostController
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
         model.addAttribute("post", new Post());
-        return "post/addPost";
+        return "posts/addPost";
     }
 
     @PostMapping("/add")
@@ -63,7 +63,7 @@ public class PostController
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "post/addPost";
+            return "posts/addPost";
         }
 
         // 성공 로직 TODO TypeConverter 적용?
@@ -82,7 +82,7 @@ public class PostController
         log.info("id : {}", savedPost.getId());
         redirectAttributes.addAttribute("postId", savedPost.getId());
         redirectAttributes.addAttribute("status", true);
-        return "redirect:/post/{postId}";
+        return "redirect:/posts/{postId}";
     }
 
     @GetMapping("/{postId}/edit")
@@ -95,13 +95,13 @@ public class PostController
 
         Post post = postRepository.findById(postId).get();
         model.addAttribute("post", post);
-        return "post/editPost";
+        return "posts/editPost";
     }
 
     @PostMapping("/{postId}/edit")
     public String editPost(@PathVariable Long postId, @ModelAttribute Post post)
     {
-        return "redirect:/post/{postId}";
+        return "redirect:/posts/{postId}";
     }
 
     @PostMapping("/{postId}/delete")

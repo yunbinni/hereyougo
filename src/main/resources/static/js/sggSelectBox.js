@@ -1,37 +1,4 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>여기있소!</title>
-    <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!--jQuery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <!--Font-->
-    <link th:href="@{/css/font.css}" rel="stylesheet" />
-</head>
-<body>
-
-    <!-- Header -->
-    <div th:replace="~{fragments/header :: header}"></div>
-
-    <a href="/posts/1">테스트 포스트 바로가기(ID: 1번)</a>
-
-    <div class="container">
-        <br><h4>최신 기부글 보기</h4><br>
-        <div th:replace="~{fragments/newPost :: newPost}"></div><br>
-
-        <br><h4>전체 기부참여 보기</h4><br>
-        <div th:replace="~{fragments/options :: options}"></div><br>
-
-        <!-- total item -->
-        <div th:replace="~{fragments/total_item :: total_item}"></div><br>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script>
-        $('document').ready(function() {
+$('document').ready(function() {
   var area0 = ["시/도 선택","서울특별시", "부산광역시", "인천광역시", "대구광역시", "대전광역시", "광주광역시", "울산광역시", "세종특별자치시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주특별자치도"];
   var area1 = ["종로구","중구","용산구","성동구","광진구","동대문구","중랑구","성북구","강북구","도봉구","노원구","은평구","서대문구","마포구","양천구","강서구","구로구","금천구","영등포구","동작구","관악구","서초구","강남구","송파구","강동구"];
   var area2 = ["중구","서구","동구","영도구","부산진구","동래구","남구","북구","해운대구","사하구","금정구","강서구","연제구","수영구","사상구","기장군"];
@@ -77,6 +44,3 @@
  });
 
 });
-    </script>
-</body>
-</html>

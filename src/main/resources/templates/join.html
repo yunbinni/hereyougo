@@ -3,6 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script language="javascript">
+        function goPopup(){
+            // 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+            var pop = window.open("jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+
+            // 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+            //var pop = window.open("jusoPopup","pop","scrollbars=yes, resizable=yes");
+        }
+
+        function jusoCallBack(roadAddrPart1, roadAddrPart2, roadFullAddr, jibunAddr, addrDetail, siNm, sggNm, zipNo)
+        {
+            $("#roadAddrPart1").val(roadAddrPart1);
+            $("#roadAddrPart2").val(roadAddrPart2);
+            $("#roadFullAddr").val(roadFullAddr);
+            $("#jibunAddr").val(jibunAddr);
+            $("#addrDetail").val(addrDetail);
+            $("#siNm").val(siNm);
+            $("#sggNm").val(sggNm);
+            $("#zipNo").val(zipNo);
+        }
+    </script>
     <title>여기있소!</title>
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -16,7 +38,7 @@
         <div class="logo-title">여기있소👋</div>
         <div class="sub-title">이메일로 가입하기</div>
 
-        <form role="form" th:action="@{/members/join}" th:object="${joinForm}" method="post">
+        <form role="form" id="form" th:action="@{/members/join}" th:object="${joinForm}" method="post">
             <div class="mb-3">
                 <label th:for="email" class="form-label">이메일 주소</label>
                 <input type="text" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요.">
@@ -46,8 +68,15 @@
 
             <div class="mb-3">
                 <label th:for="address" class="form-label">주소</label>
-                <input type="text" class="form-control" th:field="*{address}" placeholder="주소를 입력하세요">
-                <input type="text" class="form-control" th:field="*{detailAddress}" placeholder="상세주소를 입력하세요">
+                <input type="button" onclick="goPopup();" value="주소입력기" />
+                <input type="text" id="roadAddrPart1" name="roadAddrPart1" class="form-control" placeholder="도로명주소" readonly th:field="*{roadAddrPart1}">
+                <input type="text" id="roadAddrPart2" name="roadAddrPart2" class="form-control" placeholder="도로명주소 참고항목" readonly th:field="*{roadAddrPart2}">
+                <input type="text" id="roadFullAddr" name="roadFullAddr" class="form-control" placeholder="도로명주소Full" hidden th:field="*{roadFullAddr}">
+                <input type="text" id="jibunAddr" name="jibunAddr" class="form-control" placeholder="지번주소" hidden th:field="*{jibunAddr}">
+                <input type="text" id="addrDetail" name="addrDetail" class="form-control" placeholder="상세주소" readonly th:field="*{addrDetail}">
+                <input type="text" id="siNm" name="siNm" class="form-control" placeholder="시도" hidden th:field="*{siNm}">
+                <input type="text" id="sggNm" name="sggNm" class="form-control" placeholder="시군구" hidden th:field="*{sggNm}">
+                <input type="text" id="zipNo" name="zipNo" class="form-control" placeholder="우편번호" hidden th:field="*{zipNo}">
             </div>
 
             <button type="submit" class="btn btn-primary">회원가입</button>

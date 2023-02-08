@@ -1,11 +1,13 @@
 package io.k2c1.hereyougo.service;
 
+import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Appointment;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
+import io.k2c1.hereyougo.repository.AddressRepository;
 import io.k2c1.hereyougo.repository.AppointmentRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Service
 public class MemberService {
     private MemberRepository memberRepository;
+    private AddressRepository addressRepository;
     private AppointmentRepository appointmentRepository;
     private PostRepository postRepository;
 
@@ -41,8 +44,19 @@ public class MemberService {
         member.setNickname(joinForm.getNickname());
         member.setBusinessType(joinForm.getBusinessType());
 
+        Address address = new Address();
+        address.setDoro(joinForm.getRoadFullAddr());
+        address.setJibun(joinForm.getJibunAddr());
+        address.setRegion(joinForm.getSiNm());
+        address.setBasic(joinForm.getSggNm());
+        address.setZipNo(joinForm.getZipNo());
+
+        log.info("ADDRESS : {}", address.toString());
+
+        Member savedMember = memberRepository.save(member);
+        addressRepository.save(address);
+        savedMember.setAddress(address);
         isDuplicateMember(member); // 회원 이메일 중복 검사
-        memberRepository.save(member);
 
         return member.getId();
     }

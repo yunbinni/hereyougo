@@ -23,7 +23,7 @@ public class Member {
     private String nickname;
     private String businessType; // 업종
 
-    @OneToOne
+    @OneToOne(mappedBy = "member")
     private Address address;
 
     @OneToMany(mappedBy = "wanted")

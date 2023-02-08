@@ -18,7 +18,7 @@ public class Address
     private String jibun; // 지번주소
     private String zipNo; // 우편번호
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
 }

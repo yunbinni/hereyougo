@@ -27,9 +27,10 @@ public class MemberService {
     private AppointmentRepository appointmentRepository;
     private PostRepository postRepository;
 
-    public MemberService(MemberRepository memberRepository, PostRepository postRepository){
+    public MemberService(MemberRepository memberRepository, PostRepository postRepository, AddressRepository addressRepository){
         this.memberRepository = memberRepository;
         this.postRepository = postRepository;
+        this.addressRepository = addressRepository;
 //        this.appointmentRepository = appointmentRepository;
     }
 
@@ -50,13 +51,11 @@ public class MemberService {
         address.setRegion(joinForm.getSiNm());
         address.setBasic(joinForm.getSggNm());
         address.setZipNo(joinForm.getZipNo());
-
-        log.info("ADDRESS : {}", address.toString());
-
-        Member savedMember = memberRepository.save(member);
         addressRepository.save(address);
-        savedMember.setAddress(address);
+
         isDuplicateMember(member); // 회원 이메일 중복 검사
+        member.setAddress(address);
+        memberRepository.save(member);
 
         return member.getId();
     }

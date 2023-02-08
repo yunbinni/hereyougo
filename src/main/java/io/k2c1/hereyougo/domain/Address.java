@@ -18,7 +18,6 @@ public class Address
     private String jibun; // 지번주소
     private String zipNo; // 우편번호
     
-    @OneToOne
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private Member member;
 }

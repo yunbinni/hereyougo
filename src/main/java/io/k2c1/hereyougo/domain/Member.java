@@ -23,7 +23,8 @@ public class Member {
     private String nickname;
     private String businessType; // 업종
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @OneToMany(mappedBy = "wanted")
@@ -49,5 +50,10 @@ public class Member {
         this.password= password;
         this.nickname = nickname;
         this.businessType = businessType;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        address.setMember(this);
     }
 }

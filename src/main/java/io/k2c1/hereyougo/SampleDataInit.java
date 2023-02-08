@@ -33,10 +33,10 @@ public class SampleDataInit {
     @PostConstruct
     public void init()
     {
-        memberRepository.save(createNewMember());
+//        memberRepository.save(createNewMember());
         log.info("SAMPLE MEMBER SAVED IN REPO");
 
-        postRepository.save(createNewPost());
+//        postRepository.save(createNewPost());
         log.info("SAMPLE POST SAVED IN REPO");
     }
 

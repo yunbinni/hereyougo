@@ -83,11 +83,29 @@ button.editBtn {
     padding: 0.5vw 1vw;
 }
 
+.addFavoriteBtn-Container{
+    margin-top: 5vh;
+    text-align: end;
+}
+
+/* 관심 카테고리 등록 버튼 */
+a.addFavoriteBtn {
+    text-decoration: none;
+    color: white;
+    background: #acacac;
+    padding: 10px;
+    font-family: 'gsans-light';
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
 /* 키워드 목록 */
 .keywordList {
     display: grid;
     grid-template-columns: repeat(5,1fr);
+    row-gap : 20px;
 }
+
 
 .keyword-item {
     border: 1px solid #acacac;
@@ -116,6 +134,11 @@ button.btn.btn-primary {
     border: none;
     padding: 10px;
     margin-top: 20px;
+}
+/* 게시글 제목 */
+.posts-container table td a {
+    color: black;
+    text-underline-position: under;
 }
 
 /* 약속 목록, 내가 쓴 글 목록 */

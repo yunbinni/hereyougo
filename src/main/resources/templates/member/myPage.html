@@ -21,29 +21,22 @@
             <div class="nickname"><span th:text="*{nickname}"></span><span class="greeting">님, 안녕하세요</span></div>
             <div><button class="editBtn" th:onclick="|location.href='@{/members/edit}'|"><i class="fa fa-pencil" aria-hidden="true"></i> 프로필 수정</button></div>
         </div>
+
         <div class="keywords-container">
             <div class="sub-title">관심 키워드 목록</div>
             <div class="keywordList">
-                    <div class="keyword-item">
-                        <span>냉장고</span>
-                        <button class="favorite styled" type="button">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                <div class="keyword-item">
-                    <span>세탁기</span>
+                <div class="keyword-item" th:each="category : ${mypage.favoriteCategories}">
+                    <span th:text="${category.categoryName}"></span>
                     <button class="favorite styled" type="button">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div class="keyword-item">
-                    <span>튀김기</span>
-                    <button class="favorite styled delete-btn" type="button">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                </div>
+            </div>
+            <div class="addFavoriteBtn-Container">
+                <a class="addFavoriteBtn" th:href="@{/favorites/new}">관심 카테고리 등록</a>
             </div>
         </div>
+
         <div class="appointments-container">
             <div class="sub-title">약속 목록</div>
             <table class="table">
@@ -92,7 +85,7 @@
                 <tbody>
                     <tr th:each="post : ${mypage.posts}">
                         <td th:text="${post.id}" scope="row"></td>
-                        <td th:text="${post.title}"></td>
+                        <td><a th:href="@{/posts/{postId}(postId = ${post.id})}"><span th:text="${post.title}"></span></a></td>
                         <td th:text="${post.content}"></td>
                         <!-- ${#dates.format(item.createDt, 'yyyy-MM-dd HH:mm:ss')}-->
                         <td th:text="${#temporals.format(post.timestamp,'yyyy-MM-dd')}"></td>

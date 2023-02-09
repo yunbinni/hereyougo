@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,16 +27,19 @@ public class Post
 
     private String title;
     private String content;
-    private Integer width;
-    private Integer depth;
-    private Integer height;
+    private String size;
 
     @ColumnDefault("0")
     private int views; // 조회수
 
     private Integer quantity; // 남은 수량
 
-    private String address;
+    @Embedded
+    private Address address;
 
     private LocalDateTime timestamp; // 작성일/시각
+
+    public void plusViews() {
+        this.views++;
+    }
 }

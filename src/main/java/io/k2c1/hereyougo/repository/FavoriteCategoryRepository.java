@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface FavoriteCategoryRepository extends JpaRepository<FavoriteCategory, Long> {
     List<FavoriteCategory> findByMember_id(Long memberId);
 
-    Optional<FavoriteCategory> findByIdAndMember_id(Long favoriteCategoryId, Long memberId);
+    Optional<FavoriteCategory> findByCategory_idAndMember_id(Long favoriteCategoryId, Long memberId);
 
 //    @Query(value = "SELECT fc FROM FavoriteCategory fc WHERE fc.favoriteCategoryId = :favoriteCategoryId and fc.member_id = : memberId")
 //    Optional<FavoriteCategory> existFavoriteCategory(@Param("favoriteCategoryId") Long favoriteCategoryId , @Param("member_id") Long member_id);

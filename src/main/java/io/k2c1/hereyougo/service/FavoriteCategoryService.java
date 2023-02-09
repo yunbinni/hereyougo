@@ -24,9 +24,9 @@ public class FavoriteCategoryService {
     public void addFavoriteCategory(Member member, Category category){
         FavoriteCategory favoriteCategory = new FavoriteCategory();
 
-        Optional<FavoriteCategory> isExist = favoriteCategoryRepository.findByIdAndMember_id(category.getId(), member.getId());
+        Optional<FavoriteCategory> isExist = favoriteCategoryRepository.findByCategory_idAndMember_id(category.getId(), member.getId());
 
-        if(isExist.isEmpty()){
+        if(!isExist.isPresent()){
             favoriteCategory.setCategory(category);
             favoriteCategory.setMember(member);
             favoriteCategory.setCategoryName(category.getCategoryName());

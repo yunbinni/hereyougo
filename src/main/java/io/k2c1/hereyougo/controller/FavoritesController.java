@@ -12,10 +12,7 @@ import io.k2c1.hereyougo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/favorites")
 @Controller
@@ -62,6 +59,17 @@ public class FavoritesController {
 
         favoriteCategoryService.addFavoriteCategory(member, category);
 //        model.addAttribute("categoryies", categoryRepository.findByParentCategoryIsNull());
+        return "redirect:/members/";
+    }
+
+    /**
+     * 회원 관심 카테고리 삭제
+     * @DeleteMapping 사용 시, 405에러가 발생하여
+     * PostMapping으로 대체
+     */
+    @PostMapping("/delete/{categoryId}")
+    public String removeFavoriteCategory(@PathVariable(name = "categoryId") Long categoryId){
+        favoriteCategoryService.removeFavoriteCategory(categoryId);
         return "redirect:/members/";
     }
 }

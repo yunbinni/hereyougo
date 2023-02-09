@@ -128,13 +128,6 @@ a.addFavoriteBtn {
     margin-left : 10px;
 }
 
-button.btn.btn-primary {
-    width: 100%;
-    background: black;
-    border: none;
-    padding: 10px;
-    margin-top: 20px;
-}
 /* 게시글 제목 */
 .posts-container table td a {
     color: black;

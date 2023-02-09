@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>여기있소!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
@@ -27,7 +29,7 @@
             <div class="keywordList">
                 <div class="keyword-item" th:each="category : ${mypage.favoriteCategories}">
                     <span th:text="${category.categoryName}"></span>
-                    <button class="favorite styled" type="button">
+                    <button class="favorite styled" type="button" th:categoryId=${category.id}  th:onclick="removeFavoriteCategory(this.getAttribute('categoryId'))">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -95,5 +97,27 @@
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    function removeFavoriteCategory(id){
+        var result = confirm("삭제하시겠습니까?");
+
+        if(result){
+            var categoryId = id
+            const data = {
+                categoryId : categoryId
+            }
+
+            $.ajax({
+                url: "/favorites/delete/"+ id,
+                data : data,
+                type: "POST",
+            }).done(function (data){
+                alert('삭제되었습니다')
+                location.reload();
+            });
+        }
+    }
+</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package io.k2c1.hereyougo.controller;
 import io.k2c1.hereyougo.domain.Category;
 import io.k2c1.hereyougo.dto.CategoryForm;
 import io.k2c1.hereyougo.repository.CategoryRepository;
+import io.k2c1.hereyougo.service.CategoryService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,11 @@ import java.util.List;
 @Controller
 public class CategoryController {
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @GetMapping("/new")
     public String createForm(Model model){
-        model.addAttribute("categories", categoryRepository.findByParentIsNull());
+        model.addAttribute("categories", categoryService.getParentCategories());
         return "category/newCategory";
     }
 
@@ -30,15 +31,9 @@ public class CategoryController {
         return "category/newCategory";
     }
 
-    @GetMapping("/second")
+    @GetMapping("/child")
     public @ResponseBody List<Category> getSecondCategories(@RequestParam(value = "parentId") Long parentId, Model model){
-
-
-        System.out.println("카테고리 들어오는지"+categoryRepository.getCategoriesByParentId(parentId).toString());
-
-
-//        model.addAttribute("categories", categoryRepository.findByParentIsNull());
-        return categoryRepository.getCategoriesByParentId(parentId);
+        return categoryService.getChildCategories(parentId);
     }
 
 }

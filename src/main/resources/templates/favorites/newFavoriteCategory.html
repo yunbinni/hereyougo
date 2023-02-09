@@ -22,8 +22,8 @@
             <form role="form" th:action="@{/favorites/new}" method="post">
                 <div class="categoryForm-container">
 
-                    <select class="form-control" id="parentCategory" required="required" name="parentId" th:onchange="onChangeTest(this)">'
-                        <option value="0">대분류</option>
+                    <select class="form-control" id="parentCategory" required name="parentId" th:onchange="onChangeTest(this)">'
+                        <option value="">대분류</option>
                         <div th:each="category : ${categories}">
                             <option class="optionGroup"  th:text="${category.categoryName}" th:value="${category.id}"></option>
         <!--                    <option  class="optionChild" th:each="subCategory : ${category.subCategories}"  th:text="${subCategory.name}" th:value="${subCategory.id}"></option>-->

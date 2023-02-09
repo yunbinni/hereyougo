@@ -30,4 +30,8 @@ public class FavoriteCategoryService {
         favoriteCategoryRepository.save(favoriteCategory);
     }
 
+    public List<FavoriteCategory> getFavoriteCategories(Long memberId){
+        return favoriteCategoryRepository.findByMember_id(memberId);
+    }
+
 }

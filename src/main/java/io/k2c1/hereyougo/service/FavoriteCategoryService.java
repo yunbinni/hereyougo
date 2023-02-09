@@ -30,8 +30,18 @@ public class FavoriteCategoryService {
         favoriteCategoryRepository.save(favoriteCategory);
     }
 
+    /*
+     * 회원 관심 카테고리 목록 조회
+     * */
     public List<FavoriteCategory> getFavoriteCategories(Long memberId){
         return favoriteCategoryRepository.findByMember_id(memberId);
+    }
+
+    /*
+     * 회원 관심 카테고리 삭제
+     * */
+    public void removeFavoriteCategory(Long categoryId){
+        favoriteCategoryRepository.deleteById(categoryId);
     }
 
 }

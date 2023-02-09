@@ -7,9 +7,10 @@ import javax.persistence.*;
 
 @Getter @Setter
 @Entity
+@Table(name = "FavoriteCategory")
 public class FavoriteCategory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "favoriteCategoryId")
     private Long id;
 
     private String categoryName;

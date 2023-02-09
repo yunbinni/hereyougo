@@ -56,8 +56,11 @@ public class FavoritesController {
         else{
             category = categoryService.getCategory(parentCategoryId);
         }
-
-        favoriteCategoryService.addFavoriteCategory(member, category);
+//        try {
+            favoriteCategoryService.addFavoriteCategory(member, category);
+//        }catch (Exception e){
+//            model.addAttribute("error", "이미 신청한 카테고리입니다");
+//        }
 //        model.addAttribute("categoryies", categoryRepository.findByParentCategoryIsNull());
         return "redirect:/members/";
     }

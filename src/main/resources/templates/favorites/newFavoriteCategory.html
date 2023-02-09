@@ -1,0 +1,71 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>여기있소!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/font.css}" rel="stylesheet" />
+    <link th:href="@{/css/favorites/favoriteCategoryPage.css}" rel="stylesheet" />
+
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="category-container">
+    <div id ="root" >
+        <h2 class="page-title">관심 카테고리 등록 페이지</h2>
+        <div>
+            <form role="form" th:action="@{/favorites/new}" method="post">
+                <div class="categoryForm-container">
+
+                    <select class="form-control" id="parentCategory" required="required" name="parentId" th:onchange="onChangeTest(this)">'
+                        <option value="0">대분류</option>
+                        <div th:each="category : ${categories}">
+                            <option class="optionGroup"  th:text="${category.categoryName}" th:value="${category.id}"></option>
+        <!--                    <option  class="optionChild" th:each="subCategory : ${category.subCategories}"  th:text="${subCategory.name}" th:value="${subCategory.id}"></option>-->
+                        </div>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control" name="childrenId" id="secondCategory" >
+                        <option disabled="disabled" selected="selected" > 중분류</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">등록</button>
+            </form>
+
+    </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    function onChangeTest(category){
+        var parentId = category.value;
+        const data = {
+           parentId:parentId
+        };
+
+        $.ajax({
+             url: "/categories/child",
+             data: data,
+             type: "GET",
+        }).done(function (data){
+             console.log(JSON.stringify(data))
+<!--             alert(JSON.stringify(data))-->
+             var html = '<option value="">중분류</option>';
+             var len = data.length;
+             for ( var i = 0; i < len; i++) {
+                 html += '<option value="' + data[i].id + '">'+ data[i].categoryName + '</option>';
+                    }
+                 html += '</option>';
+                 $('#secondCategory').html(html);
+             });
+        }
+</script>
+</body>
+</html>

@@ -33,7 +33,7 @@ public class FavoritesController {
      */
     @GetMapping("/new")
     public String addFavoriteCategoryForm(Model model){
-        model.addAttribute("categories", categoryService.getPatentCategories());
+        model.addAttribute("categories", categoryService.getParentCategories());
         model.addAttribute("favoriteCategoryForm", new FavoriteCategoryForm());
         return "favorites/newFavoriteCategory";
     }

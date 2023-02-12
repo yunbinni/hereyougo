@@ -27,24 +27,29 @@ public class SampleDataInit {
     @Autowired
     public final PostRepository postRepository;
 
+    @Autowired
+
     private static long MEMBER_LID = 0L;
     private static long POST_LID = 0L;
 
     @PostConstruct
     public void init()
     {
-//        memberRepository.save(createNewMember());
+        memberRepository.save(createNewMember());
         log.info("SAMPLE MEMBER SAVED IN REPO");
 
-//        postRepository.save(createNewPost());
+        postRepository.save(createNewPost());
         log.info("SAMPLE POST SAVED IN REPO");
     }
 
     public static Member createNewMember()
     {
-        return new Member(MEMBER_LID++, "test@naver.com", "1234", "testNickname", "요식업");
+        return new Member(MEMBER_LID++, "test@naver.com", "1234", "testNickname", "요식업", createNewAddress());
     }
 
+    public static Address createNewAddress() {
+        return new Address("경기도", "의정부시", "경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)", "경기도 의정부시 금오동 67-1 거성아파트", "11764");
+    }
 
     public static Post createNewPost()
     {
@@ -53,12 +58,10 @@ public class SampleDataInit {
                 createNewMember(),
                 "테스트 게시글 제목",
                 "테스트 게시글 내용",
-                10,
-                20,
-                30,
+                "10 * 20 * 30",
                 0,
                 3,
-                "서울 마포구 양화로23길 20 1층",
+                createNewAddress(),
                 LocalDateTime.now()
         );
     }

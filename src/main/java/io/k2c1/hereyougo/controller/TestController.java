@@ -74,4 +74,9 @@ public class TestController {
         model.addAttribute("jusoApiForm", jusoApiForm);
         return "jusoPopup";
     }
+
+    @GetMapping("/mapExample")
+    public String mapExample() {
+        return "mapExample";
+    }
 }

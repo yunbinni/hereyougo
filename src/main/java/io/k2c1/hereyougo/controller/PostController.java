@@ -1,11 +1,13 @@
 package io.k2c1.hereyougo.controller;
 
 import io.k2c1.hereyougo.constant.SessionConst;
+import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
+import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class PostController
     @Autowired
     private final PostRepository postRepository;
 
+    @Autowired
+    private final PostService postService;
+
     @GetMapping("/{postId}")
     public String getPost(
             @PathVariable("postId") Long postId,
@@ -38,6 +43,7 @@ public class PostController
         Post getPost = postRepository.findById(postId).get();
         log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
         model.addAttribute("post", getPost);
+        getPost.plusViews();
         return "posts/post";
     }
 
@@ -47,13 +53,13 @@ public class PostController
             Model model)
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
-        model.addAttribute("post", new Post());
+        model.addAttribute("form", new PostSaveForm());
         return "posts/addPost";
     }
 
     @PostMapping("/add")
     public String addPost(
-            @Validated @ModelAttribute("post") PostSaveForm form,
+            @Validated @ModelAttribute("form") PostSaveForm form,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
@@ -71,12 +77,18 @@ public class PostController
         post.setWriter(loginMember);
         post.setTitle(form.getTitle());
         post.setContent(form.getContent());
-        post.setWidth(form.getWidth());
-        post.setDepth(form.getDepth());
-        post.setHeight(form.getHeight());
+        post.setSize(form.getSize());
         post.setViews(0);
         post.setQuantity(form.getQuantity());
-        post.setAddress(form.getAddress());
+//        post.setAddress(form.getAddress());
+
+        Address address = new Address();
+        address.setRegion(form.getSiNm());
+        address.setBasic(form.getSggNm());
+        address.setDoro(form.getRoadFullAddr());
+        address.setJibun(form.getJibunAddr());
+        address.setZipNo(form.getZipNo());
+        post.setAddress(address);
 
         Post savedPost = postRepository.save(post);
         log.info("id : {}", savedPost.getId());

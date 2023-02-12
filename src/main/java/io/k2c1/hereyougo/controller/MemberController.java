@@ -6,6 +6,7 @@ import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
 import io.k2c1.hereyougo.repository.PostRepository;
+import io.k2c1.hereyougo.service.FavoriteCategoryService;
 import io.k2c1.hereyougo.service.MemberService;
 import io.k2c1.hereyougo.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -74,13 +75,12 @@ public class MemberController {
     /***
      * 회원정보 조회
      */
-    @GetMapping("/{memberId}")
+    @GetMapping("/")
     public String mypage(
-            @PathVariable("memberId") Long memberId,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model)
     {
-        MyPageForm memberInfo = memberService.mypage(memberId);
+        MyPageForm memberInfo = memberService.mypage(loginMember.getId());
         model.addAttribute("member", loginMember);
         model.addAttribute("mypage", memberInfo);
         return "member/myPage";

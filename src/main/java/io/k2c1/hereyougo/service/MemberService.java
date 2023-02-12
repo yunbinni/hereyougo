@@ -1,14 +1,5 @@
 package io.k2c1.hereyougo.service;
 
-import io.k2c1.hereyougo.domain.Address;
-import io.k2c1.hereyougo.domain.Member;
-import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.dto.JoinForm;
-import io.k2c1.hereyougo.dto.MemberUpdateForm;
-import io.k2c1.hereyougo.dto.MyPageForm;
-import io.k2c1.hereyougo.repository.AppointmentRepository;
-import io.k2c1.hereyougo.repository.MemberRepository;
-import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +14,7 @@ public class MemberService {
     private MemberRepository memberRepository;
     private AppointmentRepository appointmentRepository;
     private PostRepository postRepository;
+    private FavoriteCategoryRepository favoriteCategoryRepository;
 
     public MemberService(MemberRepository memberRepository, PostRepository postRepository){
         this.memberRepository = memberRepository;
@@ -91,10 +83,9 @@ public class MemberService {
         List<Post> posts = postRepository.findByWriter_Id(memberId);
         myPageForm.setPosts(posts);
 
-        log.info("======post List======="+ posts);
+        List<FavoriteCategory> favoriteCategories = favoriteCategoryRepository.findByMember_id(memberId);
+        myPageForm.setFavoriteCategories(favoriteCategories);
 
-
-//        키워드 목록 Set하기
 //        약속 목록 Set하기
 //        myPageForm.setAppointments();
 

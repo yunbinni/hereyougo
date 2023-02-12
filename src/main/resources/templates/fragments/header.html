@@ -11,9 +11,11 @@
         </th:block>
         <th:block th:if="${member != null}">
             <ul class="navbar-nav">
-                <li class="nav-item btn btn-danger me-2">
-                    <a th:href="@{/members/{memberId}(memberId = ${member.id})}"><p th:text="|${member.nickname}|"></p></a>
-                </li>
+                <a th:href="@{/members/}">
+                    <li class="nav-item btn btn-danger me-2">
+                       <p style="margin-bottom: 0px;" th:text="|${member.nickname}|"></p>
+                    </li>
+                </a>
                 <li class="nav-item">
                     <form th:action="@{/logout}" method="post">
                         <button class="btn btn-primary" type="submit">로그아웃</button>

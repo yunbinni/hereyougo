@@ -23,8 +23,7 @@ public class Member {
     private String nickname;
     private String businessType; // 업종
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
+    @Embedded
     private Address address;
 
     @OneToMany(mappedBy = "wanted")
@@ -52,8 +51,12 @@ public class Member {
         this.businessType = businessType;
     }
 
-    public void setAddress(Address address) {
+    public Member(Long id, String email, String password, String nickname, String businessType, Address address) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.businessType = businessType;
         this.address = address;
-        address.setMember(this);
     }
 }

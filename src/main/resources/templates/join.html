@@ -6,11 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script language="javascript">
         function goPopup(){
-            // 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
-            var pop = window.open("jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-
-            // 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-            //var pop = window.open("jusoPopup","pop","scrollbars=yes, resizable=yes");
+            var pop = window.open("http://localhost:8080/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+            //var pop = window.open("jusoPopup","pop","scrollbars=yes, resizable=yes"); // 모바일 웹
         }
 
         function jusoCallBack(roadAddrPart1, roadAddrPart2, roadFullAddr, jibunAddr, addrDetail, siNm, sggNm, zipNo)

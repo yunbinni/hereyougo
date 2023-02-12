@@ -1,6 +1,7 @@
 package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Member;
+import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -22,7 +22,7 @@
             <form role="form" th:action="@{/categories/new}" method="post">
                 <div class="categoryForm-container">
 
-                    <select class="form-control" id="parentCategory" name="parentId" th:onchange="onChangeTest(this)">'
+                    <select class="form-control" id="parentCategory" name="parentId" th:onchange="onChangeTest(this)">
                         <option value="0">대분류</option>
                         <div th:each="category : ${categories}">
                             <option class="optionGroup"  th:text="${category.categoryName}" th:value="${category.id}"></option>

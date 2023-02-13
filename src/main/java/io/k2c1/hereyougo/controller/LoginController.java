@@ -43,12 +43,10 @@ public class LoginController {
     public String login(
             @Valid @ModelAttribute LoginForm form,
             BindingResult bindingResult,
-            @RequestParam(defaultValue = "/") String redirectURL,
+            @RequestParam("redirectURL") String redirectURL,
             HttpServletRequest request)
     {
         Member loginMember = loginService.login(form);
-
-        log.info("redirectURI : {}", redirectURL);
 
         log.info("Login : {}", loginMember);
 
@@ -64,7 +62,7 @@ public class LoginController {
         // 세션
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")

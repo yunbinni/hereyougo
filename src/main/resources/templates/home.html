@@ -30,7 +30,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script>
+    <script th:inline="javascript">
         $('document').ready(function() {
   var area0 = ["시/도 선택","서울특별시", "부산광역시", "인천광역시", "대구광역시", "대전광역시", "광주광역시", "울산광역시", "세종특별자치시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주특별자치도"];
   var area1 = ["종로구","중구","용산구","성동구","광진구","동대문구","중랑구","성북구","강북구","도봉구","노원구","은평구","서대문구","마포구","양천구","강서구","구로구","금천구","영등포구","동작구","관악구","서초구","강남구","송파구","강동구"];
@@ -77,6 +77,27 @@
  });
 
 });
+
+function getCategories(category) {
+    var parentId = category.value;
+    const data = {
+        parentId:parentId
+    };
+
+    $.ajax({
+        url: "/categories/child",
+        data: data,
+        type: "GET",
+    }).done(function(data) {
+        console.log(JSON.stringify(data));
+        var options = '<option value="">중분류</option>';
+        var len = data.length;
+        for(var i = 0; i < len; i++) {
+            options += '<option value="' + data[i].id + '">' + data[i].categoryName + '</option>';
+        }
+        $(#childrenCategories).html(options);
+    });
+}
     </script>
 </body>
 </html>

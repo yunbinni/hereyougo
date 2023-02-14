@@ -30,14 +30,14 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model)
     {
-        List<Category> parentCategories = categoryService.getParentCategories();
-        model.addAttribute("parentCategories", parentCategories);
+        model.addAttribute("parentCategories", categoryService.getParentCategories());
 
         HttpSession session = request.getSession(false);
         if (session == null) return "home";
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if (loginMember == null) return "home";
 
+        model.addAttribute("parentCategories", categoryService.getParentCategories());
         model.addAttribute("member", loginMember);
 
         return "home";

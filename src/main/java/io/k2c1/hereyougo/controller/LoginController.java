@@ -43,7 +43,6 @@ public class LoginController {
     public String login(
             @Valid @ModelAttribute LoginForm form,
             BindingResult bindingResult,
-            @RequestParam("redirectURL") String redirectURL,
             HttpServletRequest request)
     {
         Member loginMember = loginService.login(form);
@@ -55,6 +54,9 @@ public class LoginController {
             return "login";
         }
 
+        String redirectURL = request.getParameter("redirectURL");
+        if(redirectURL == null) redirectURL = "";
+
 //        // 쿠키
 //        Cookie loginCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
 //        response.addCookie(loginCookie);
@@ -62,6 +64,7 @@ public class LoginController {
         // 세션
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        System.out.println("redirectURL = " + redirectURL);
         return "redirect:" + redirectURL;
     }
 

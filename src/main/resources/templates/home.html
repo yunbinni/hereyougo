@@ -90,12 +90,13 @@ function getCategories(category) {
         type: "GET",
     }).done(function(data) {
         console.log(JSON.stringify(data));
+                     alert(JSON.stringify(data));
         var options = '<option value="">중분류</option>';
         var len = data.length;
         for(var i = 0; i < len; i++) {
             options += '<option value="' + data[i].id + '">' + data[i].categoryName + '</option>';
         }
-        $(#childrenCategories).html(options);
+        $('#secondCategory').html(options);
     });
 }
     </script>

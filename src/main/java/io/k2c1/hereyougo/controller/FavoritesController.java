@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequestMapping("/favorites")
 @Controller
 public class FavoritesController {
@@ -29,7 +31,11 @@ public class FavoritesController {
      * 회원 관심 카테고리 등록 페이지로 이동
      */
     @GetMapping("/new")
-    public String addFavoriteCategoryForm(Model model){
+    public String addFavoriteCategoryForm(
+            Model model,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
         model.addAttribute("categories", categoryService.getParentCategories());
         model.addAttribute("favoriteCategoryForm", new FavoriteCategoryForm());
         return "favorites/newFavoriteCategory";

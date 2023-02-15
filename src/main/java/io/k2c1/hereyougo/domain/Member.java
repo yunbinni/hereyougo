@@ -59,4 +59,12 @@ public class Member {
         this.businessType = businessType;
         this.address = address;
     }
+
+    public Member(String email, String password, String nickname, String businessType, Address address) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.businessType = businessType;
+        this.address = address;
+    }
 }

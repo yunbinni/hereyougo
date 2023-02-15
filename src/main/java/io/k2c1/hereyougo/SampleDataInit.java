@@ -31,39 +31,80 @@ public class SampleDataInit {
     @Autowired
     public final PostRepository postRepository;
 
+    Address address = new Address("경기도", "의정부시", "경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)", "경기도 의정부시 금오동 67-1 거성아파트", "11764");
+    Member member = new Member("test@naver.com", "1234", "testNickname", "요식업", address);
+
     private static long MEMBER_LID = 0L;
     private static long POST_LID = 0L;
 
     @PostConstruct
-    public void init()
-    {
-        memberRepository.save(createNewMember());
+    public void init() {
+        memberRepository.save(member);
         log.info("SAMPLE MEMBER SAVED IN REPO");
 
-        postRepository.save(createNewPost());
+        postRepository.save(createNewPost1());
+        postRepository.save(createNewPost2());
+        postRepository.save(createNewPost3());
+        postRepository.save(createNewPost4());
         log.info("SAMPLE POST SAVED IN REPO");
     }
 
-    public static Member createNewMember()
-    {
-        return new Member(MEMBER_LID++, "test@naver.com", "1234", "testNickname", "요식업", createNewAddress());
-    }
-
-    public static Address createNewAddress() {
-        return new Address("경기도", "의정부시", "경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)", "경기도 의정부시 금오동 67-1 거성아파트", "11764");
-    }
-
-    public static Post createNewPost()
+    public Post createNewPost1()
     {
         return new Post(
-                POST_LID++,
-                createNewMember(),
-                "테스트 게시글 제목",
-                "테스트 게시글 내용",
+                member,
+                "테스트 제목 1",
+                "테스트 내용 1",
                 "10 * 20 * 30",
                 0,
                 3,
-                createNewAddress(),
+                11,
+                address,
+                LocalDateTime.now()
+        );
+    }
+
+    public Post createNewPost2()
+    {
+        return new Post(
+                member,
+                "테스트 제목 2",
+                "테스트 내용 2",
+                "10 * 20 * 30",
+                0,
+                3,
+                12,
+                address,
+                LocalDateTime.now()
+        );
+    }
+
+    public Post createNewPost3()
+    {
+        return new Post(
+                member,
+                "테스트 제목 3",
+                "테스트 내용 3",
+                "10 * 20 * 30",
+                0,
+                3,
+                13,
+                address,
+                LocalDateTime.now()
+        );
+    }
+
+    public Post createNewPost4()
+    {
+        return new Post(
+                member,
+                "테스트 제목 4",
+                "테스트 내용 4",
+                "10 * 20 * 30",
+                0,
+                3,
+                14,
+                address,
                 LocalDateTime.now()
         );
     }

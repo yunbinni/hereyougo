@@ -5,6 +5,7 @@ import io.k2c1.hereyougo.domain.Category;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.service.CategoryService;
+import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,19 @@ public class HomeController {
     private final MemberRepository memberRepository;
     @Autowired
     private final CategoryService categoryService;
+    @Autowired
+    private final PostService postService;
 
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model)
     {
         model.addAttribute("parentCategories", categoryService.getParentCategories());
+        model.addAttribute("recentPopularPosts", postService.getRecentPopularPosts());
 
         HttpSession session = request.getSession(false);
         if (session == null) return "home";
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         if (loginMember == null) return "home";
-
-        model.addAttribute("parentCategories", categoryService.getParentCategories());
         model.addAttribute("member", loginMember);
 
         return "home";

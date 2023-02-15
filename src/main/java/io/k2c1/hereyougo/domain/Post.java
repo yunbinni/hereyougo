@@ -34,6 +34,8 @@ public class Post
 
     private Integer quantity; // 남은 수량
 
+    private Integer recommend; // 추천 수
+
     @Embedded
     private Address address;
 
@@ -41,5 +43,17 @@ public class Post
 
     public void plusViews() {
         this.views++;
+    }
+
+    public Post(Member writer, String title, String content, String size, int views, Integer quantity, Integer recommend, Address address, LocalDateTime timestamp) {
+        this.writer = writer;
+        this.title = title;
+        this.content = content;
+        this.size = size;
+        this.views = views;
+        this.quantity = quantity;
+        this.recommend = recommend;
+        this.address = address;
+        this.timestamp = timestamp;
     }
 }

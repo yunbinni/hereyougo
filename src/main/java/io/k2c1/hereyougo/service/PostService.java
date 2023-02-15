@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Transactional
 @Service
 public class PostService {
@@ -15,6 +19,15 @@ public class PostService {
     private MemberRepository memberRepository;
     @Autowired
     private PostRepository postRepository;
+
+    public List<Post> getRecentPopularPosts()
+    {
+        return postRepository.findAll().stream()
+                .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
+                .filter(post -> post.getRecommend() >= 10)
+                .limit(3)
+                .collect(Collectors.toList());
+    }
 
     public void deleteByWriter(Long memberId){
         Member member = memberRepository.findById(memberId).get();

@@ -1,3 +1,11 @@
+.post-item {
+    border-radius: 5px;
+}
+
+.post-item li {
+    border: 1px solid black;
+}
+
 .post-item p {
     display: -webkit-box;
     -webkit-line-clamp: 2;

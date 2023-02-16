@@ -1,21 +1,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<ul th:fragment="newPost" class="list-group">
-    <th:block th:each="post : ${recentPopularPosts}">
-        <li class="post-item list-group-item w-75 mb-1" style="border:1px solid black; border-radius: 5px">
+<ul th:fragment="recentPost" class="list-group">
+    <div class="post-item" th:each="post : ${recentPopularPosts}">
+        <li class="list-group-item w-75 mb-1">
             <div class="row">
                 <div class="col-1">
                     <img src="https://sitem.ssgcdn.com/41/48/85/item/1000048854841_i1_1200.jpg"
-                         alt="공부방책상" width="70px" height="85px" style="border: 1px solid black">
+                         alt="공부방책상" width="70px" height="85px">
                 </div>
                 <div class="col">
                     <h5 th:text="${post.title}">제목</h5>
                     <p th:text="${post.content}">내용</p>
                 </div>
                 <div class="col-2">
-                    <h6 class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도/시군구</h6>
+                    <h6 class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도 시군구</h6><br>
+                    <p class="text-end" th:text="|👍${post.recommend}|"></p>
                 </div>
             </div>
         </li>
-    </th:block>
+    </div>
 </ul>

@@ -2,7 +2,7 @@
 
 <ul th:fragment="recentPost" class="list-group">
     <div class="post-item" th:each="post : ${recentPopularPosts}">
-        <li class="list-group-item w-75 mb-1" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|" style="cursor: pointer;">
+        <li class="list-group-item" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
             <div class="row">
                 <div class="col-1">
                     <img src="https://sitem.ssgcdn.com/41/48/85/item/1000048854841_i1_1200.jpg"
@@ -15,6 +15,7 @@
                 <div class="col-2">
                     <h6 class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도 시군구</h6><br>
                     <p class="text-end" th:text="|👍${post.recommend}|"></p>
+                    <p class="text-end" th:text="|남은수량: ${post.quantity}|"></p>
                 </div>
             </div>
         </li>

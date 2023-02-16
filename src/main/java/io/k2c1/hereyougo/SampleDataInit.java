@@ -72,7 +72,7 @@ public class SampleDataInit {
                 "테스트 내용 2",
                 "10 * 20 * 30",
                 0,
-                3,
+                5,
                 12,
                 address,
                 LocalDateTime.now()
@@ -87,7 +87,7 @@ public class SampleDataInit {
                 "테스트 내용 3",
                 "10 * 20 * 30",
                 0,
-                3,
+                10,
                 13,
                 address,
                 LocalDateTime.now()
@@ -102,7 +102,7 @@ public class SampleDataInit {
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It h",
                 "10 * 20 * 30",
                 0,
-                3,
+                20,
                 14,
                 address,
                 LocalDateTime.now()

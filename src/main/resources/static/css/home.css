@@ -1,3 +1,9 @@
+.nav-item a {
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+
 .post-item {
     border-radius: 5px;
 }

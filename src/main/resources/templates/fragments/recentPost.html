@@ -2,7 +2,7 @@
 
 <ul th:fragment="recentPost" class="list-group">
     <div class="post-item" th:each="post : ${recentPopularPosts}">
-        <li class="list-group-item w-75 mb-1">
+        <li class="list-group-item w-75 mb-1" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|" style="cursor: pointer;">
             <div class="row">
                 <div class="col-1">
                     <img src="https://sitem.ssgcdn.com/41/48/85/item/1000048854841_i1_1200.jpg"

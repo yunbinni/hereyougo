@@ -73,6 +73,8 @@
                      if (status === kakao.maps.services.Status.OK) {
 
                         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                        var Y = result[0].y;
+                        var X = result[0].x;
 
                         // 결과값으로 받은 위치를 마커로 표시합니다
                         var marker = new kakao.maps.Marker({
@@ -82,7 +84,7 @@
                         });
 
                         // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-                        var iwContent = '<div style="padding:5px;"><a href="https://map.kakao.com/link/map/길찾기,37.402056,127.108212" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                        var iwContent = `<div style="padding:5px;"><a href="https://map.kakao.com/link/map/길찾기,${Y},${X}" target="+blank">길찾기</a></div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
                             iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
                         // 인포윈도우를 생성합니다

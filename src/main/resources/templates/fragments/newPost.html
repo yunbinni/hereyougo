@@ -12,6 +12,9 @@
                     <h5 th:text="${post.title}">제목</h5>
                     <p th:text="${post.content}">내용</p>
                 </div>
+                <div class="col-2">
+                    <h6 class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도/시군구</h6>
+                </div>
             </div>
         </li>
     </th:block>

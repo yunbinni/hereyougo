@@ -1,3 +1,3 @@
-function getSelectedPost(selected) {
+function getSelectedPost() {
     alert("안녕?");
 }

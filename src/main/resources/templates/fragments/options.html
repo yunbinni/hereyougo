@@ -7,7 +7,7 @@
     <select id="sgg" name="sgg" class="form-select-inline">
     </select>
 
-    <select class="form-select-inline" id="parentCategories" name="parentId" required th:onchange="getCategories(this)">
+    <select class="form-select-inline" id="firstCategory" name="parentId" required th:onchange="getCategories(this)">
         <option value="0">업종 선택</option>
         <div th:each="parentCategory : ${parentCategories}">
             <option th:text="${parentCategory.categoryName}" th:value="${parentCategory.id}"></option>
@@ -15,7 +15,7 @@
     </select>
 
     <select class="form-select-inline" id="secondCategory" name="childrenId">
-        <option disabled="disabled" selected="selected">상세업종 선택</option>
+        <option disabled="disabled" selected="selected" value="0">상세업종 선택</option>
     </select>
 
 </div><br>

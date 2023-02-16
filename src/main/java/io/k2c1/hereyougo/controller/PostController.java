@@ -18,6 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -83,8 +86,8 @@ public class PostController
 //        post.setAddress(form.getAddress());
 
         Address address = new Address();
-        address.setRegion(form.getSiNm());
-        address.setBasic(form.getSggNm());
+        address.setSido(form.getSiNm());
+        address.setSgg(form.getSggNm());
         address.setDoro(form.getRoadFullAddr());
         address.setJibun(form.getJibunAddr());
         address.setZipNo(form.getZipNo());
@@ -121,5 +124,19 @@ public class PostController
     {
         postRepository.deleteById(postId);
         return "redirect:/";
+    }
+
+    @GetMapping("/filtered")
+    @ResponseBody
+    public List<Post> getFilteredPosts(
+            @RequestParam("sido") String sido,
+            @RequestParam("sgg") String sgg,
+            @RequestParam("parentCategory") Long categoryId
+    ) {
+        return postRepository.findAll().stream()
+                .filter(post -> post.getAddress().getSido().equals(sido))
+                .filter(post -> post.getAddress().getSgg().equals(sgg))
+                .filter(post -> (post.getCategory().getId() == categoryId))
+                .collect(Collectors.toList());
     }
 }

@@ -39,6 +39,10 @@ public class Post
     @Embedded
     private Address address;
 
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private LocalDateTime timestamp; // 작성일/시각
 
     public void plusViews() {

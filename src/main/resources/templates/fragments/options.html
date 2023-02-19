@@ -1,21 +1,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="options" th:onchange="getSelectedPost(this)">
+<div th:fragment="newOptions" th:onchange="getFilteredPost()">
     <select id="sido" name="sido" class="form-select-inline">
     </select>
 
     <select id="sgg" name="sgg" class="form-select-inline">
     </select>
 
-    <select class="form-select-inline" id="firstCategory" name="parentId" required th:onchange="getCategories(this)">
-        <option value="0">업종 선택</option>
-        <div th:each="parentCategory : ${parentCategories}">
-            <option th:text="${parentCategory.categoryName}" th:value="${parentCategory.id}"></option>
-        </div>
+    <select id="firstCategory" name="firstCategory" class="form-select-inline" th:onchange="getSecondCategory()">
+        <option value="0">업종 전체</option>
+        <option value="1">외식</option>
+        <option value="2">도소매</option>
+        <option value="3">서비스</option>
     </select>
 
-    <select class="form-select-inline" id="secondCategory" name="childrenId">
-        <option disabled="disabled" selected="selected" value="0">상세업종 선택</option>
+    <select id="secondCategory" name="secondCategory" class="form-select-inline">
+        <option value="0">(업종 전체)</option>
     </select>
-
 </div><br>

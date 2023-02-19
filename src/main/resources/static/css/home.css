@@ -8,7 +8,7 @@
     border-radius: 5px;
     width: 65vw;
     height: 21vh;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .post-item li {
@@ -24,4 +24,11 @@
     font-size: 0.9375em;
     line-height: 1.6;
     color: #666;
+}
+
+.tabmenu input:checked ~ label{
+  background:#ccc;
+}
+.tabmenu input:checked ~ .tabCon{
+  display:block;
 }

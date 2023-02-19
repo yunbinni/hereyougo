@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<ul th:fragment="recentPost" class="list-group">
+<ul th:fragment="recentPost" class="list-group tab-pane fade show active tabCon" id="home" role="tabpanel" aria-labelledby="home-tab">
     <div class="post-item" th:each="post : ${recentPopularPosts}">
         <li class="list-group-item" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
             <div class="row">
@@ -15,9 +15,10 @@
                 <div class="col-2">
                     <h6 class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도 시군구</h6><br>
                     <p class="text-end" th:text="|👍${post.recommend}|"></p>
-                    <p class="text-end" th:text="|남은수량: ${post.quantity}|"></p>
+                    <p class="text-end" th:text="|${post.quantity}개 남음|"></p>
                 </div>
             </div>
         </li>
     </div>
 </ul>
+

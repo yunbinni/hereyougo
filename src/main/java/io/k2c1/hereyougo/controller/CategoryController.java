@@ -32,8 +32,8 @@ public class CategoryController {
     }
 
     @GetMapping("/child")
-    public @ResponseBody List<Category> getSecondCategories(@RequestParam(value = "parentId") Long parentId, Model model){
-        return categoryService.getChildCategories(parentId);
+    public @ResponseBody List<Category> getSecondCategories(@RequestParam(value = "firstCategoryId") Long firstCategoryId, Model model){
+        return categoryService.getChildCategories(firstCategoryId);
     }
 
 }

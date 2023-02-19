@@ -127,16 +127,19 @@ public class PostController
     }
 
     @GetMapping("/filtered")
-    @ResponseBody
-    public List<Post> getFilteredPosts(
+    public String getFilteredPosts(
             @RequestParam("sido") String sido,
             @RequestParam("sgg") String sgg,
-            @RequestParam("parentCategory") Long categoryId
+            @RequestParam("categoryId") Long categoryId,
+            Model model
     ) {
-        return postRepository.findAll().stream()
+        List<Post> filteredPost = postRepository.findAll().stream()
                 .filter(post -> post.getAddress().getSido().equals(sido))
                 .filter(post -> post.getAddress().getSgg().equals(sgg))
                 .filter(post -> (post.getCategory().getId() == categoryId))
                 .collect(Collectors.toList());
+        model.addAttribute("filteredPost", filteredPost);
+
+        return "";
     }
 }

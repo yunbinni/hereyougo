@@ -29,6 +29,10 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
     public void deleteByWriter(Long memberId){
         Member member = memberRepository.findById(memberId).get();
         postRepository.deleteByWriter(member);

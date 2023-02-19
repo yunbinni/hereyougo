@@ -137,17 +137,22 @@ public class PostController
             Model model
     ) {
         List<Post> posts = postRepository.findAll().stream()
-                .filter(post -> post.getAddress().getSido().equals(sido))
-                .filter(post -> post.getAddress().getSgg().equals(sgg))
-//                .filter(post -> (post.getCategory().getId() == categoryId))
+                .filter(post -> {
+                    if(sido.equals("시/도 전체")) return true;
+                    else return post.getAddress().getSido().equals(sido);
+                })
+                .filter(post -> {
+                    if(sgg.equals("0")) return true;
+                    else return post.getAddress().getSgg().equals(sgg);
+                })
+//                .filter(post -> {
+//                    if(categoryId == 0L) return true;
+//                    else return post.getCategory().getId() == categoryId;
+//                })
                 .collect(Collectors.toList());
-
-        for (Post post : posts) {
-            log.info("title = {}, content = {}", post.getTitle(), post.getContent());
-        }
 
         model.addAttribute("posts", posts);
 
-        return "fragments/temp";
+        return "fragments/filtered";
     }
 }

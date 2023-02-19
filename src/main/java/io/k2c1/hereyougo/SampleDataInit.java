@@ -1,9 +1,11 @@
 package io.k2c1.hereyougo;
 
+import io.k2c1.hereyougo.controller.PostController;
 import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Category;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.repository.CategoryRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.CategoryService;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,9 @@ public class SampleDataInit {
     public final MemberRepository memberRepository;
     @Autowired
     public final PostRepository postRepository;
+
+    @Autowired
+    public final CategoryRepository categoryRepository;
 
     Address address = new Address("경기도", "의정부시", "경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)", "경기도 의정부시 금오동 67-1 거성아파트", "11764");
     Member member = new Member("test@naver.com", "1234", "testNickname", "요식업", address);

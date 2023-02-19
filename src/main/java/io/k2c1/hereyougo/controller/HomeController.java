@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -31,10 +33,10 @@ public class HomeController {
     private final PostService postService;
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Model model)
-    {
+    public String home(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         model.addAttribute("parentCategories", categoryService.getParentCategories());
         model.addAttribute("recentPopularPosts", postService.getRecentPopularPosts());
+        model.addAttribute("posts", postService.getAllPosts()); // 페이지네이션 필요
 
         HttpSession session = request.getSession(false);
         if (session == null) return "home";

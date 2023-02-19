@@ -20,6 +20,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -149,6 +150,7 @@ public class PostController
 //                    if(categoryId == 0L) return true;
 //                    else return post.getCategory().getId() == categoryId;
 //                })
+                .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
                 .collect(Collectors.toList());
 
         model.addAttribute("posts", posts);

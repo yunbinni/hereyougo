@@ -3,6 +3,7 @@ package io.k2c1.hereyougo.controller;
 import io.k2c1.hereyougo.constant.SessionConst;
 import io.k2c1.hereyougo.domain.Category;
 import io.k2c1.hereyougo.domain.Member;
+import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.service.CategoryService;
 import io.k2c1.hereyougo.service.PostService;
@@ -18,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -36,7 +39,9 @@ public class HomeController {
     public String home(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         model.addAttribute("parentCategories", categoryService.getParentCategories());
         model.addAttribute("recentPopularPosts", postService.getRecentPopularPosts());
-        model.addAttribute("posts", postService.getAllPosts()); // 페이지네이션 필요
+        model.addAttribute("posts", postService.getAllPosts().stream()
+                .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
+                .collect(Collectors.toList())); // 페이지네이션 필요
 
         HttpSession session = request.getSession(false);
         if (session == null) return "home";

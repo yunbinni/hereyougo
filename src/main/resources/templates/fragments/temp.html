@@ -1,0 +1,11 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="temp" id="postTable" class="postTable">
+    <div th:each="post : ${posts}" class="post" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
+        <h5 th:text="${post.title}" class="text-center">제목</h5>
+        <br>
+        <p th:text="${post.content}" class="text-center">내용</p>
+        <p th:text="|❤ ${post.recommend}|"></p>
+        <p th:text="|${post.quantity}개 남음|"></p>
+    </div>
+</div>

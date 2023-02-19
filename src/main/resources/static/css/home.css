@@ -32,3 +32,20 @@
 .tabmenu input:checked ~ .tabCon{
   display:block;
 }
+
+.postTable {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 40vh);
+}
+
+.post {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.post h5, .post p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

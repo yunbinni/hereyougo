@@ -16,9 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -133,13 +136,18 @@ public class PostController
             @RequestParam("categoryId") Long categoryId,
             Model model
     ) {
-        List<Post> filteredPost = postRepository.findAll().stream()
+        List<Post> posts = postRepository.findAll().stream()
                 .filter(post -> post.getAddress().getSido().equals(sido))
                 .filter(post -> post.getAddress().getSgg().equals(sgg))
-                .filter(post -> (post.getCategory().getId() == categoryId))
+//                .filter(post -> (post.getCategory().getId() == categoryId))
                 .collect(Collectors.toList());
-        model.addAttribute("filteredPost", filteredPost);
 
-        return "";
+        for (Post post : posts) {
+            log.info("title = {}, content = {}", post.getTitle(), post.getContent());
+        }
+
+        model.addAttribute("posts", posts);
+
+        return "fragments/temp";
     }
 }

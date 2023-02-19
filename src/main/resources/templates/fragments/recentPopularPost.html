@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<ul th:fragment="recentPost" class="list-group tab-pane fade show active tabCon" id="home" role="tabpanel" aria-labelledby="home-tab">
+<ul th:fragment="recentPopularPost" class="list-group tab-pane fade show active tabCon" id="home" role="tabpanel" aria-labelledby="home-tab">
     <div class="post-item" th:each="post : ${recentPopularPosts}">
         <li class="list-group-item" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
             <div class="row">

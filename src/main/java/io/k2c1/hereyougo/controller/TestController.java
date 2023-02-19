@@ -78,5 +78,6 @@ public class TestController {
     @GetMapping("/mapExample")
     public String mapExample() {
         return "mapExample";
+
     }
 }

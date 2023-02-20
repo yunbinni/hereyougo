@@ -139,7 +139,25 @@ $('#firstCategory').change(function() {
     }
 });
 
-function getFilteredPost() {}
+function getFilteredPost() {
+    var sido = $('#sido').val();
+    var sgg = $('#sgg').val();
+    var categoryId = $('#secondCategory').val();
+
+    const data = {
+        sido : sido,
+        sgg : sgg,
+        categoryId : categoryId
+    };
+
+    $.ajax({
+        url: "/posts/filtered",
+        type: "GET",
+        data: data
+    }).done(function(fragment) {
+        $('#postTable').replaceWith(fragment);
+    });
+}
     </script>
 </body>
 </html>

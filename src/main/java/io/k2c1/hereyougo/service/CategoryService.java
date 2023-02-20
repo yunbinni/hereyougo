@@ -62,4 +62,10 @@ public class CategoryService {
     public List<Category> getAllChildCategories() {
         return categoryRepository.findAll();
     }
+
+    public List<Category> getParentAndChildCategories(Long parentId) {
+        List<Category> results = getChildCategories(parentId);
+        results.add(getCategory(parentId));
+        return results;
+    }
 }

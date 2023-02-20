@@ -7,6 +7,7 @@ import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
+import io.k2c1.hereyougo.service.CategoryService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,9 @@ public class PostController
 
     @Autowired
     private final PostService postService;
+
+    @Autowired
+    private final CategoryService categoryService;
 
     @GetMapping("/{postId}")
     public String getPost(
@@ -151,7 +155,10 @@ public class PostController
                 })
                 .filter(post -> {
                     if(categoryId == 0L) return true;
-                    else return post.getCategory().getId().equals(categoryId);
+                    else {
+                        return categoryService.getParentAndChildCategories(categoryId)
+                                .contains(post.getCategory());
+                    }
                 })
                 .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
                 .collect(Collectors.toList());

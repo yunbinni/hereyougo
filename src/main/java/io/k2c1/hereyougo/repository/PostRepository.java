@@ -22,7 +22,4 @@ public interface PostRepository extends JpaRepository<Post, Long>
     @Modifying
     @Query("delete from Post p where p.writer = :writer ")
     void deleteByWriter(@Param("writer") Member member);
-
-    // 시도, 시구군, 카테고리ID
-    Page<Post> findByAddressSidoAndAddressSggAndCategoryId(String sido, String sgg, Long categoryId, Pageable pageable);
 }

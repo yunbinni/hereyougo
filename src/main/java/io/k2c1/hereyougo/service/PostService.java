@@ -30,7 +30,9 @@ public class PostService {
     }
 
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAll().stream()
+                .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
+                .collect(Collectors.toList());
     }
 
     public void deleteByWriter(Long memberId){

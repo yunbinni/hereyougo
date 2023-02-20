@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,4 +59,7 @@ public class CategoryService {
         return categoryRepository.getCategoriesByParentId(parentId);
     }
 
+    public List<Category> getAllChildCategories() {
+        return categoryRepository.findAll();
+    }
 }

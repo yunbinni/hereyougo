@@ -12,10 +12,14 @@ import io.k2c1.hereyougo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +41,9 @@ public class SampleDataInit {
     @Autowired
     public final CategoryRepository categoryRepository;
 
+    @Autowired
+    private DataSource dataSource;
+
     Address address = new Address("경기도", "의정부시", "경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)", "경기도 의정부시 금오동 67-1 거성아파트", "11764");
     Member member = new Member("test@naver.com", "1234", "testNickname", "요식업", address);
 
@@ -44,7 +51,12 @@ public class SampleDataInit {
     private static long POST_LID = 0L;
 
     @PostConstruct
-    public void init() {
+    public void init() throws SQLException {
+        ClassPathResource resource = new ClassPathResource("data.sql");
+
+        // Execute the script using the DataSource
+        ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
+
         memberRepository.save(member);
         log.info("SAMPLE MEMBER SAVED IN REPO");
 
@@ -66,6 +78,7 @@ public class SampleDataInit {
                 3,
                 11,
                 address,
+                categoryRepository.findById(1L).get(),
                 LocalDateTime.now()
         );
     }
@@ -81,6 +94,7 @@ public class SampleDataInit {
                 5,
                 12,
                 address,
+                categoryRepository.findById(3L).get(),
                 LocalDateTime.now()
         );
     }
@@ -96,6 +110,7 @@ public class SampleDataInit {
                 10,
                 13,
                 address,
+                categoryRepository.findById(4L).get(),
                 LocalDateTime.now()
         );
     }
@@ -111,6 +126,7 @@ public class SampleDataInit {
                 20,
                 14,
                 address,
+                categoryRepository.findById(37L).get(),
                 LocalDateTime.now()
         );
     }

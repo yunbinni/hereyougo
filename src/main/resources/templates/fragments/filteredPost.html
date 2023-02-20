@@ -7,7 +7,7 @@
     <select id="sgg" name="sgg" class="form-select-inline">
     </select>
 
-    <select id="firstCategory" name="firstCategory" class="form-select-inline" th:onchange="getSecondCategory()">
+    <select id="firstCategory" name="firstCategory" class="form-select-inline">
         <option value="0">업종 전체</option>
         <option value="1">외식</option>
         <option value="2">도소매</option>
@@ -16,6 +16,9 @@
 
     <select id="secondCategory" name="secondCategory" class="form-select-inline">
         <option value="0">(업종 전체)</option>
+        <th:block th:each="secondCategory : ${secondCategories}">
+            <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}"></option>
+        </th:block>
     </select><br><br>
 
     <div th:replace="~{fragments/filtered :: filtered}"></div><br><br>

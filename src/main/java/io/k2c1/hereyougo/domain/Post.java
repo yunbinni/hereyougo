@@ -1,15 +1,13 @@
 package io.k2c1.hereyougo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,6 +56,19 @@ public class Post
         this.quantity = quantity;
         this.recommend = recommend;
         this.address = address;
+        this.timestamp = timestamp;
+    }
+
+    public Post(Member writer, String title, String content, String size, int views, Integer quantity, Integer recommend, Address address, Category category, LocalDateTime timestamp) {
+        this.writer = writer;
+        this.title = title;
+        this.content = content;
+        this.size = size;
+        this.views = views;
+        this.quantity = quantity;
+        this.recommend = recommend;
+        this.address = address;
+        this.category = category;
         this.timestamp = timestamp;
     }
 }

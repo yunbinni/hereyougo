@@ -11,6 +11,8 @@ import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -137,6 +139,7 @@ public class PostController
             @RequestParam("categoryId") Long categoryId,
             Model model
     ) {
+        log.info("categoryId = {}", categoryId);
         List<Post> posts = postRepository.findAll().stream()
                 .filter(post -> {
                     if(sido.equals("시/도 전체")) return true;
@@ -146,10 +149,10 @@ public class PostController
                     if(sgg.equals("0")) return true;
                     else return post.getAddress().getSgg().equals(sgg);
                 })
-//                .filter(post -> {
-//                    if(categoryId == 0L) return true;
-//                    else return post.getCategory().getId() == categoryId;
-//                })
+                .filter(post -> {
+                    if(categoryId == 0L) return true;
+                    else return post.getCategory().getId().equals(categoryId);
+                })
                 .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
                 .collect(Collectors.toList());
 

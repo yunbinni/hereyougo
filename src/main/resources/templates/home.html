@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/css/home.css">
     <!--jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <!--KAKAO MAP-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f1ad9b5adce2cf7e772b667dde656195&libraries=services"></script>
     <!--Font-->
     <link th:href="@{/css/font.css}" rel="stylesheet" />
 </head>
@@ -18,8 +20,11 @@
     <div th:replace="~{fragments/header :: header}"></div>
 
     <div class="container" style="border: 1px solid black;"><br>
+
         <h4>최근 인기글</h4><br>
-        <div th:replace="~{fragments/recentPopularPost :: recentPopularPost}"></div><br>
+        <div th:replace="~{fragments/recentPopularPost :: recentPopularPost}"></div><br><br>
+
+        <h4>내 주변 보기</h4>
 
         <br><h4>전체 기부참여 보기</h4><br>
         <div th:replace="~{fragments/filteredPost :: filteredPost}"></div><br>
@@ -75,63 +80,66 @@
 
 });
 
-function getSecondCategory()
-{
-    var firstCategoryId = $("#firstCategory option:selected").val();
+// 1차업종 선택시 2차업종 설정
+$('#firstCategory').change(function() {
+    var first = $('#firstCategory').val();
 
-    const data = {
-        firstCategoryId : firstCategoryId
-    };
-
-    $.ajax({
-        url: "/categories/child",
-        data: data,
-        type: "GET"
-    }).done(function (data) {
-<!--        console.log(JSON.stringify(data))-->
-
-        if(firstCategoryId == "0") {
-            var html = '<option value="0">(업종 전체)</option>';
-            $("#secondCategory").html(html);
-        }
-        else
-        {
-            var html = '<option value="' + firstCategoryId + '">전체</option>';
-            var len = data.length;
-
-            for(var i = 0; i < len; ++i)
-            {
-                html += '<option value="' + data[i].id + '">' + data[i].categoryName + '</option>';
+    if(first == "0") {
+        $('#secondCategory option').each(function() {
+<!--            console.log(this);-->
+            if($(this).val() == 0) {
+                $(this).removeAttr('hidden');
+                $(this).attr('selected', 'selected');
             }
-            $("#secondCategory").html(html);
-        }
-    });
-}
+            else
+                $(this).attr('hidden', 'hidden');
+        });
+    }
+    if(first == "1") {
+        $('#secondCategory option').each(function() {
+<!--            console.log(this);-->
+            if($(this).val() == 1) {
+                $(this).text('(외식 전체)');
+                $(this).removeAttr('hidden');
+                $(this).attr('selected', 'selected');
+            }
+            else if($(this).val() > 3 && $(this).val() < 18)
+                $(this).removeAttr('hidden');
+            else
+                $(this).attr('hidden', 'hidden');
+        });
+    }
+    if(first == "2") {
+        $('#secondCategory option').each(function() {
+<!--            console.log(this);-->
+            if($(this).val() == 2) {
+                $(this).text('(도소매 전체)');
+                $(this).removeAttr('hidden');
+                $(this).attr('selected', 'selected');
+            }
+            else if($(this).val() >= 18 && $(this).val() < 24)
+                $(this).removeAttr('hidden');
+            else
+                $(this).attr('hidden', 'hidden');
+        });
+    }
+    if(first == "3") {
+        $('#secondCategory option').each(function() {
+<!--            console.log(this);-->
+            if($(this).val() == 3) {
+                $(this).text('(서비스 전체)');
+                $(this).removeAttr('hidden');
+                $(this).attr('selected', 'selected');
+            }
+            else if($(this).val() >= 24)
+                $(this).removeAttr('hidden');
+            else
+                $(this).attr('hidden', 'hidden');
+        });
+    }
+});
 
-function getFilteredPost() {
-    var sido = $("#sido option:selected").val();
-    var sgg = $("#sgg option:selected").val();
-    var categoryId = $("#secondCategory option:selected").val();
-
-    const data = {
-        sido : sido,
-        sgg : sgg,
-        categoryId : categoryId
-    };
-
-    $.ajax({
-        url: "/posts/filtered",
-        type: "GET",
-        data : data
-    }).done(function(fragment) {
-        console.log(fragment);
-
-        $("#postTable").empty();
-
-        $("#postTable").replaceWith(fragment);
-
-    });
-}
+function getFilteredPost() {}
     </script>
 </body>
 </html>

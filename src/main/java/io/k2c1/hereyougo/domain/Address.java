@@ -3,13 +3,15 @@ package io.k2c1.hereyougo.domain;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Embeddable
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Embeddable
 public class Address
 {
     private String sido; // 광역자치단체: 서울, 경기도 등

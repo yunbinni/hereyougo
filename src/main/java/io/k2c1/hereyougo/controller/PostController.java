@@ -5,27 +5,20 @@ import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
-import io.k2c1.hereyougo.repository.MemberRepository;
+import io.k2c1.hereyougo.file.FileUploader;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.CategoryService;
-import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -34,16 +27,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 public class PostController
 {
-    @Autowired
-    private final MemberRepository memberRepository;
-    @Autowired
     private final PostRepository postRepository;
-
-    @Autowired
-    private final PostService postService;
-
-    @Autowired
     private final CategoryService categoryService;
+    private final FileUploader fileUploader;
 
     @GetMapping("/{postId}")
     public String getPost(
@@ -67,6 +53,7 @@ public class PostController
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
         model.addAttribute("form", new PostSaveForm());
+        model.addAttribute("secondCategories", categoryService.getAllChildCategories());
         return "posts/addPost";
     }
 
@@ -78,30 +65,29 @@ public class PostController
             RedirectAttributes redirectAttributes
     )
     {
-//        redirectAttributes.addAttribute("postId", );
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "posts/addPost";
         }
 
-        // 성공 로직 TODO TypeConverter 적용?
-        Post post = new Post();
-        post.setWriter(loginMember);
-        post.setTitle(form.getTitle());
-        post.setContent(form.getContent());
-        post.setSize(form.getSize());
-        post.setViews(0);
-        post.setQuantity(form.getQuantity());
-//        post.setAddress(form.getAddress());
+        Address address = Address.builder()
+                .sido(form.getSiNm())
+                .sgg(form.getSggNm())
+                .doro(form.getRoadFullAddr())
+                .jibun(form.getJibunAddr())
+                .zipNo(form.getZipNo())
+                .build();
 
-        Address address = new Address();
-        address.setSido(form.getSiNm());
-        address.setSgg(form.getSggNm());
-        address.setDoro(form.getRoadFullAddr());
-        address.setJibun(form.getJibunAddr());
-        address.setZipNo(form.getZipNo());
-        post.setAddress(address);
+        Post post = Post.builder()
+                .writer(loginMember)
+                .title(form.getTitle())
+                .content(form.getContent())
+                .views(0)
+                .quantity(form.getQuantity())
+                .address(address)
+                .category(categoryService.getCategory(form.getCategoryId()))
+                .build();
 
         Post savedPost = postRepository.save(post);
         log.info("id : {}", savedPost.getId());

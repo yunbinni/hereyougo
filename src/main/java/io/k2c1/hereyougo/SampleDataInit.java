@@ -44,7 +44,13 @@ public class SampleDataInit {
     @Autowired
     private DataSource dataSource;
 
-    Address address = new Address("경기도", "의정부시", "경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)", "경기도 의정부시 금오동 67-1 거성아파트", "11764");
+    Address address = Address.builder()
+            .sido("경기도")
+            .sgg("의정부시")
+            .doro("경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)")
+            .jibun("경기도 의정부시 금오동 67-1 거성아파트")
+            .zipNo("11764")
+            .build();
     Member member = new Member("test@naver.com", "1234", "testNickname", "요식업", address);
 
     private static long MEMBER_LID = 0L;
@@ -67,67 +73,63 @@ public class SampleDataInit {
         log.info("SAMPLE POST SAVED IN REPO");
     }
 
-    public Post createNewPost1()
+    Post createNewPost1()
     {
-        return new Post(
-                member,
-                "테스트 제목 1",
-                "테스트 내용 1",
-                "10 * 20 * 30",
-                0,
-                3,
-                11,
-                address,
-                categoryRepository.findById(1L).get(),
-                LocalDateTime.now()
-        );
+        return Post.builder()
+                .writer(member)
+                .title("테스트 제목 1")
+                .content("테스트 내용 1")
+                .views(0)
+                .quantity(11)
+                .recommend(5)
+                .address(address)
+                .category(categoryRepository.findById(1L).get())
+                .timestamp(LocalDateTime.now())
+                .build();
     }
 
     public Post createNewPost2()
     {
-        return new Post(
-                member,
-                "테스트 제목 2",
-                "테스트 내용 2",
-                "10 * 20 * 30",
-                0,
-                5,
-                12,
-                address,
-                categoryRepository.findById(3L).get(),
-                LocalDateTime.now()
-        );
+        return Post.builder()
+                .writer(member)
+                .title("테스트 제목 2")
+                .content("테스트 내용 2")
+                .views(5)
+                .quantity(12)
+                .recommend(10)
+                .address(address)
+                .category(categoryRepository.findById(3L).get())
+                .timestamp(LocalDateTime.now())
+                .build();
     }
 
     public Post createNewPost3()
     {
-        return new Post(
-                member,
-                "테스트 제목 3",
-                "테스트 내용 3",
-                "10 * 20 * 30",
-                0,
-                10,
-                13,
-                address,
-                categoryRepository.findById(4L).get(),
-                LocalDateTime.now()
-        );
+        return Post.builder()
+                .writer(member)
+                .title("테스트 제목 3")
+                .content("테스트 내용 3")
+                .views(0)
+                .quantity(13)
+                .recommend(12)
+                .address(address)
+                .category(categoryRepository.findById(3L).get())
+                .timestamp(LocalDateTime.now())
+                .build();
     }
 
     public Post createNewPost4()
     {
-        return new Post(
-                member,
-                "테스트 제목 4",
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It h",
-                "10 * 20 * 30",
-                0,
-                20,
-                14,
-                address,
-                categoryRepository.findById(37L).get(),
-                LocalDateTime.now()
-        );
+        return Post.builder()
+                .writer(member)
+                .title("테스트 제목 3")
+                .content("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It h")
+                .views(0)
+                .quantity(18)
+                .recommend(20)
+                .address(address)
+                .category(categoryRepository.findById(3L).get())
+                .timestamp(LocalDateTime.now())
+                .build();
     }
 }

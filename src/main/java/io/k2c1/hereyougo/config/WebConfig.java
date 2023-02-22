@@ -2,6 +2,7 @@ package io.k2c1.hereyougo.config;
 
 import io.k2c1.hereyougo.filter.LoginCheckFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

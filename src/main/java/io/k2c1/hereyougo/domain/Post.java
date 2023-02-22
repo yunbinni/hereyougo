@@ -1,17 +1,19 @@
 package io.k2c1.hereyougo.domain;
 
+import io.k2c1.hereyougo.file.UploadFile;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter @Setter
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "post")
 public class Post
 {
@@ -25,7 +27,6 @@ public class Post
 
     private String title;
     private String content;
-    private String size;
 
     @ColumnDefault("0")
     private int views; // 조회수
@@ -43,32 +44,10 @@ public class Post
 
     private LocalDateTime timestamp; // 작성일/시각
 
+    @Embedded
+    private List<String> imagesFilepath;
+
     public void plusViews() {
         this.views++;
-    }
-
-    public Post(Member writer, String title, String content, String size, int views, Integer quantity, Integer recommend, Address address, LocalDateTime timestamp) {
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        this.size = size;
-        this.views = views;
-        this.quantity = quantity;
-        this.recommend = recommend;
-        this.address = address;
-        this.timestamp = timestamp;
-    }
-
-    public Post(Member writer, String title, String content, String size, int views, Integer quantity, Integer recommend, Address address, Category category, LocalDateTime timestamp) {
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        this.size = size;
-        this.views = views;
-        this.quantity = quantity;
-        this.recommend = recommend;
-        this.address = address;
-        this.category = category;
-        this.timestamp = timestamp;
     }
 }

@@ -44,12 +44,13 @@ public class MemberService {
         member.setNickname(joinForm.getNickname());
         member.setBusinessType(joinForm.getBusinessType());
 
-        Address address = new Address();
-        address.setDoro(joinForm.getRoadFullAddr());
-        address.setJibun(joinForm.getJibunAddr());
-        address.setSido(joinForm.getSiNm());
-        address.setSgg(joinForm.getSggNm());
-        address.setZipNo(joinForm.getZipNo());
+        Address address= Address.builder()
+                .sido(joinForm.getSiNm())
+                .sgg(joinForm.getSggNm())
+                .doro(joinForm.getRoadFullAddr())
+                .jibun(joinForm.getJibunAddr())
+                .zipNo(joinForm.getZipNo())
+                .build();
 
         isDuplicateMember(member); // 회원 이메일 중복 검사
         member.setAddress(address);

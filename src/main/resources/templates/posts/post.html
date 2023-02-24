@@ -15,8 +15,7 @@
     <!-- Header -->
     <div th:replace="~{fragments/header :: header}"></div><br>
 
-    <!-- TODO 아래 DIV의 border는 지울 것! -->
-    <div class="container" style="border: solid 2px black;">
+    <div class="container">
 
         <div class="d-flex justify-content-center">
             <button class="btn btn-primary align-self-center" th:text="${post.category.categoryName}">업종</button>
@@ -34,8 +33,7 @@
 
         <div class="d-flex justify-content-center">
             <ul class="list-group list-group-horizontal">
-                <li class="list-group-item"><img src="#" style="width: 300px; height: 300px; border: 2px solid red" /></li>
-                <li class="list-group-item"><img src="#" style="width: 300px; height: 300px; border: 2px solid blue" /></li>
+                <li class="list-group-item"><img src="/images/ba8e035a-b449-46d4-99d0-a8642419d66e.png" style="width: 300px; height: 300px; border: 2px solid red" /></li>
             </ul>
         </div><br><br>
 

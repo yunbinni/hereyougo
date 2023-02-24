@@ -4,8 +4,9 @@ import io.k2c1.hereyougo.constant.SessionConst;
 import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.dto.PostSaveForm;
-import io.k2c1.hereyougo.file.FileUploader;
+import io.k2c1.hereyougo.config.FileUploader;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,8 +66,7 @@ public class PostController
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
-    )
-    {
+    ) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
@@ -88,6 +90,10 @@ public class PostController
                 .address(address)
                 .category(categoryService.getCategory(form.getCategoryId()))
                 .build();
+
+        List<MultipartFile> images = form.getImages();
+        List<Image> uploadFiles = fileUploader.uploadFiles(images, post);
+        post.setImages(uploadFiles);
 
         Post savedPost = postRepository.save(post);
         log.info("id : {}", savedPost.getId());

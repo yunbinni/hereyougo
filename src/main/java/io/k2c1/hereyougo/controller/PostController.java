@@ -46,6 +46,11 @@ public class PostController
         log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
         model.addAttribute("post", getPost);
         getPost.plusViews();
+
+        for (Image image : getPost.getImages()) {
+            log.info("{}", image.getStoredFilename());
+        }
+
         return "posts/post";
     }
 
@@ -93,6 +98,9 @@ public class PostController
 
         List<MultipartFile> images = form.getImages();
         List<Image> uploadFiles = fileUploader.uploadFiles(images, post);
+        for (Image uploadFile : uploadFiles) {
+            log.info("{} : ", uploadFile);
+        }
         post.setImages(uploadFiles);
 
         Post savedPost = postRepository.save(post);

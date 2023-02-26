@@ -167,4 +167,18 @@ public class PostController
 
         return "fragments/filtered";
     }
+
+    @GetMapping("/list")
+    public String getPostsByMember(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
+        List<Post> posts = postRepository.findByWriter_Id(loginMember.getId());
+
+        model.addAttribute("posts", posts);
+
+        return "posts/postList";
+    }
 }

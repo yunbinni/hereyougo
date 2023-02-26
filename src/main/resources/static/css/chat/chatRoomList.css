@@ -1,0 +1,108 @@
+.chatRoomList-container {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.sub-title {
+    margin-top: 4vh;
+    font-size: 1.2em;
+}
+
+.chat-link{
+    text-decoration : none;
+}
+
+.card-text.nickname {
+    color: #272727;
+    font-family: 'gsans-light';
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.card-text.message {
+    color: #000;
+    font-size: 1em;
+}
+
+.chatroom-empty{
+    border: 1px solid #cccc;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    margin-top : 2vh;
+}
+
+.empty-message{
+    align-self: center;
+    font-size: 1.2em;
+}
+
+.chatRoomList-container .card {
+    margin-top: 3vh;
+}
+
+.chatRoomList-container .card-body {
+    display: flex;
+    padding : 2vw;
+}
+
+.profile-image{
+    flex-basis: 5%;
+}
+
+.profile-image img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+}
+
+.card-text.chat-datetime {
+    flex-grow: 0;
+    font-size: 0.8em;
+    text-align: end;
+    color: #7c7c7c;
+    font-family: 'gsans-light';
+    font-weight: 600;
+    flex-basis: 10%;
+}
+
+.chat-date{
+    margin-bottom: 3px;
+}
+
+.chat-info{
+    align-self: center;
+    margin-left: 3vw;
+    flex-basis: 80%;
+}
+
+.card-text.nickname{
+    color : #000;
+    font-size: 1em;
+}
+
+.chat-info .message{
+    margin-top: 0.5vw;
+    word-break: break-all;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.card-text.message {
+    color: #7c7c7c;
+    font-size: 0.9em;
+    font-family: 'gsans';
+    /* font-weight: 600; */
+}
+
+.card-text.post-title {
+    color: #242424;
+    font-family: 'gsans-light';
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+

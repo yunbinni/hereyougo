@@ -1,0 +1,151 @@
+
+@font-face {
+    font-family: 'gsans';
+    src: url('/font/GmarketSansTTFMedium.woff2') format('woff2'),
+        url('/font/GmarketSansTTFMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gsans-light';
+    src: url('/font/GmarketSansTTFLight.woff2') format('woff2'),
+        url('/font/GmarketSansTTFLight.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+
+}
+
+body{
+ font-family: gsans;
+}
+
+.chatting-container{
+    width : 60%;
+    margin-top : 50px;
+    margin: 30px auto;
+}
+
+.card-header {
+    padding: 20px;
+}
+
+.card-body{
+    padding : 2vw;
+}
+
+button.btn.btn-outline-primary {
+    margin-top: 3vh;
+}
+
+.chatMessage-container{
+    min-height: 500px;
+}
+
+.chat-container{
+    padding: 2vw 3vw;
+    margin-bottom: 3vh;
+    border-radius: 10px;
+}
+
+.chatMessage-empty{
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    margin-top : 2vh;
+}
+
+.empty-message{
+    align-self: center;
+    font-size: 1.2em;
+}
+
+.chat-container.blue{
+   background : #3A96EE;
+   color: white;
+}
+
+.chat-container.gray {
+    background: #f3f3f3;
+}
+
+.chat-container p{
+  margin-bottom: 0px;
+}
+
+input#message {
+    padding: 1vw 3vw;
+    border-radius: 20px;
+}
+
+/* 전송버튼 컨테이너 */
+.input-group-append {
+    align-items: center;
+    align-self: center;
+}
+
+/* 전송 버튼 */
+button#send {
+    padding: 1.2vw 3vw;
+    margin-left: 2vw;
+    background: #2F80ED;
+    color: white;
+}
+
+.text-center{
+    text-align : center;
+}
+
+.post-info{
+    display : flex;
+}
+
+.post-thumbnail img{
+    width : 60px;
+    height : 60px;
+}
+
+.post-info .post-title {
+    align-self: center;
+    margin-left: 2vw;
+}
+
+ /* 약속잡기 팝업창*/
+.modal-container {
+    margin-top: 3vh;
+}
+
+ /* 약속잡기 팝업창 소제목*/
+.sub-title{
+    font-family: 'gsans-light';
+    font-weight: 600;
+    color: #000000;
+ }
+
+ /* 제목, 날짜, 시간 선택 버튼 */
+ .post-title, input.appoint-date, input.appoint-time {
+     font-size: 1.1em;
+ }
+
+ /* 약속잡기 팝업창 날짜, 시간 선택 버튼*/
+ input.appoint-date,input.appoint-time {
+     width: 80%;
+     border: 1px solid #ccc;
+     padding: 1.5vw;
+     border-radius: 5px;
+ }
+
+ /* 약속잡기 팝업창 등록 버튼*/
+ button.btn.btn-primary.appoint-btn {
+     width: 80%;
+     margin-top: 5vh;
+     margin-bottom: 3vh;
+ }

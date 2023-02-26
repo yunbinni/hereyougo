@@ -1,6 +1,7 @@
 package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Address;
+import io.k2c1.hereyougo.domain.FavoriteCategory;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.JoinForm;
@@ -95,8 +96,8 @@ public class MemberService {
         List<Post> posts = postRepository.findByWriter_Id(memberId);
         myPageForm.setPosts(posts);
 
-        log.info("======post List======="+ posts);
-
+        List<FavoriteCategory> favoriteCategories = favoriteCategoryRepository.findByMember_id(memberId);
+        myPageForm.setFavoriteCategories(favoriteCategories);
 
 //        키워드 목록 Set하기
 //        약속 목록 Set하기

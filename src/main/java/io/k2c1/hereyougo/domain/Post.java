@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -40,6 +41,7 @@ public class Post
 
     private LocalDateTime timestamp; // 작성일/시각
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post")
     private List<Image> images;
 

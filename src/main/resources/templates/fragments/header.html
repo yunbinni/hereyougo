@@ -11,17 +11,26 @@
         </th:block>
         <th:block th:if="${member != null}">
             <ul class="navbar-nav">
-                <a th:href="@{/members/}">
-                    <li class="nav-item btn btn-danger me-2">
-                       <p style="margin-bottom: 0px;" th:text="|${member.nickname}|"></p>
-                    </li>
-                </a>
                 <li class="nav-item">
+                    <div class="dropdown">
+                        <button style="display: flex;margin-right: 1vw;" class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <p style="margin-bottom: 0px;" th:text="|${member.nickname}|"></p>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/members/}">마이페이지</a></li>
+                            <li><a class="dropdown-item" th:href="@{/posts/list}">작성글 목록</a></li>
+                            <li><a class="dropdown-item" th:href="@{/chatroom/roomList}">채팅 목록</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <form th:action="@{/logout}" method="post">
-                        <button class="btn btn-primary" type="submit">로그아웃</button>
+                        <button class="btn btn-secondary" type="submit">로그아웃</button>
                     </form>
                 </li>
             </ul>
         </th:block>
     </div>
-</nav><br>
+</nav>
+<br>

@@ -28,16 +28,18 @@ body{
  font-family: gsans;
 }
 
-/*
-.chattingroom {
-    width: 80%;
-    margin: 0 auto;
+.chatting-container{
+    width : 60%;
+    margin-top : 50px;
+    margin: 30px auto;
 }
-*/
-
 
 .card-header {
     padding: 20px;
+}
+
+.card-body{
+    padding : 2vw;
 }
 
 button.btn.btn-outline-primary {
@@ -51,6 +53,7 @@ button.btn.btn-outline-primary {
 .chat-container{
     padding: 2vw 3vw;
     margin-bottom: 3vh;
+    border-radius: 10px;
 }
 
 .chatMessage-empty{
@@ -65,8 +68,7 @@ button.btn.btn-outline-primary {
     font-size: 1.2em;
 }
 
-.chat-container.purple{
-   /* background: #3285ED; */
+.chat-container.blue{
    background : #3A96EE;
    color: white;
 }
@@ -80,7 +82,7 @@ button.btn.btn-outline-primary {
 }
 
 input#message {
-    padding: 1.5vw 3vw;
+    padding: 1vw 3vw;
     border-radius: 20px;
 }
 

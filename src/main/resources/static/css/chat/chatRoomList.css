@@ -1,5 +1,5 @@
 .chatRoomList-container {
-    width: 80%;
+    width: 60%;
     margin: 0 auto;
 }
 
@@ -43,6 +43,11 @@
 
 .chatRoomList-container .card-body {
     display: flex;
+    padding : 2vw;
+}
+
+.profile-image{
+    flex-basis: 5%;
 }
 
 .profile-image img {
@@ -58,6 +63,7 @@
     color: #7c7c7c;
     font-family: 'gsans-light';
     font-weight: 600;
+    flex-basis: 10%;
 }
 
 .chat-date{
@@ -67,13 +73,14 @@
 .chat-info{
     align-self: center;
     margin-left: 3vw;
-    flex-grow: 3;
+    flex-basis: 80%;
 }
 
 .card-text.nickname{
     color : #000;
     font-size: 1em;
 }
+
 .chat-info .message{
     margin-top: 0.5vw;
     word-break: break-all;
@@ -82,10 +89,6 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-
-   /* line-height: 16px;
-    height: 32px;
-    */
 }
 
 .card-text.message {

@@ -31,10 +31,14 @@ public class ChatRoomService {
         Long writerId = post.getWriter().getId();
         Member member = memberRepository.findById(roomForm.getMemberId()).get();
 
+        Member writer = memberRepository.findById(writerId).get();
+
         ChatRoom chatRoom = ChatRoom.builder()
                 .post(post)
                 .member(member)
+                .memberNickname(member.getNickname())
                 .writerId(writerId)
+                .writerNickname(writer.getNickname())
                 .build();
 
         chatRoomRepository.save(chatRoom);

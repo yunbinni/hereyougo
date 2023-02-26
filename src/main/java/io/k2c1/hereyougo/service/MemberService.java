@@ -1,5 +1,16 @@
 package io.k2c1.hereyougo.service;
 
+import io.k2c1.hereyougo.domain.Address;
+import io.k2c1.hereyougo.domain.FavoriteCategory;
+import io.k2c1.hereyougo.domain.Member;
+import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.dto.JoinForm;
+import io.k2c1.hereyougo.dto.MemberUpdateForm;
+import io.k2c1.hereyougo.dto.MyPageForm;
+import io.k2c1.hereyougo.repository.AppointmentRepository;
+import io.k2c1.hereyougo.repository.FavoriteCategoryRepository;
+import io.k2c1.hereyougo.repository.MemberRepository;
+import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

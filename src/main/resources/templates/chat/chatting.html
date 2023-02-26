@@ -29,10 +29,9 @@
 <div id="name-from" class="d-flex align-items-center">
     <div class="container-fluid">
         <div class="row">
-            <div style="width : 80%; margin : 0 auto">
+            <div class="chatting-container">
                 <div class="card chattingroom">
                     <div class="card-header">
-
                         <!--   글 정보  -->
                         <div class="post-info">
                             <div class="post-thumbnail"><img
@@ -124,8 +123,6 @@
         }else{
             $(".chatMessage-empty").hide();
         }
-
-
     }
 
     window.BeforeUnloadEvent = function(){
@@ -150,10 +147,7 @@
             roomId = roomId.toString()
             loadChat(chatList)
 
-            // room/{roomId}를 구독
             stompClient.subscribe("/room/"+ roomId, function(chatMessage){
-                console.log("구독 후 챗 메시지"+chatMessage);
-
                 showChatMessage(JSON.parse(chatMessage.body))
 
                 var length = $(".chatMessage-container").children().length;
@@ -191,8 +185,6 @@
         stompClient.send("/app/"+ roomId,{},JSON.stringify(jsonOb));
 
         $("input#message").val('');
-
-
      }
 
      function loadChat(chatList){
@@ -209,7 +201,7 @@
                 var memberId = $("#memberId").val();
                 var containerTag = ''
                 if(memberId == chatList[i].sender){
-                    containerTag = '<div class="chat-container purple">'
+                    containerTag = '<div class="chat-container blue">'
                 }else{
                     containerTag = '<div class="chat-container gray">'
                 }
@@ -241,7 +233,7 @@
         var element = document.getElementById("chatMessage-container");
 
         if(memberId == chatMessage.sender){
-               $('.chat-container:last-child').addClass( 'purple' );
+               $('.chat-container:last-child').addClass( 'blue' );
          }else{
                 $('.chat-container:last-child').addClass( 'gray' );
         }

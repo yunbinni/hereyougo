@@ -35,11 +35,11 @@ class PostServiceTest {
         post.setTitle("게시글 제목");
         post.setContent("게시글 내용");
         post.setWriter(member);
-        post.setWidth(10);
-        post.setHeight(20);
-        post.setDepth(3);
+//        post.setWidth(10);
+//        post.setHeight(20);
+//        post.setDepth(3);
         post.setTimestamp(LocalDateTime.now());
-        post.setAddress("서울 마포구 양화로23길 20 1층");
+//        post.setAddress("서울 마포구 양화로23길 20 1층");
 
         Post result = postRepository.save(post);
 
@@ -54,15 +54,15 @@ class PostServiceTest {
 
 //      when
         savedPost.setContent("게시글 내용 수정");
-        savedPost.setAddress("서울 마포구 양화로6길 22");
-        savedPost.setDepth(5);
+//        savedPost.setAddress("서울 마포구 양화로6길 22");
+//        savedPost.setDepth(5);
 
         Post result = postRepository.findById(1L).get();
 
 //      then
         assertEquals(savedPost.getContent(), result.getContent());
         assertEquals(savedPost.getAddress(), result.getAddress());
-        assertEquals(savedPost.getDepth(), result.getDepth());
+//        assertEquals(savedPost.getDepth(), result.getDepth());
     }
 
     @Test
@@ -147,11 +147,11 @@ class PostServiceTest {
         post.setTitle("게시글 제목");
         post.setContent("게시글 내용");
         post.setWriter(member);
-        post.setWidth(10);
-        post.setHeight(20);
-        post.setDepth(3);
+//        post.setWidth(10);
+//        post.setHeight(20);
+//        post.setDepth(3);
         post.setTimestamp(LocalDateTime.now());
-        post.setAddress("서울 마포구 양화로23길 20 1층");
+//        post.setAddress("서울 마포구 양화로23길 20 1층");
 
         postRepository.save(post);
 

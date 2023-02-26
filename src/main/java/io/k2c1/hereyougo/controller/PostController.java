@@ -18,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -121,5 +123,19 @@ public class PostController
     {
         postRepository.deleteById(postId);
         return "redirect:/";
+    }
+
+    @GetMapping("/list")
+    public String getPostsByMember(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
+        List<Post> posts = postRepository.findByWriter_Id(loginMember.getId());
+
+        model.addAttribute("posts", posts);
+
+        return "posts/postList";
     }
 }

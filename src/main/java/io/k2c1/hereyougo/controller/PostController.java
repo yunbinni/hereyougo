@@ -7,10 +7,13 @@ import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.dto.PostSaveForm;
 import io.k2c1.hereyougo.config.FileUploader;
+import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
+import io.k2c1.hereyougo.service.PostService;
 import io.k2c1.hereyougo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -30,6 +35,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 public class PostController
 {
+    @Autowired
+    private final MemberRepository memberRepository;
+    @Autowired
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final FileUploader fileUploader;
@@ -46,11 +54,6 @@ public class PostController
         log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
         model.addAttribute("post", getPost);
         getPost.plusViews();
-
-        for (Image image : getPost.getImages()) {
-            log.info("{}", image.getStoredFilename());
-        }
-
         return "posts/post";
     }
 
@@ -166,5 +169,19 @@ public class PostController
         model.addAttribute("posts", posts);
 
         return "fragments/filtered";
+    }
+
+    @GetMapping("/list")
+    public String getPostsByMember(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
+        List<Post> posts = postRepository.findByWriter_Id(loginMember.getId());
+
+        model.addAttribute("posts", posts);
+
+        return "posts/postList";
     }
 }

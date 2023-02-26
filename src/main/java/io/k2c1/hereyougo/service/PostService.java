@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.util.Optional;
+
 @Transactional
 @Service
 public class PostService {
@@ -38,5 +40,9 @@ public class PostService {
     public void deleteByWriter(Long memberId){
         Member member = memberRepository.findById(memberId).get();
         postRepository.deleteByWriter(member);
+    }
+
+    public Optional<Post> getPost(Long postId){
+        return postRepository.findById(postId);
     }
 }

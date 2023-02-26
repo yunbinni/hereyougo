@@ -34,7 +34,7 @@
         <div class="d-flex justify-content-center">
             <ul class="list-group list-group-horizontal">
                 <div th:each="image : ${post.images}">
-<!--                    <li class="list-group-item"><img th:src="|@{/images/${image.storedFilename}}|" style="width: 300px; height: 300px; border: 2px solid red" /></li>-->
+                    <li class="list-group-item"><img th:src="|@{/images/${image.storedFilename}}|" style="width: 300px; height: 300px; border: 2px solid red" /></li>
                     <p th:text="${image.storedFilename}"></p>
                 </div>
             </ul>

@@ -50,4 +50,24 @@ public class ChatRoomService {
     public Optional<ChatRoom> isExistChatRoom(Long postId, Long memberId){
         return chatRoomRepository.findByPost_IdAndMember_Id(postId, memberId);
     }
+
+    /**
+     * 채팅방 조회
+     */
+    public ChatRoom getChatRoom(Long roomId){
+        return chatRoomRepository.findById(roomId).get();
+    }
+
+    /**
+     * 채팅방 목록 조회
+     */
+    public List<ChatRoom> getChatRoomList(Long writerId, Long memberId){
+        return chatRoomRepository.findByWriterIdOrMember_Id(writerId, memberId);
+    }
+
+    public void updateRecentMessage(Long roomId, String message){
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+        chatRoom.updateRecentMessage(message);
+    }
+
 }

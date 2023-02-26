@@ -5,6 +5,7 @@ import io.k2c1.hereyougo.domain.ChatMessage;
 import io.k2c1.hereyougo.domain.ChatRoom;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.dto.ChatMessageResponseDTO;
 import io.k2c1.hereyougo.dto.RoomForm;
 import io.k2c1.hereyougo.service.ChatMessageService;
 import io.k2c1.hereyougo.service.ChatRoomService;
@@ -47,7 +48,7 @@ public class ChatRoomController {
         log.info("포스트 아이디" + postId);
         log.info("회원 아이디" + loginMember.getId());
         ChatRoom chatRoom;
-        List<ChatMessage> chatList;
+        List<ChatMessageResponseDTO> chatList;
 
         Long resPostId = Long.parseLong(postId);
         Long memberId = loginMember.getId();
@@ -79,15 +80,31 @@ public class ChatRoomController {
 
         log.info("채팅방 아이디 잘 넘겨질까?" + chatRoom.getId());
         model.addAttribute("roomId", chatRoom.getId());
-        model.addAttribute("memberId", memberId);
+        model.addAttribute("loggedMemberId", memberId);
         model.addAttribute("chatRoom", chatRoom);
         model.addAttribute("post", post);
         model.addAttribute("chatList", chatList);
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
 
 //        return "redirect:/chatroom/enter?roomId="+ roomId;
 //        return roomId;
         return "chat/chatting";
     }
 
+    /**
+     * 채팅방 목록
+     */
+    @GetMapping("/roomList")
+    public String roomList(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        Long writerId = loginMember.getId();
+        Long memberId = loginMember.getId();
+        List<ChatRoom> chatRoomList = chatRoomService.getChatRoomList(writerId, memberId);
 
+//        log.info("로그인 멤버" + loginMember);
+        model.addAttribute("loginMember", loginMember);
+        model.addAttribute("member", loginMember);
+        model.addAttribute("chatRoomList", chatRoomList);
+        return "chat/chatRoomList";
+    }
 }

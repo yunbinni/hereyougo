@@ -107,4 +107,21 @@ public class ChatRoomController {
         model.addAttribute("chatRoomList", chatRoomList);
         return "chat/chatRoomList";
     }
+
+    /**
+     * 채팅방 문의하기
+     */
+    @GetMapping("/enter")
+    public String moveChatRoom(@RequestParam("roomId") String roomId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+
+        log.info("/enter로 들어오는지");
+
+        model.addAttribute("roomId", Long.parseLong(roomId));
+
+        log.info("채팅방 아이디" +  roomId);
+
+        return "chat/chatting";
+    }
+
+
 }

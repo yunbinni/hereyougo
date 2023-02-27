@@ -5,8 +5,6 @@ import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
-import io.k2c1.hereyougo.repository.PostRepository;
-import io.k2c1.hereyougo.service.FavoriteCategoryService;
 import io.k2c1.hereyougo.service.MemberService;
 import io.k2c1.hereyougo.service.PostService;
 import org.springframework.stereotype.Controller;

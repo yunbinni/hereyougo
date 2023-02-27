@@ -5,8 +5,6 @@ import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
-import io.k2c1.hereyougo.repository.PostRepository;
-import io.k2c1.hereyougo.service.FavoriteCategoryService;
 import io.k2c1.hereyougo.service.MemberService;
 import io.k2c1.hereyougo.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -35,7 +33,7 @@ public class MemberController {
     public String join(JoinForm joinForm){
         memberService.join(joinForm);
 
-        return "redirect:login";
+        return "redirect:/login";
     }
     /***
      * 회원정보 수정 페이지로 이동

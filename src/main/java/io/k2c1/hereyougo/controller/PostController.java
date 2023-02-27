@@ -96,14 +96,16 @@ public class PostController
                 .category(categoryService.getCategory(form.getCategoryId()))
                 .build();
 
+        Post savedPost = postRepository.save(post);
+
         List<MultipartFile> images = form.getImages();
         List<Image> uploadFiles = fileUploader.uploadFiles(images, post);
         for (Image uploadFile : uploadFiles) {
             log.info("{} : ", uploadFile);
         }
-        post.setImages(uploadFiles);
+        savedPost.setImages(uploadFiles);
 
-        Post savedPost = postRepository.save(post);
+
         log.info("id : {}", savedPost.getId());
         redirectAttributes.addAttribute("postId", savedPost.getId());
         redirectAttributes.addAttribute("status", true);
@@ -166,5 +168,19 @@ public class PostController
         model.addAttribute("posts", posts);
 
         return "fragments/filtered";
+    }
+
+    @GetMapping("/list")
+    public String getPostsByMember(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model)
+    {
+        if (loginMember != null) model.addAttribute("member", loginMember);
+
+        List<Post> posts = postRepository.findByWriter_Id(loginMember.getId());
+
+        model.addAttribute("posts", posts);
+
+        return "posts/postList";
     }
 }

@@ -44,3 +44,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+a.dropdown-item {
+    color: #000;
+}

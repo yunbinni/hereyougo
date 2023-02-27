@@ -36,7 +36,7 @@ public class HomeController {
     @Autowired
     private final PostService postService;
 
-    @GetMapping("/")
+//    @GetMapping("/")
     public String home(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         model.addAttribute("parentCategories", categoryService.getParentCategories());
         model.addAttribute("recentPopularPosts", postService.getRecentPopularPosts());
@@ -50,5 +50,10 @@ public class HomeController {
         model.addAttribute("member", loginMember);
 
         return "home";
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "tempHome";
     }
 }

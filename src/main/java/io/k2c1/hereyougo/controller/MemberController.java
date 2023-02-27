@@ -35,7 +35,7 @@ public class MemberController {
     public String join(JoinForm joinForm){
         memberService.join(joinForm);
 
-        return "redirect:login";
+        return "redirect:/login";
     }
     /***
      * 회원정보 수정 페이지로 이동

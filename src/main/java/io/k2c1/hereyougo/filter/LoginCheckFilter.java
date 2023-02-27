@@ -14,12 +14,11 @@ import java.io.IOException;
 public class LoginCheckFilter implements Filter
 {
     private static final String[] whitelist = {"/",
-            "/login", "/logout", "/join",
+            "/members/login", "/login", "/logout", "/join",
             "/jusoPopup", "/members/join", "https://business.juso.go.kr/*",
             "/categories/child", "/posts/filtered",
-            "favicon.ico", "/css/*", "/font/*", "/images/*"
+            "favicon.ico", "/css/*", "/font/*", "/js/*","/images/*"
     };
-
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException

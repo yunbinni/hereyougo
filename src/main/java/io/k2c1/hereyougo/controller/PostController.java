@@ -96,14 +96,16 @@ public class PostController
                 .category(categoryService.getCategory(form.getCategoryId()))
                 .build();
 
+        Post savedPost = postRepository.save(post);
+
         List<MultipartFile> images = form.getImages();
         List<Image> uploadFiles = fileUploader.uploadFiles(images, post);
         for (Image uploadFile : uploadFiles) {
             log.info("{} : ", uploadFile);
         }
-        post.setImages(uploadFiles);
+        savedPost.setImages(uploadFiles);
 
-        Post savedPost = postRepository.save(post);
+
         log.info("id : {}", savedPost.getId());
         redirectAttributes.addAttribute("postId", savedPost.getId());
         redirectAttributes.addAttribute("status", true);

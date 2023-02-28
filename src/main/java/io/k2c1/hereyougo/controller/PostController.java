@@ -47,8 +47,6 @@ public class PostController
         model.addAttribute("post", getPost);
         getPost.plusViews();
 
-        log.info("imageFile: {}", getPost.getImages().get(0).getStoredFilename());
-
         return "posts/post";
     }
 

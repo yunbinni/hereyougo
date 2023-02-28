@@ -6,7 +6,7 @@
         <th:block th:if="${member == null}">
             <ul class="navbar-nav">
                 <li class="nav-item btn btn-danger me-2"><a href="/login">로그인</a></li>
-                <li class="nav-item btn btn-success"><a href="/join">회원가입</a></li>
+                <li class="nav-item btn btn-success"><a href="/members/join">회원가입</a></li>
             </ul>
         </th:block>
         <th:block th:if="${member != null}">
@@ -18,7 +18,7 @@
                             <p style="margin-bottom: 0px;" th:text="|${member.nickname}|"></p>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/members/}">마이페이지</a></li>
+                            <li><a class="dropdown-item" th:href="@{/members/mypage}">마이페이지</a></li>
                             <li><a class="dropdown-item" th:href="@{/posts/list}">작성글 목록</a></li>
                             <li><a class="dropdown-item" th:href="@{/chatroom/roomList}">채팅 목록</a></li>
                         </ul>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="join_form_container">
+        <script language="javascript">
+            function goPopup(){
+                var pop = window.open("http://localhost:8080/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+                //var pop = window.open("jusoPopup","pop","scrollbars=yes, resizable=yes"); // 모바일 웹
+            }
+
+            function jusoCallBack(roadAddrPart1, roadAddrPart2, roadFullAddr, jibunAddr, addrDetail, siNm, sggNm, zipNo)
+            {
+                $("#roadAddrPart1").val(roadAddrPart1);
+                $("#roadAddrPart2").val(roadAddrPart2);
+                $("#roadFullAddr").val(roadFullAddr);
+                $("#jibunAddr").val(jibunAddr);
+                $("#addrDetail").val(addrDetail);
+                $("#siNm").val(siNm);
+                $("#sggNm").val(sggNm);
+                $("#zipNo").val(zipNo);
+            }
+        </script>
+        <div id ="root">
+            <div class="logo-title">여기있소👋</div>
+            <div class="sub-title">이메일로 가입하기</div>
+
+            <form role="form" id="form" th:action="@{/members/join}" th:object="${joinForm}" method="post">
+                <div class="mb-3">
+                    <label th:for="email" class="form-label">이메일 주소</label>
+                    <input type="text" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요.">
+                </div>
+                <div class="mb-3">
+                    <label th:for="password" class="form-label">비밀번호</label>
+                    <input type="password" class="form-control" th:field="*{password}" placeholder="6자이상 입력하세요">
+                </div>
+
+                <!--         비밀번호 확인은 프론트 단에서 검증하기
+                             비밀번호가 일치하지않으면, 회원가입 버튼 비활성화
+                   -->
+                <div class="mb-3">
+                    <label th:for="confirmPassword" class="form-label">비밀번호 확인</label>
+                    <input type="password" class="form-control" name="confirmPassword" placeholder="다시 한번 더 입력하세요">
+                </div>
+
+                <div class="mb-3">
+                    <label th:for="type" class="form-label">닉네임</label>
+                    <input type="text" class="form-control" th:field="*{nickname}" placeholder="닉네임을 입력하세요">
+                </div>
+
+                <div class="mb-3">
+                    <label th:for="type" class="form-label">업종</label>
+                    <input type="text" class="form-control" th:field="*{businessType}" placeholder="업종을 입력하세요">
+                </div>
+
+                <div class="mb-3">
+                    <label th:for="address" class="form-label">주소</label>
+                    <input type="button" onclick="goPopup();" value="주소입력기" />
+                    <input type="text" id="roadAddrPart1" name="roadAddrPart1" class="form-control" placeholder="도로명주소" readonly th:field="*{roadAddrPart1}">
+                    <input type="text" id="roadAddrPart2" name="roadAddrPart2" class="form-control" placeholder="도로명주소 참고항목" readonly th:field="*{roadAddrPart2}">
+                    <input type="text" id="roadFullAddr" name="roadFullAddr" class="form-control" placeholder="도로명주소Full" hidden th:field="*{roadFullAddr}">
+                    <input type="text" id="jibunAddr" name="jibunAddr" class="form-control" placeholder="지번주소" hidden th:field="*{jibunAddr}">
+                    <input type="text" id="addrDetail" name="addrDetail" class="form-control" placeholder="상세주소" readonly th:field="*{addrDetail}">
+                    <input type="text" id="siNm" name="siNm" class="form-control" placeholder="시도" hidden th:field="*{siNm}">
+                    <input type="text" id="sggNm" name="sggNm" class="form-control" placeholder="시군구" hidden th:field="*{sggNm}">
+                    <input type="text" id="zipNo" name="zipNo" class="form-control" placeholder="우편번호" hidden th:field="*{zipNo}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">회원가입</button>
+            </form>
+        </div>
+    </div>
+</html>

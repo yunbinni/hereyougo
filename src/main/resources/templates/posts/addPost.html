@@ -1,9 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script language="javascript">
         function goPopup(){
             var pop = window.open("http://localhost:8080/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
@@ -22,144 +19,130 @@
             $("#zipNo").val(zipNo);
         }
     </script>
-    <title>여기있소!</title>
-    <!--Bootstrap-->
-    <!--Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!--Font-->
-    <link th:href="@{/css/font.css}" rel="stylesheet" />
 </head>
-<body>
+<div class="container" style="border: solid 2px black;">
 
-    <!-- Header -->
-    <div th:replace="~{fragments/header :: header}"></div><br>
+    <form action="/add" id="form" th:action th:object="${form}" method="post" enctype="multipart/form-data">
 
-    <!-- TODO 아래 DIV의 border는 지울 것! -->
-    <div class="container" style="border: solid 2px black;">
+        <h4 class="d-flex justify-content-center"><label for="title">업종</label></h4>
+        <div class="d-flex justify-content-center">
+            <select id="firstCategory" name="firstCategory" class="form-select-inline">
+                <option value="0">업종 전체</option>
+                <option value="1">외식</option>
+                <option value="2">도소매</option>
+                <option value="3">서비스</option>
+            </select>
 
-        <form action="/add" id="form" th:action th:object="${form}" method="post" enctype="multipart/form-data">
+            <select id="secondCategory" name="secondCategory" class="form-select-inline" th:field="*{categoryId}">
+                <option value="0">(업종 전체)</option>
+                <th:block th:each="secondCategory : ${secondCategories}">
+                    <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}"></option>
+                </th:block>
+            </select>
+        </div><br><br>
 
-            <h4 class="d-flex justify-content-center"><label for="title">업종</label></h4>
-            <div class="d-flex justify-content-center">
-                <select id="firstCategory" name="firstCategory" class="form-select-inline">
-                    <option value="0">업종 전체</option>
-                    <option value="1">외식</option>
-                    <option value="2">도소매</option>
-                    <option value="3">서비스</option>
-                </select>
-
-                <select id="secondCategory" name="secondCategory" class="form-select-inline" th:field="*{categoryId}">
-                    <option value="0">(업종 전체)</option>
-                    <th:block th:each="secondCategory : ${secondCategories}">
-                        <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}"></option>
-                    </th:block>
-                </select>
-            </div><br><br>
-
-            <h4 class="d-flex justify-content-center"><label for="title">제목</label></h4>
-            <div class="d-flex justify-content-center">
-                <input class="form-control" type="text" id="title" name="title" placeholder="제목을 입력하세요." th:field="*{title}">
-            </div><br><br>
+        <h4 class="d-flex justify-content-center"><label for="title">제목</label></h4>
+        <div class="d-flex justify-content-center">
+            <input class="form-control" type="text" id="title" name="title" placeholder="제목을 입력하세요." th:field="*{title}">
+        </div><br><br>
 
 
-            <h4 class="d-flex justify-content-center"><label for="images">사진 업로드</label></h4>
-            <div style="border: 2px solid yellow;">
-                <input type="file" id="images" name="images" multiple="multiple"><br>
-            </div><br><br>
+        <h4 class="d-flex justify-content-center"><label for="images">사진 업로드</label></h4>
+        <div style="border: 2px solid yellow;">
+            <input type="file" id="images" name="images" multiple="multiple"><br>
+        </div><br><br>
 
-            <h4 class="d-flex justify-content-center"><label for="content" class="form-label">내용</label></h4>
-            <div class="d-flex justify-content-center">
-                <textarea id="content" name="content" class="form-control" rows="5" cols="5" th:field="*{content}"></textarea>
-            </div><br><br>
+        <h4 class="d-flex justify-content-center"><label for="content" class="form-label">내용</label></h4>
+        <div class="d-flex justify-content-center">
+            <textarea id="content" name="content" class="form-control" rows="5" cols="5" th:field="*{content}"></textarea>
+        </div><br><br>
 
-            <h4 class="d-flex justify-content-center"><label for="content" class="form-label">수량</label></h4>
-            <div class="d-flex justify-content-center">
-                <input class="form-control" type="text" id="quantity" name="quantity" placeholder="수량" th:field="*{quantity}">
-            </div><br><br>
+        <h4 class="d-flex justify-content-center"><label for="content" class="form-label">수량</label></h4>
+        <div class="d-flex justify-content-center">
+            <input class="form-control" type="text" id="quantity" name="quantity" placeholder="수량" th:field="*{quantity}">
+        </div><br><br>
 
-            <h4 class="d-flex justify-content-center">위치</h4>
-            <div>
-            <input type="button" onclick="goPopup();" value="주소입력기" />
-                <input type="text" id="roadAddrPart1" name="roadAddrPart1" class="form-control" placeholder="도로명주소" hidden readonly th:field="*{roadAddrPart1}">
-                <input type="text" id="roadAddrPart2" name="roadAddrPart2" class="form-control" placeholder="도로명주소 참고항목" hidden readonly th:field="*{roadAddrPart2}">
-                <input type="text" id="roadFullAddr" name="roadFullAddr" class="form-control" placeholder="도로명주소" readonly th:field="*{roadFullAddr}">
-                <input type="text" id="jibunAddr" name="jibunAddr" class="form-control" placeholder="지번주소" readonly th:field="*{jibunAddr}">
-                <input type="text" id="addrDetail" name="addrDetail" class="form-control" placeholder="상세주소" hidden readonly th:field="*{addrDetail}">
-                <input type="text" id="siNm" name="siNm" class="form-control" placeholder="시도" hidden readonly th:field="*{siNm}">
-                <input type="text" id="sggNm" name="sggNm" class="form-control" placeholder="시군구" hidden readonly th:field="*{sggNm}">
-                <input type="text" id="zipNo" name="zipNo" class="form-control" placeholder="우편번호" hidden readonly th:field="*{zipNo}">
-            </div><br><br>
+        <h4 class="d-flex justify-content-center">위치</h4>
+        <div>
+        <input type="button" onclick="goPopup();" value="주소입력기" />
+            <input type="text" id="roadAddrPart1" name="roadAddrPart1" class="form-control" placeholder="도로명주소" hidden readonly th:field="*{roadAddrPart1}">
+            <input type="text" id="roadAddrPart2" name="roadAddrPart2" class="form-control" placeholder="도로명주소 참고항목" hidden readonly th:field="*{roadAddrPart2}">
+            <input type="text" id="roadFullAddr" name="roadFullAddr" class="form-control" placeholder="도로명주소" readonly th:field="*{roadFullAddr}">
+            <input type="text" id="jibunAddr" name="jibunAddr" class="form-control" placeholder="지번주소" readonly th:field="*{jibunAddr}">
+            <input type="text" id="addrDetail" name="addrDetail" class="form-control" placeholder="상세주소" hidden readonly th:field="*{addrDetail}">
+            <input type="text" id="siNm" name="siNm" class="form-control" placeholder="시도" hidden readonly th:field="*{siNm}">
+            <input type="text" id="sggNm" name="sggNm" class="form-control" placeholder="시군구" hidden readonly th:field="*{sggNm}">
+            <input type="text" id="zipNo" name="zipNo" class="form-control" placeholder="우편번호" hidden readonly th:field="*{zipNo}">
+        </div><br><br>
 
-            <div th:replace="~{fragments/kakaomap :: kakaomap}"></div><br><br>
+        <div th:replace="~{fragments/kakaomap :: kakaomap}"></div><br><br>
 
-            <div class="d-flex justify-content-center">
-                <button class="btn btn-warning me-2" onclick="location.href='/'" th:onclick="|location.href='@{/}'|" type="button">취소</button>
-                <button class="btn btn-success" type="submit">등록</button>
-            </div><br><br>
-        </form>
-    </div>
-    <script>
-        // 1차업종 선택시 2차업종 설정
-        $('#firstCategory').change(function() {
-            var first = $('#firstCategory').val();
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-warning me-2" onclick="location.href='/'" th:onclick="|location.href='@{/}'|" type="button">취소</button>
+            <button class="btn btn-success" type="submit">등록</button>
+        </div><br><br>
+    </form>
+</div>
+<script>
+    // 1차업종 선택시 2차업종 설정
+    $('#firstCategory').change(function() {
+        var first = $('#firstCategory').val();
 
-            if(first == "0") {
-                $('#secondCategory option').each(function() {
-        <!--            console.log(this);-->
-                    if($(this).val() == 0) {
-                        $(this).removeAttr('hidden');
-                        $(this).attr('selected', 'selected');
-                    }
-                    else
-                        $(this).attr('hidden', 'hidden');
-                });
-            }
-            if(first == "1") {
-                $('#secondCategory option').each(function() {
-        <!--            console.log(this);-->
-                    if($(this).val() == 1) {
-                        $(this).text('(외식 전체)');
-                        $(this).removeAttr('hidden');
-                        $(this).attr('selected', 'selected');
-                    }
-                    else if($(this).val() > 3 && $(this).val() < 18)
-                        $(this).removeAttr('hidden');
-                    else
-                        $(this).attr('hidden', 'hidden');
-                });
-            }
-            if(first == "2") {
-                $('#secondCategory option').each(function() {
-        <!--            console.log(this);-->
-                    if($(this).val() == 2) {
-                        $(this).text('(도소매 전체)');
-                        $(this).removeAttr('hidden');
-                        $(this).attr('selected', 'selected');
-                    }
-                    else if($(this).val() >= 18 && $(this).val() < 24)
-                        $(this).removeAttr('hidden');
-                    else
-                        $(this).attr('hidden', 'hidden');
-                });
-            }
-            if(first == "3") {
-                $('#secondCategory option').each(function() {
-        <!--            console.log(this);-->
-                    if($(this).val() == 3) {
-                        $(this).text('(서비스 전체)');
-                        $(this).removeAttr('hidden');
-                        $(this).attr('selected', 'selected');
-                    }
-                    else if($(this).val() >= 24)
-                        $(this).removeAttr('hidden');
-                    else
-                        $(this).attr('hidden', 'hidden');
-                });
-            }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        if(first == "0") {
+            $('#secondCategory option').each(function() {
+    <!--            console.log(this);-->
+                if($(this).val() == 0) {
+                    $(this).removeAttr('hidden');
+                    $(this).attr('selected', 'selected');
+                }
+                else
+                    $(this).attr('hidden', 'hidden');
+            });
+        }
+        if(first == "1") {
+            $('#secondCategory option').each(function() {
+    <!--            console.log(this);-->
+                if($(this).val() == 1) {
+                    $(this).text('(외식 전체)');
+                    $(this).removeAttr('hidden');
+                    $(this).attr('selected', 'selected');
+                }
+                else if($(this).val() > 3 && $(this).val() < 18)
+                    $(this).removeAttr('hidden');
+                else
+                    $(this).attr('hidden', 'hidden');
+            });
+        }
+        if(first == "2") {
+            $('#secondCategory option').each(function() {
+    <!--            console.log(this);-->
+                if($(this).val() == 2) {
+                    $(this).text('(도소매 전체)');
+                    $(this).removeAttr('hidden');
+                    $(this).attr('selected', 'selected');
+                }
+                else if($(this).val() >= 18 && $(this).val() < 24)
+                    $(this).removeAttr('hidden');
+                else
+                    $(this).attr('hidden', 'hidden');
+            });
+        }
+        if(first == "3") {
+            $('#secondCategory option').each(function() {
+    <!--            console.log(this);-->
+                if($(this).val() == 3) {
+                    $(this).text('(서비스 전체)');
+                    $(this).removeAttr('hidden');
+                    $(this).attr('selected', 'selected');
+                }
+                else if($(this).val() >= 24)
+                    $(this).removeAttr('hidden');
+                else
+                    $(this).attr('hidden', 'hidden');
+            });
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

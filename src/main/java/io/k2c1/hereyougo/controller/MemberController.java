@@ -29,12 +29,19 @@ public class MemberController {
     /***
      * 회원가입
      */
+    @GetMapping("/join")
+    public String joinForm(@ModelAttribute("joinForm") JoinForm joinForm) {
+//        memberService.join(joinForm);
+        return "members/join";
+    }
+
     @PostMapping("/join")
     public String join(JoinForm joinForm){
         memberService.join(joinForm);
 
         return "redirect:/login";
     }
+
     /***
      * 회원정보 수정 페이지로 이동
      * TODO
@@ -73,7 +80,7 @@ public class MemberController {
     /***
      * 회원정보 조회
      */
-    @GetMapping("/")
+    @GetMapping("/mypage")
     public String mypage(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model)
@@ -81,7 +88,7 @@ public class MemberController {
         MyPageForm memberInfo = memberService.mypage(loginMember.getId());
         model.addAttribute("member", loginMember);
         model.addAttribute("mypage", memberInfo);
-        return "member/myPage";
+        return "members/myPage";
     }
 
     /***

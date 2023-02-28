@@ -32,6 +32,8 @@ public class Post
 
     private Integer quantity; // 남은 수량
 
+    private Integer reserveQuantity; // 예약 수량
+
     private Integer recommend; // 추천 수
 
     @Embedded

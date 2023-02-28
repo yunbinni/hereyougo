@@ -1,68 +1,48 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>여기있소!</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
+    <div class="chatRoom-container">
+        <div class="chatRoomList-container">
+            <div class="sub-title">채팅 목록</div>
 
-    <!--Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+            <div class="chatroom-list">
+                <div class="card" th:each="chat : ${chatRoomList}">
+                    <!--                <div class="card-header">-->
+                    <!--                    <span th:text="${chat.id}"></span>-->
+                    <!--                </div>-->
+                    <a class="chat-link" th:href="@{/chat/{roomId}(roomId = ${chat.id})}">
+                        <div class="card-body">
+                            <div class="profile-image">
+                                <img src="https://i.pinimg.com/originals/37/66/bd/3766bd2da443c2cca359ae87cf98b4a2.png"/>
+                            </div>
+                            <!--                    <a th:href="@{/chat/{roomId}(roomId = ${chat.id})}"><h5 class="card-title" th:text="${chat.post.title}"></h5></a>-->
+                            <div class="chat-info">
+                                <div th:if="${loginMember.id == chat.writerId}" class="card-text nickname" th:text="${chat.memberNickname}"></div>
 
-    <link th:href="@{/css/font.css}" rel="stylesheet"/>
-    <link th:href="@{/css/chat/chatRoomList.css}" rel="stylesheet"/>
+                                <div th:if="${loginMember.id != chat.writerId}" class="card-text nickname" th:text="${chat.writerNickname}"></div>
 
-</head>
-<body>
-<div th:replace="~{fragments/header :: header}"></div>
-<div class="chatRoom-container">
-    <div class="chatRoomList-container">
-        <div class="sub-title">채팅 목록</div>
-
-        <div class="chatroom-list">
-            <div class="card" th:each="chat : ${chatRoomList}">
-                <!--                <div class="card-header">-->
-                <!--                    <span th:text="${chat.id}"></span>-->
-                <!--                </div>-->
-                <a class="chat-link" th:href="@{/chat/{roomId}(roomId = ${chat.id})}">
-                    <div class="card-body">
-                        <div class="profile-image">
-                            <img src="https://i.pinimg.com/originals/37/66/bd/3766bd2da443c2cca359ae87cf98b4a2.png"/>
+                                <div class="card-text message" th:text="${chat.resentMessage}"></div>
+                                <div class="card-text post-title"><span>제목 : </span><span th:text="${chat.post.title}"></span></div>
+                            </div>
+                            <div th:if="${chat.resentDate != null}" class="card-text chat-datetime">
+                                <th:block th:with="dateTime=${chat.resentDate}">
+    <!--                            <span th:text="${chat.resentDate}"></span>-->
+                                    <p class="chat-date"><span th:text="${#temporals.format(dateTime, 'yyyy-MM-dd')}"></span></p>
+                                    <p class="chat-time"><span th:text="${#temporals.format(dateTime, 'HH:mm')}"></span></p>
+                                </th:block>
+                            </div>
                         </div>
-                        <!--                    <a th:href="@{/chat/{roomId}(roomId = ${chat.id})}"><h5 class="card-title" th:text="${chat.post.title}"></h5></a>-->
-                        <div class="chat-info">
-                            <div th:if="${loginMember.id == chat.writerId}" class="card-text nickname" th:text="${chat.memberNickname}"></div>
-
-                            <div th:if="${loginMember.id != chat.writerId}" class="card-text nickname" th:text="${chat.writerNickname}"></div>
-
-                            <div class="card-text message" th:text="${chat.resentMessage}"></div>
-                            <div class="card-text post-title"><span>제목 : </span><span th:text="${chat.post.title}"></span></div>
-                        </div>
-                        <div th:if="${chat.resentDate != null}" class="card-text chat-datetime">
-                            <th:block th:with="dateTime=${chat.resentDate}">
-<!--                            <span th:text="${chat.resentDate}"></span>-->
-                                <p class="chat-date"><span th:text="${#temporals.format(dateTime, 'yyyy-MM-dd')}"></span></p>
-                                <p class="chat-time"><span th:text="${#temporals.format(dateTime, 'HH:mm')}"></span></p>
-                            </th:block>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-
-<script>
-    window.onload = function(){
-        var length = $(".chatroom-list").children().length;
-        if(length < 1){
-            $(".chatroom-list").append('<div class="chatroom-empty"><div class="empty-message">채팅목록이 없습니다😢</div></div>');
+    <script>
+        window.onload = function(){
+            var length = $(".chatroom-list").children().length;
+            if(length < 1){
+                $(".chatroom-list").append('<div class="chatroom-empty"><div class="empty-message">채팅목록이 없습니다😢</div></div>');
+            }
         }
-    }
-</script>
-</body>
+    </script>
+    </body>
 </html>

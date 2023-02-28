@@ -17,7 +17,7 @@ public class LoginCheckFilter implements Filter
             "/login", "/logout", "/join",
             "/jusoPopup", "/members/join", "/members/login","https://business.juso.go.kr/*",
             "/categories/child", "/posts/filtered",
-            "favicon.ico", "/css/*", "/font/*", "/images/*"
+            "favicon.ico", "/css/*", "/js/*", "/font/*", "/images/*"
     };
 
 
@@ -30,7 +30,6 @@ public class LoginCheckFilter implements Filter
 
         try
         {
-            log.info("인증 체크 필터 시작 {}", requestURI);
             HttpSession session = httpRequest.getSession(false);
 
             if(isLoginCheckPath(requestURI))

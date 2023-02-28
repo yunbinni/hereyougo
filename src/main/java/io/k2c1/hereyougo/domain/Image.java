@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
+@NoArgsConstructor
 public class Image {
 
     @Id
@@ -19,4 +18,12 @@ public class Image {
 
     @ManyToOne(cascade = CascadeType.PERSIST) @JoinColumn(name = "post_id")
     private Post post;
+
+    public Image(String storedFilename, String originalFilename, Post post) {
+        this.storedFilename = storedFilename;
+        this.originalFilename = originalFilename;
+        this.post = post;
+
+        post.addImage(this);
+    }
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -42,8 +43,14 @@ public class Post
     private LocalDateTime timestamp; // 작성일/시각
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "post")
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
+
+    public void addImage(Image image) {
+        this.images.add(image);
+        image.setPost(this);
+    }
 
     public void plusViews() {
         this.views++;

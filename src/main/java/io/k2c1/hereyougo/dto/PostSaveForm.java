@@ -31,5 +31,5 @@ public class PostSaveForm
     private String zipNo;
 
     @Size(max = 5, message = "이미지는 최대 5개까지만 첨부할 수 있습니다.")
-    private List<MultipartFile> images;
+    private List<MultipartFile> files;
 }

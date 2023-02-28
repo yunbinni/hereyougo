@@ -2,7 +2,6 @@ package io.k2c1.hereyougo.config;
 
 import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,8 +17,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileUploader {
 
-    private final ImageRepository imageRepository;
-
     @Value("${file.dir}")
     private String fileDir;
 
@@ -30,10 +27,7 @@ public class FileUploader {
         String storedFilename = createStoredFilename(orignalFilename);
         multipartFile.transferTo(new File(getFullPath(storedFilename)));
 
-        Image image = new Image(storedFilename, orignalFilename, post);
-        imageRepository.save(image);
-
-        return image;
+        return new Image(storedFilename, orignalFilename, post);
     }
 
     public List<Image> uploadFiles(List<MultipartFile> multipartFiles, Post post) throws IOException {

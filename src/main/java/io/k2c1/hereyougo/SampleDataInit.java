@@ -1,11 +1,9 @@
 package io.k2c1.hereyougo;
 
 import io.k2c1.hereyougo.controller.PostController;
-import io.k2c1.hereyougo.domain.Address;
-import io.k2c1.hereyougo.domain.Category;
-import io.k2c1.hereyougo.domain.Member;
-import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.domain.*;
 import io.k2c1.hereyougo.repository.CategoryRepository;
+import io.k2c1.hereyougo.repository.ImageRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.CategoryService;
@@ -22,6 +20,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,12 +32,9 @@ import java.util.List;
 @Component
 public class SampleDataInit {
 
-    @Autowired
     public final MemberRepository memberRepository;
-    @Autowired
     public final PostRepository postRepository;
-
-    @Autowired
+    public final ImageRepository imageRepository;
     public final CategoryRepository categoryRepository;
 
     @Autowired
@@ -51,6 +47,7 @@ public class SampleDataInit {
             .jibun("경기도 의정부시 금오동 67-1 거성아파트")
             .zipNo("11764")
             .build();
+
     Member member = new Member("test@naver.com", "1234", "testNickname", "요식업", address);
 
     private static long MEMBER_LID = 0L;
@@ -75,61 +72,85 @@ public class SampleDataInit {
 
     Post createNewPost1()
     {
-        return Post.builder()
+        Post post = Post.builder()
                 .writer(member)
-                .title("테스트 제목 1")
-                .content("테스트 내용 1")
+                .title("고깃집 의자 팔아요")
+                .content("10개 있습니다.")
                 .views(0)
-                .quantity(11)
+                .quantity(10)
                 .recommend(5)
                 .address(address)
-                .category(categoryRepository.findById(1L).get())
+                .category(categoryRepository.findById(4L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
+
+//        Image image = new Image("post1.jpg", "post1.jpg", post);
+//        imageRepository.save(image);
+
+        return post;
     }
 
     public Post createNewPost2()
     {
-        return Post.builder()
+        Post post = Post.builder()
                 .writer(member)
-                .title("테스트 제목 2")
-                .content("테스트 내용 2")
+                .title("PC방 중고PC 판매, 출장조립도 해드려요.")
+                .content("설치문의는 01012345678, Windows 클린설치 해드립니다.")
                 .views(5)
                 .quantity(12)
                 .recommend(10)
                 .address(address)
-                .category(categoryRepository.findById(3L).get())
+                .category(categoryRepository.findById(33L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
+
+//        Image image = new Image("post2.jpg", "post2.jpg", post);
+//        imageRepository.save(image);
+
+        return post;
     }
 
     public Post createNewPost3()
     {
-        return Post.builder()
+        Post post = Post.builder()
                 .writer(member)
-                .title("테스트 제목 3")
-                .content("테스트 내용 3")
+                .title("치킨 후라이기 급처")
+                .content("3년 정도 사용했고, 유지관리 꾸준히해서 그런지 아마 앞으로도 오래 쓰실 거예요^^")
                 .views(0)
                 .quantity(13)
                 .recommend(12)
                 .address(address)
-                .category(categoryRepository.findById(3L).get())
+                .category(categoryRepository.findById(2L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
+
+//        Image image = new Image("post3.jpg", "post3.jpg", post);
+//        imageRepository.save(image);
+//
+//        post.addImage(image);
+
+        return post;
     }
 
     public Post createNewPost4()
     {
-        return Post.builder()
+        Post post = Post.builder()
                 .writer(member)
-                .title("테스트 제목 3")
-                .content("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It h")
+                .title("펫샵 케이지")
+                .content("소형 반려동물 전용이구요. 은근 무거워서 택배는 안됩니다!")
                 .views(0)
                 .quantity(18)
                 .recommend(20)
                 .address(address)
-                .category(categoryRepository.findById(3L).get())
+                .category(categoryRepository.findById(39L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
+
+//        Image image = new Image("post4.jpg", "post4.jpg", post);
+//        imageRepository.save(image);
+//
+//        post.addImage(image);
+
+        return post;
     }
 }

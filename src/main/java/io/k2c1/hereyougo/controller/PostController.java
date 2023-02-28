@@ -47,9 +47,7 @@ public class PostController
         model.addAttribute("post", getPost);
         getPost.plusViews();
 
-        for (Image image : getPost.getImages()) {
-            log.info("{}", image.getStoredFilename());
-        }
+        log.info("imageFile: {}", getPost.getImages().get(0).getStoredFilename());
 
         return "posts/post";
     }
@@ -93,18 +91,15 @@ public class PostController
                 .views(0)
                 .quantity(form.getQuantity())
                 .address(address)
+                .recommend(0)
                 .category(categoryService.getCategory(form.getCategoryId()))
                 .build();
 
         Post savedPost = postRepository.save(post);
 
-        List<MultipartFile> images = form.getImages();
-        List<Image> uploadFiles = fileUploader.uploadFiles(images, post);
-        for (Image uploadFile : uploadFiles) {
-            log.info("{} : ", uploadFile);
-        }
-        savedPost.setImages(uploadFiles);
-
+        List<MultipartFile> files = form.getFiles();
+        List<Image> images = fileUploader.uploadFiles(files, post);
+        savedPost.setImages(images);
 
         log.info("id : {}", savedPost.getId());
         redirectAttributes.addAttribute("postId", savedPost.getId());

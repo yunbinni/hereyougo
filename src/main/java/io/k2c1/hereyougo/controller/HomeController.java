@@ -29,31 +29,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HomeController {
 
-    @Autowired
-    private final MemberRepository memberRepository;
-    @Autowired
     private final CategoryService categoryService;
-    @Autowired
     private final PostService postService;
 
-//    @GetMapping("/")
-    public String home(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-        model.addAttribute("parentCategories", categoryService.getParentCategories());
-        model.addAttribute("recentPopularPosts", postService.getRecentPopularPosts());
-        model.addAttribute("secondCategories", categoryService.getAllChildCategories());
-        model.addAttribute("posts", postService.getAllPosts()); // 페이지네이션 필요
+    @GetMapping("/")
+    public String home(HttpServletRequest request, Model model) {
+        model
+                .addAttribute("recentPopularPosts", postService.getRecentPopularPosts())
+                .addAttribute("secondCategories", categoryService.getAllChildCategories())
+                .addAttribute("posts", postService.getAllPosts()); // 페이지네이션 필요
 
         HttpSession session = request.getSession(false);
         if (session == null) return "home";
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        if (loginMember == null) return "home";
-        model.addAttribute("member", loginMember);
+
+        if (loginMember == null)
+            return "home";
+        else
+            model.addAttribute("member", loginMember);
 
         return "home";
-    }
-
-    @GetMapping("/")
-    public String home() {
-        return "tempHome";
     }
 }

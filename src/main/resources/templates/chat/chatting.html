@@ -1,14 +1,6 @@
 <!doctype html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- WebSocket -->
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <!--    <script src="/js/chat_script.js"></script>-->
+<html th:replace="~{layout/base :: base(~{fragments/headerItems :: chatting}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
-    <link th:href="@{/css/chat/chatting.css}" rel="stylesheet"/>
-</head>
 <div id="name-from" class="d-flex align-items-center">
     <div class="container-fluid">
         <div class="row">
@@ -87,9 +79,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<script th:inline="javascript">
+    </div><script th:inline="javascript">
     var stompClient=null
     roomId = [[${roomId}]]
     chatList =  [[${chatList}]]
@@ -260,8 +250,6 @@
             sendChatMessage();
         })
      })
-
-
-
 </script>
+</div>
 </html>

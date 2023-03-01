@@ -83,7 +83,7 @@ public class SampleDataInit {
                 .views(0)
                 .quantity(10)
                 .recommend(5)
-                .address(address1)
+                .address(member1.getAddress())
                 .category(categoryRepository.findById(4L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -103,7 +103,7 @@ public class SampleDataInit {
                 .views(5)
                 .quantity(12)
                 .recommend(10)
-                .address(address1)
+                .address(member1.getAddress())
                 .category(categoryRepository.findById(33L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -117,13 +117,13 @@ public class SampleDataInit {
     public Post createNewPost3()
     {
         Post post = Post.builder()
-                .writer(member1)
+                .writer(member2)
                 .title("치킨 후라이기 급처")
                 .content("3년 정도 사용했고, 유지관리 꾸준히해서 그런지 아마 앞으로도 오래 쓰실 거예요^^")
                 .views(0)
                 .quantity(13)
                 .recommend(12)
-                .address(address1)
+                .address(member2.getAddress())
                 .category(categoryRepository.findById(2L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -139,13 +139,13 @@ public class SampleDataInit {
     public Post createNewPost4()
     {
         Post post = Post.builder()
-                .writer(member1)
+                .writer(member2)
                 .title("펫샵 케이지")
                 .content("소형 반려동물 전용이구요. 은근 무거워서 택배는 안됩니다!")
                 .views(0)
                 .quantity(18)
                 .recommend(20)
-                .address(address1)
+                .address(member2.getAddress())
                 .category(categoryRepository.findById(39L).get())
                 .timestamp(LocalDateTime.now())
                 .build();

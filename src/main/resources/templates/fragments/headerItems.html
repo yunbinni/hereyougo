@@ -3,8 +3,14 @@
 <link th:fragment="home" th:href="@{/css/home.css}" rel="stylesheet" />
 
 <link th:fragment="login" th:href="@{/css/login.css}" rel="stylesheet" />
+
 <link th:fragment="mypage" th:href="@{/css/member/mypage.css}" rel="stylesheet" />
 
 <link th:fragment="postList" th:href="@{/css/post/postList.css}" rel="stylesheet" />
 
 <link th:fragment="chatRoomList" th:href="@{/css/chat/chatRoomList.css}" rel="stylesheet" />
+
+<th:block th:fragment="myPage">
+    <link th:href="@{/css/member/mypage.css}" rel="stylesheet" />
+    <link th:href="@{/css/post/postList.css}" rel="stylesheet" />
+</th:block>

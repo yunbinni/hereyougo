@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public interface PostRepository extends JpaRepository<Post, Long>
 {
     List<Post> findByWriter_Id(Long memberId);
+
     @Modifying
     @Query("delete from Post p where p.writer = :writer ")
     void deleteByWriter(@Param("writer") Member member);

@@ -46,7 +46,7 @@ public class Post
 
     @JsonIgnore
     @Builder.Default
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
 
     public void addImage(Image image) {

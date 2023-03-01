@@ -24,7 +24,7 @@ $('document').ready(function() {
   $.each(eval(area0), function() {
    $sido.append("<option value='"+this+"'>"+this+"</option>");
   });
-  $("#sgg").append("<option value=''>시/구/군 선택</option>");
+  $("#sgg").append("<option value='0'>시/구/군 선택</option>");
  });
 
 
@@ -50,20 +50,38 @@ $('document').ready(function() {
 $('#firstCategory').change(function() {
     var first = $('#firstCategory').val();
 
-    if(first == "0") {
-        $('#secondCategory option').each(function() {
-<!--            console.log(this);-->
-            if($(this).val() == 0) {
-                $(this).removeAttr('hidden');
+    if(first == "0") // "업종 전체" 선택
+    {
+        $('#firstCategory option').each(function() {
+            if($(this).val() == 0)
                 $(this).attr('selected', 'selected');
-            }
             else
+                $(this).removeAttr('selected');
+        });
+
+        $('#secondCategory option').each(function()
+        {
+            if($(this).val() == 0) {
+                $(this).attr('selected', 'selected');
+                $(this).removeAttr('hidden');
+            }
+            else {
                 $(this).attr('hidden', 'hidden');
+                $(this).removeAttr('selected');
+            }
         });
     }
-    if(first == "1") {
-        $('#secondCategory option').each(function() {
-<!--            console.log(this);-->
+    if(first == "1")
+    {
+        $('#firstCategory option').each(function() {
+            if($(this).val() == 1)
+                $(this).attr('selected', 'selected');
+            else
+                $(this).removeAttr('selected');
+        });
+
+        $('#secondCategory option').each(function()
+        {
             if($(this).val() == 1) {
                 $(this).text('(외식 전체)');
                 $(this).removeAttr('hidden');
@@ -71,13 +89,23 @@ $('#firstCategory').change(function() {
             }
             else if($(this).val() > 3 && $(this).val() < 18)
                 $(this).removeAttr('hidden');
-            else
+            else {
                 $(this).attr('hidden', 'hidden');
+                $(this).removeAttr('selected');
+            }
         });
     }
-    if(first == "2") {
-        $('#secondCategory option').each(function() {
-<!--            console.log(this);-->
+    if(first == "2")
+    {
+        $('#firstCategory option').each(function() {
+            if($(this).val() == 2)
+                $(this).attr('selected', 'selected');
+            else
+                $(this).removeAttr('selected');
+        });
+
+        $('#secondCategory option').each(function()
+        {
             if($(this).val() == 2) {
                 $(this).text('(도소매 전체)');
                 $(this).removeAttr('hidden');
@@ -85,13 +113,23 @@ $('#firstCategory').change(function() {
             }
             else if($(this).val() >= 18 && $(this).val() < 24)
                 $(this).removeAttr('hidden');
-            else
+            else {
                 $(this).attr('hidden', 'hidden');
+                $(this).removeAttr('selected');
+            }
         });
     }
-    if(first == "3") {
-        $('#secondCategory option').each(function() {
-<!--            console.log(this);-->
+    if(first == "3")
+    {
+        $('#firstCategory option').each(function() {
+            if($(this).val() == 3)
+                $(this).attr('selected', 'selected');
+            else
+                $(this).removeAttr('selected');
+        });
+
+        $('#secondCategory option').each(function()
+        {
             if($(this).val() == 3) {
                 $(this).text('(서비스 전체)');
                 $(this).removeAttr('hidden');
@@ -99,8 +137,10 @@ $('#firstCategory').change(function() {
             }
             else if($(this).val() >= 24)
                 $(this).removeAttr('hidden');
-            else
+            else {
                 $(this).attr('hidden', 'hidden');
+                $(this).removeAttr('selected');
+            }
         });
     }
 });

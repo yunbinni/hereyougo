@@ -138,7 +138,6 @@ public class PostController
             @RequestParam("categoryId") Long categoryId,
             Model model
     ) {
-        log.info("categoryId = {}", categoryId);
         List<Post> posts = postRepository.findAll().stream()
                 .filter(post -> {
                     if(sido.equals("시/도 전체")) return true;
@@ -157,6 +156,10 @@ public class PostController
                 })
                 .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
                 .collect(Collectors.toList());
+
+        log.info("sido = {}", sido);
+        log.info("sgg = {}", sgg);
+        log.info("categoryId = {}", categoryId);
 
         model.addAttribute("posts", posts);
 

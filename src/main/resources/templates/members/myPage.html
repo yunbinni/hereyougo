@@ -1,4 +1,4 @@
-<!DOCTYPE html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: mypage}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: myPage}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
 <div class="mypage-container"><br>
     <div id ="root" th:object="${mypage}">
@@ -82,28 +82,7 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div><script th:inline="javascript" th:src="@{/js/members/myPage.js}"></script>
     </div>
-    <script th:inline="javascript">
-    function removeFavoriteCategory(id){
-        var result = confirm("삭제하시겠습니까?");
-
-        if(result){
-            var categoryId = id
-            const data = {
-                categoryId : categoryId
-            }
-
-            $.ajax({
-                url: "/favorites/delete/"+ id,
-                data : data,
-                type: "POST",
-            }).done(function (data){
-                alert('삭제되었습니다')
-                location.reload();
-            });
-        }
-    }
-</script>
 </div>
 </html>

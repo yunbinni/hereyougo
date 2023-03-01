@@ -1,4 +1,4 @@
-.nav-item a {
+nav button a, nav button p {
     color: #fff;
     text-decoration: none;
     outline: none;
@@ -47,4 +47,9 @@
 
 a.dropdown-item {
     color: #000;
+}
+
+footer a {
+    text-decoration: none;
+    color: blue;
 }

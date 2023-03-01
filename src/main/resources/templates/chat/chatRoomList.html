@@ -1,48 +1,39 @@
-<!doctype html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
-    <div class="chatRoom-container">
-        <div class="chatRoomList-container">
-            <div class="sub-title">채팅 목록</div>
+<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: chatRoomList}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
-            <div class="chatroom-list">
-                <div class="card" th:each="chat : ${chatRoomList}">
-                    <!--                <div class="card-header">-->
-                    <!--                    <span th:text="${chat.id}"></span>-->
-                    <!--                </div>-->
-                    <a class="chat-link" th:href="@{/chat/{roomId}(roomId = ${chat.id})}">
-                        <div class="card-body">
-                            <div class="profile-image">
-                                <img src="https://i.pinimg.com/originals/37/66/bd/3766bd2da443c2cca359ae87cf98b4a2.png"/>
-                            </div>
-                            <!--                    <a th:href="@{/chat/{roomId}(roomId = ${chat.id})}"><h5 class="card-title" th:text="${chat.post.title}"></h5></a>-->
-                            <div class="chat-info">
-                                <div th:if="${loginMember.id == chat.writerId}" class="card-text nickname" th:text="${chat.memberNickname}"></div>
-
-                                <div th:if="${loginMember.id != chat.writerId}" class="card-text nickname" th:text="${chat.writerNickname}"></div>
-
-                                <div class="card-text message" th:text="${chat.resentMessage}"></div>
-                                <div class="card-text post-title"><span>제목 : </span><span th:text="${chat.post.title}"></span></div>
-                            </div>
-                            <div th:if="${chat.resentDate != null}" class="card-text chat-datetime">
-                                <th:block th:with="dateTime=${chat.resentDate}">
-    <!--                            <span th:text="${chat.resentDate}"></span>-->
-                                    <p class="chat-date"><span th:text="${#temporals.format(dateTime, 'yyyy-MM-dd')}"></span></p>
-                                    <p class="chat-time"><span th:text="${#temporals.format(dateTime, 'HH:mm')}"></span></p>
-                                </th:block>
-                            </div>
+<div class="chatRoom-container">
+    <div class="chatRoomList-container">
+        <div class="sub-title">채팅 목록</div>
+        <div class="chatroom-list">
+            <div class="card" th:each="chat : ${chatRoomList}">
+                <!--                <div class="card-header">-->
+                <!--                    <span th:text="${chat.id}"></span>-->
+                <!--                </div>-->
+                <a class="chat-link" th:href="@{/chat/{roomId}(roomId = ${chat.id})}">
+                    <div class="card-body">
+                        <div class="profile-image">
+                            <img src="https://i.pinimg.com/originals/37/66/bd/3766bd2da443c2cca359ae87cf98b4a2.png"/>
                         </div>
-                    </a>
-                </div>
+                        <!--                    <a th:href="@{/chat/{roomId}(roomId = ${chat.id})}"><h5 class="card-title" th:text="${chat.post.title}"></h5></a>-->
+                        <div class="chat-info">
+                            <div th:if="${loginMember.id == chat.writerId}" class="card-text nickname" th:text="${chat.memberNickname}"></div>
+
+                            <div th:if="${loginMember.id != chat.writerId}" class="card-text nickname" th:text="${chat.writerNickname}"></div>
+
+                            <div class="card-text message" th:text="${chat.resentMessage}"></div>
+                            <div class="card-text post-title"><span>제목 : </span><span th:text="${chat.post.title}"></span></div>
+                        </div>
+                        <div th:if="${chat.resentDate != null}" class="card-text chat-datetime">
+                            <th:block th:with="dateTime=${chat.resentDate}">
+<!--                            <span th:text="${chat.resentDate}"></span>-->
+                                <p class="chat-date"><span th:text="${#temporals.format(dateTime, 'yyyy-MM-dd')}"></span></p>
+                                <p class="chat-time"><span th:text="${#temporals.format(dateTime, 'HH:mm')}"></span></p>
+                            </th:block>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
-    <script>
-        window.onload = function(){
-            var length = $(".chatroom-list").children().length;
-            if(length < 1){
-                $(".chatroom-list").append('<div class="chatroom-empty"><div class="empty-message">채팅목록이 없습니다😢</div></div>');
-            }
-        }
-    </script>
-    </body>
+    </div><br><br>
+    <script th:src="@{/js/chat/chatRoomList.js}"></script>
+</div>
 </html>

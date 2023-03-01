@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: mypage}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+
 <div class="mypage-container"><br>
     <div id ="root" th:object="${mypage}">
         <h2 class="page-title">마이페이지</h2>

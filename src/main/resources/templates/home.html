@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
-<div class="container" style="border: 1px solid black;"><br>
+<!DOCTYPE html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: home}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
-    <h4>최근 인기글</h4><br>
+<div class="container"><br>
+
+    <h3>최근 인기글</h3><br>
     <ul class="list-group tab-pane fade show active tabCon" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="post-item" th:each="post : ${recentPopularPosts}">
             <li class="list-group-item" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
@@ -24,14 +24,14 @@
         </div>
     </ul><br><br>
 
-    <h4>내 주변 보기</h4>
+    <h3>내 주변 보기</h3>
     <div class="d-flex justify-content-center">
         <div id="map" style="width: 600px; height: 500px; border: 2px solid green"></div>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f1ad9b5adce2cf7e772b667dde656195&libraries=services"></script>
         <script type="text/javascript" th:src="@{/js/home/kakaomap.js}" th:inline="javascript"></script>
     </div><br><br>
 
-    <br><h4>전체 기부참여 보기</h4><br>
+    <h3>전체 기부참여 보기</h3><br>
     <div th:onchange="getFilteredPost()">
         <select id="sido" name="sido" class="form-select-inline">
         </select>

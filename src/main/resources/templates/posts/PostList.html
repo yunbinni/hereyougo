@@ -1,5 +1,4 @@
-<!doctype html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: postList}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 <div class="posts-container">
     <div id="root">
         <div class="sub-title">내가 쓴 글 목록</div>

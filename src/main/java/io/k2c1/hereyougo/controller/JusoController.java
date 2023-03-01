@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * TODO 나중에 Controller가 비대해지면, 분류합시다!
- */
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -51,11 +47,5 @@ public class JusoController {
 
         model.addAttribute("jusoApiForm", jusoApiForm);
         return "jusoPopup";
-    }
-
-    @GetMapping("/mapExample")
-    public String mapExample() {
-        return "mapExample";
-
     }
 }

@@ -1,12 +1,10 @@
 package io.k2c1.hereyougo;
 
-import io.k2c1.hereyougo.controller.PostController;
 import io.k2c1.hereyougo.domain.*;
 import io.k2c1.hereyougo.repository.CategoryRepository;
 import io.k2c1.hereyougo.repository.ImageRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
-import io.k2c1.hereyougo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +13,9 @@ import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 개발단계에 쓰일 테스트용 샘플 리소스들을 만들어봤습니다! (잘했죠?)
@@ -40,7 +34,7 @@ public class SampleDataInit {
     @Autowired
     private DataSource dataSource;
 
-    Address address = Address.builder()
+    Address address1 = Address.builder()
             .sido("경기도")
             .sgg("의정부시")
             .doro("경기도 의정부시 상금로 36, 103동 1601호(금오동, 거성아파트)")
@@ -48,7 +42,16 @@ public class SampleDataInit {
             .zipNo("11764")
             .build();
 
-    Member member = new Member("test@naver.com", "1234", "testNickname", "요식업", address);
+    Address address2 = Address.builder()
+            .sido("서울특별시")
+            .sgg("종로구")
+            .doro("서울특별시 종로구 삼봉로 71(수송동), G타워 2층")
+            .jibun("서울특별시 종로구 수송동 156 광화문G타워")
+            .zipNo("03150")
+            .build();
+
+    Member member1 = new Member("test@naver.com", "1234", "test1", "한식", address1);
+    Member member2 = new Member("test2@naver.com", "1234", "test2", "서비스", address2);
 
     private static long MEMBER_LID = 0L;
     private static long POST_LID = 0L;
@@ -60,7 +63,8 @@ public class SampleDataInit {
         // Execute the script using the DataSource
         ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
 
-        memberRepository.save(member);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
         log.info("SAMPLE MEMBER SAVED IN REPO");
 
         postRepository.save(createNewPost1());
@@ -73,13 +77,13 @@ public class SampleDataInit {
     Post createNewPost1()
     {
         Post post = Post.builder()
-                .writer(member)
+                .writer(member1)
                 .title("고깃집 의자 팔아요")
                 .content("10개 있습니다.")
                 .views(0)
                 .quantity(10)
                 .recommend(5)
-                .address(address)
+                .address(address1)
                 .category(categoryRepository.findById(4L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -93,13 +97,13 @@ public class SampleDataInit {
     public Post createNewPost2()
     {
         Post post = Post.builder()
-                .writer(member)
+                .writer(member1)
                 .title("PC방 중고PC 판매, 출장조립도 해드려요.")
                 .content("설치문의는 01012345678, Windows 클린설치 해드립니다.")
                 .views(5)
                 .quantity(12)
                 .recommend(10)
-                .address(address)
+                .address(address1)
                 .category(categoryRepository.findById(33L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -113,13 +117,13 @@ public class SampleDataInit {
     public Post createNewPost3()
     {
         Post post = Post.builder()
-                .writer(member)
+                .writer(member1)
                 .title("치킨 후라이기 급처")
                 .content("3년 정도 사용했고, 유지관리 꾸준히해서 그런지 아마 앞으로도 오래 쓰실 거예요^^")
                 .views(0)
                 .quantity(13)
                 .recommend(12)
-                .address(address)
+                .address(address1)
                 .category(categoryRepository.findById(2L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -135,13 +139,13 @@ public class SampleDataInit {
     public Post createNewPost4()
     {
         Post post = Post.builder()
-                .writer(member)
+                .writer(member1)
                 .title("펫샵 케이지")
                 .content("소형 반려동물 전용이구요. 은근 무거워서 택배는 안됩니다!")
                 .views(0)
                 .quantity(18)
                 .recommend(20)
-                .address(address)
+                .address(address1)
                 .category(categoryRepository.findById(39L).get())
                 .timestamp(LocalDateTime.now())
                 .build();

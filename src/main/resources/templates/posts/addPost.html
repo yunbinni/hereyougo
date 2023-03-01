@@ -1,40 +1,20 @@
-<!doctype html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <script language="javascript">
-        function goPopup(){
-            var pop = window.open("http://localhost:8080/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-            //var pop = window.open("jusoPopup","pop","scrollbars=yes, resizable=yes"); // 모바일 웹
-        }
+<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: addPost1}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
-        function jusoCallBack(roadAddrPart1, roadAddrPart2, roadFullAddr, jibunAddr, addrDetail, siNm, sggNm, zipNo)
-        {
-            $("#roadAddrPart1").val(roadAddrPart1);
-            $("#roadAddrPart2").val(roadAddrPart2);
-            $("#roadFullAddr").val(roadFullAddr);
-            $("#jibunAddr").val(jibunAddr);
-            $("#addrDetail").val(addrDetail);
-            $("#siNm").val(siNm);
-            $("#sggNm").val(sggNm);
-            $("#zipNo").val(zipNo);
-        }
-    </script>
-</head>
-<div class="container" style="border: solid 2px black;">
+<div class="container">
 
     <form action="/add" id="form" th:action th:object="${form}" method="post" enctype="multipart/form-data">
 
         <h4 class="d-flex justify-content-center"><label for="title">업종</label></h4>
         <div class="d-flex justify-content-center">
             <select id="firstCategory" name="firstCategory" class="form-select-inline">
-                <option value="0">업종 전체</option>
+                <option value="0" selected="selected">업종 전체</option>
                 <option value="1">외식</option>
                 <option value="2">도소매</option>
                 <option value="3">서비스</option>
             </select>
 
             <select id="secondCategory" name="secondCategory" class="form-select-inline" th:field="*{categoryId}">
-                <option value="0">(업종 전체)</option>
+                <option value="0" selected>(업종 전체)</option>
                 <th:block th:each="secondCategory : ${secondCategories}">
                     <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}"></option>
                 </th:block>
@@ -82,67 +62,8 @@
             <button class="btn btn-success" type="submit">등록</button>
         </div><br><br>
     </form>
+    <script th:src="@{/js/post/addPost2.js}"></script>
 </div>
-<script>
-    // 1차업종 선택시 2차업종 설정
-    $('#firstCategory').change(function() {
-        var first = $('#firstCategory').val();
-
-        if(first == "0") {
-            $('#secondCategory option').each(function() {
-    <!--            console.log(this);-->
-                if($(this).val() == 0) {
-                    $(this).removeAttr('hidden');
-                    $(this).attr('selected', 'selected');
-                }
-                else
-                    $(this).attr('hidden', 'hidden');
-            });
-        }
-        if(first == "1") {
-            $('#secondCategory option').each(function() {
-    <!--            console.log(this);-->
-                if($(this).val() == 1) {
-                    $(this).text('(외식 전체)');
-                    $(this).removeAttr('hidden');
-                    $(this).attr('selected', 'selected');
-                }
-                else if($(this).val() > 3 && $(this).val() < 18)
-                    $(this).removeAttr('hidden');
-                else
-                    $(this).attr('hidden', 'hidden');
-            });
-        }
-        if(first == "2") {
-            $('#secondCategory option').each(function() {
-    <!--            console.log(this);-->
-                if($(this).val() == 2) {
-                    $(this).text('(도소매 전체)');
-                    $(this).removeAttr('hidden');
-                    $(this).attr('selected', 'selected');
-                }
-                else if($(this).val() >= 18 && $(this).val() < 24)
-                    $(this).removeAttr('hidden');
-                else
-                    $(this).attr('hidden', 'hidden');
-            });
-        }
-        if(first == "3") {
-            $('#secondCategory option').each(function() {
-    <!--            console.log(this);-->
-                if($(this).val() == 3) {
-                    $(this).text('(서비스 전체)');
-                    $(this).removeAttr('hidden');
-                    $(this).attr('selected', 'selected');
-                }
-                else if($(this).val() >= 24)
-                    $(this).removeAttr('hidden');
-                else
-                    $(this).attr('hidden', 'hidden');
-            });
-        }
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>-->
 </body>
 </html>

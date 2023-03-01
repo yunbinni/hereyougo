@@ -1,7 +1,6 @@
-<!doctype html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
-<div class="container" style="border: solid 2px black;">
+<!doctype html><html th:replace="~{layout/base :: base(~{}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
+<div class="container" style="border: solid 2px black;">
     <form action="edit" method="post">
         <div class="d-flex justify-content-center">
             <label for="title">제목</label>

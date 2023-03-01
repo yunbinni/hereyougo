@@ -64,7 +64,7 @@ public class MemberController {
 
         model.addAttribute("member", loginMember);
         model.addAttribute("updateForm", updateForm);
-        return "member/updateMemberForm";
+        return "members/updateMemberForm";
     }
 
     /***

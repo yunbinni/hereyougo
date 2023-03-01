@@ -1,8 +1,5 @@
-<!doctype html>
-<html th:replace="~{layout/base :: base(~{::div})}" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link th:href="@{/css/favorites/favoriteCategoryPage.css}" rel="stylesheet" />
-</head>
+<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: favoriteCategoryPage}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+
 <div class="category-container">
     <div id ="root" >
         <h2 class="page-title">관심 카테고리 등록 페이지</h2>
@@ -29,30 +26,6 @@
             </form>
 
     </div>
-    </div>
+    </div><script th:inline="javascript" th:src="@{/js/category/newFavoriteCategory.js}"></script>
 </div>
-<script th:inline="javascript">
-    function onChangeTest(category){
-        var parentId = category.value;
-        alert(parentId);
-        const data = {
-           parentId:parentId
-        };
-
-        $.ajax({
-             url: "/categories/child",
-             data: data,
-             type: "GET",
-        }).done(function (data){
-             console.log(JSON.stringify(data))
-<!--             alert(JSON.stringify(data))-->
-             var html = '<option value="">중분류</option>';
-             var len = data.length;
-             for ( var i = 0; i < len; i++) {
-                 html += '<option value="' + data[i].id + '">'+ data[i].categoryName + '</option>';
-             }
-                 $('#secondCategory').html(html);
-             });
-        }
-</script>
 </html>

@@ -2,27 +2,6 @@
 $('#firstCategory').change(function() {
     var first = $('#firstCategory').val();
 
-    if(first == "0") // "업종 전체" 선택
-    {
-        $('#firstCategory option').each(function() {
-            if($(this).val() == 0)
-                $(this).attr('selected', 'selected');
-            else
-                $(this).removeAttr('selected');
-        });
-
-        $('#secondCategory option').each(function()
-        {
-            if($(this).val() == 0) {
-                $(this).attr('selected', 'selected');
-                $(this).removeAttr('hidden');
-            }
-            else {
-                $(this).attr('hidden', 'hidden');
-                $(this).removeAttr('selected');
-            }
-        });
-    }
     if(first == "1")
     {
         $('#firstCategory option').each(function() {
@@ -96,23 +75,3 @@ $('#firstCategory').change(function() {
         });
     }
 });
-
-function getFilteredPost() {
-    var sido = $('#sido').val();
-    var sgg = $('#sgg').val();
-    var categoryId = $('#secondCategory').val();
-
-    const data = {
-        sido : sido,
-        sgg : sgg,
-        categoryId : categoryId
-    };
-
-    $.ajax({
-        url: "/posts/filtered",
-        type: "GET",
-        data: data
-    }).done(function(fragment) {
-        $('#postTable').replaceWith(fragment);
-    });
-}

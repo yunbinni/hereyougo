@@ -1,5 +1,6 @@
 <!doctype html>
-<html th:replace="~{layout/base :: base(~{fragments/headerItems :: chatting}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/base :: base(~{fragments/headerItems :: chatting}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 
 <div id="name-from" class="d-flex align-items-center">
     <div class="container-fluid">
@@ -75,11 +76,17 @@
                         <input type="hidden" id="dateTime" name="dateTime">
                     </div>
 
+                    <div class="modal-container">
+                        <p class="sub-title">수량</p>
+                        <input type="number" id="appointmentQuantity" class="appointmentQuantity"/>
+                    </div>
+
                     <button type="button" class="btn btn-primary appoint-btn">등록</button>
                 </div>
             </div>
         </div>
-    </div><script th:inline="javascript">
+    </div>
+    <script th:inline="javascript">
     var stompClient=null
     roomId = [[${roomId}]]
     chatList =  [[${chatList}]]
@@ -220,11 +227,16 @@
     <!-- 약속 잡기 버튼 클릭 시 -->
     $(".appoint-btn").click(function(){
         const memberId = $('#memberId').val()
-        const postId = $('#posstId').val()
+        const postId = $('#postId').val()
+        const appointmentQuantity = $('#appointmentQuantity').val()
 
+        <!-- 약속 날짜-->
         const dateValue = $('#appoint-date').val()
+        <!-- 약속 시간-->
         const timeValue = $('#appoint-time').val()
+        <!--  약속 날짜,시간 병합 -->
         const dateTimeString = dateValue + ' ' + timeValue + ':00';
+
         document.getElementById('dateTime').value = dateTimeString;
 
         const dateTimeValue = $('#dateTime').val()
@@ -232,16 +244,19 @@
         const data = {
            postId : postId,
            memberId : memberId,
-           dateTime: dateTimeValue
+           dateTime: dateTimeValue,
+           appointmentQuantity : appointmentQuantity
         };
 
         $.ajax({
             url : "/appointments/new",
             data : data,
-            type : "POST"
-        }).done(function (data){
-            $('#exampleModal').modal('hide')
-        })
+            type : "POST",
+            success : function (data){
+                alert(data)
+                $('#appointmentModal').modal('hide')
+            }
+        });
     })
 
 
@@ -250,6 +265,7 @@
             sendChatMessage();
         })
      })
-</script>
+
+    </script>
 </div>
 </html>

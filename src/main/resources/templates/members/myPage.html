@@ -32,30 +32,23 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">거래명</th>
-                    <th scope="col">거래자명</th>
-                    <th scope="col">날짜</th>
+                    <th scope="col">거래수량</th>
+                    <th scope="col">약속날짜</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td scope="row">1</td>
-                    <td>냉장고 거래</td>
-                    <td>한혜진</td>
-                    <td>2023-01-28</td>
-                </tr>
-                <tr>
-                    <td scope="row">2</td>
-                    <td>세탁기 거래</td>
-                    <td>송중기</td>
-                    <td>2023-01-28</td>
-                </tr>
-                <tr>
-                    <td scope="row">3</td>
-                    <td>튀김기 거래</td>
-                    <td>박보영</td>
-                    <td>2023-01-28</td>
+                <tr th:each="appointment : ${mypage.appointments}">
+                    <td><a th:href="@{/chat/{roomId}(roomId = ${appointment.chatRoom.id})}"><span th:text="${appointment.post.title}"></span></a></td>
+                    <td th:text="${appointment.wanted.nickname}" scope="row"></td>
+                    <td th:text="${appointment.appointmentQuantity}" scope="row"></td>
+                    <!-- ${#dates.format(item.createDt, 'yyyy-MM-dd HH:mm:ss')}-->
+                    <td th:text="${#temporals.format(appointment.timestamp,'yyyy-MM-dd')}"></td>
+                    <td>
+                        <button class="favorite styled" type="button" th:appointment=${appointment.id}  th:onclick="completeAppointment(this.getAttribute('appointment'))">전달 완료</button>
+                        <button class="favorite styled" type="button" th:appointment=${appointment.id}  th:onclick="cancelAppointment(this.getAttribute('appointment'))">약속 취소</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

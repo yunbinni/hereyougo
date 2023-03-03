@@ -39,7 +39,7 @@ div#root {
     display: grid;
     align-content: center;
     align-self: center;
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
 }
 

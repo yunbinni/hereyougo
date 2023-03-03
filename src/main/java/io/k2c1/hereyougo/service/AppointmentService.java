@@ -86,4 +86,19 @@ public class AppointmentService {
 //        필요해보임
         return appointmentRepository.getAppointments(member, member);
     }
+
+    public void cancelAppointment(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+        Long postId = appointment.getPost().getId();
+        Post post = postRepository.findById(postId).get();
+
+        appointment.setProgress(Progress.CANCEL);
+
+        int reservationQuantity = post.getReservationQuantity();
+        int cancelQuantity = appointment.getAppointmentQuantity();
+
+        log.info("포스트 수량" + post.getReservationQuantity());
+        post.minusReservationQuantity(cancelQuantity);
+        log.info("수량 적어진" + post.getReservationQuantity());
+    }
 }

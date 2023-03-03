@@ -34,3 +34,19 @@ function cancelAppointment(appointmentId){
         });
     }
 }
+
+function completeAppointment(appointmentId){
+    var result = confirm("완료하시겠습니까?");
+
+    if(result){
+        var appointmentId = appointmentId
+
+        $.ajax({
+            url: "/appointments/"+appointmentId+ "/status/complete",
+            type: "PUT",
+        }).done(function (data){
+            alert('완료되었습니다')
+            location.reload();
+        });
+    }
+}

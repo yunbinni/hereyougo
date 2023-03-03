@@ -49,4 +49,10 @@ public class AppointmentController {
     public void cancelAppointmentStatus(@PathVariable("id") Long appointmentId){
         appointmentService.cancelAppointment(appointmentId);
     }
+
+    @ResponseBody
+    @PutMapping("/{id}/status/complete")
+    public void completeAppointment(@PathVariable("id") Long appointmentId){
+        appointmentService.completeAppointment(appointmentId);
+    }
 }

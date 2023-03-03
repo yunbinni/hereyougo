@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long>
 {
-    @Query(value = "SELECT distinct a FROM Appointment a INNER JOIN a.post p WHERE p.writer = :writer_id OR a.wanted = :member_id")
+    @Query(value = "SELECT distinct a FROM Appointment a INNER JOIN a.post p WHERE p.writer = :writer_id OR a.wanted = :member_id order by a.timestamp asc ")
     List<Appointment> getAppointments(@Param("writer_id") Member writer_id, @Param("member_id") Member member_id);
 }

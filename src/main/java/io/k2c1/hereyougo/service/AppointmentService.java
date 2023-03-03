@@ -101,4 +101,22 @@ public class AppointmentService {
         post.minusReservationQuantity(cancelQuantity);
         log.info("수량 적어진" + post.getReservationQuantity());
     }
+
+    public void completeAppointment(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+        Long postId = appointment.getPost().getId();
+        Post post = postRepository.findById(postId).get();
+
+        appointment.setProgress(Progress.DONE);
+
+        int completeQuantity = appointment.getAppointmentQuantity();
+
+        log.info("포스트 수량" + post.getReservationQuantity());
+
+        post.minusReservationQuantity(completeQuantity);
+        post.minusPostQuantity(completeQuantity);
+        log.info("수량 적어진" + post.getReservationQuantity());
+    }
+
+
 }

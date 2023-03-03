@@ -32,9 +32,11 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col"></th>
                     <th scope="col">거래명</th>
                     <th scope="col">거래수량</th>
                     <th scope="col">약속날짜</th>
+                    <th scope="col">거래상태</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -45,10 +47,18 @@
                     <td th:text="${appointment.appointmentQuantity}" scope="row"></td>
                     <!-- ${#dates.format(item.createDt, 'yyyy-MM-dd HH:mm:ss')}-->
                     <td th:text="${#temporals.format(appointment.timestamp,'yyyy-MM-dd')}"></td>
-                    <td>
-                        <button class="favorite styled" type="button" th:appointment=${appointment.id}  th:onclick="completeAppointment(this.getAttribute('appointment'))">전달 완료</button>
-                        <button class="favorite styled" type="button" th:appointment=${appointment.id}  th:onclick="cancelAppointment(this.getAttribute('appointment'))">약속 취소</button>
-                    </td>
+                    <th:block th:switch="${appointment.progress.toString()}">
+                        <td th:case="RESERVING" th:text="예약완료"></td>
+                        <td th:case="CANCEL" th:text="예약취소"></td>
+                        <td th:case="DONE" th:text="전달완료"></td>
+                        <td th:case="*" th:text="Unknown"></td> <!-- default case -->
+                    </th:block>
+                    <th:block th:if="${appointment.progress.toString().equals('RESERVING')}">
+                        <td>
+                            <button class="appointmentStatus styled" type="button" th:appointment=${appointment.id}  th:onclick="completeAppointment(this.getAttribute('appointment'))">전달 완료</button>
+                            <button class="appointmentStatus styled" type="button" th:appointment=${appointment.id}  th:onclick="cancelAppointment(this.getAttribute('appointment'))">약속 취소</button>
+                        </td>
+                    </th:block>
                 </tr>
                 </tbody>
             </table>

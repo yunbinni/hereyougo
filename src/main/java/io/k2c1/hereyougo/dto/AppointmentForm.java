@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AppointmentForm {
+    private Long chatRoomId;
     private Long postId;
     private Long memberId;
     private String dateTime;

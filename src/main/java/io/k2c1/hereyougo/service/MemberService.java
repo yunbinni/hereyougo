@@ -1,9 +1,6 @@
 package io.k2c1.hereyougo.service;
 
-import io.k2c1.hereyougo.domain.Address;
-import io.k2c1.hereyougo.domain.FavoriteCategory;
-import io.k2c1.hereyougo.domain.Member;
-import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.domain.*;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
@@ -101,7 +98,8 @@ public class MemberService {
 
 //        키워드 목록 Set하기
 //        약속 목록 Set하기
-//        myPageForm.setAppointments();
+        List<Appointment> appointments = appointmentRepository.getAppointments(member, member);
+        myPageForm.setAppointments(appointments);
 
         return myPageForm;
     }

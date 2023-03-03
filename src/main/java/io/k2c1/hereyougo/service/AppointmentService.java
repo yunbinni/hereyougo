@@ -2,10 +2,12 @@ package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.constant.Progress;
 import io.k2c1.hereyougo.domain.Appointment;
+import io.k2c1.hereyougo.domain.ChatRoom;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.AppointmentForm;
 import io.k2c1.hereyougo.repository.AppointmentRepository;
+import io.k2c1.hereyougo.repository.ChatRoomRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Slf4j
 @Transactional
@@ -25,6 +28,10 @@ public class AppointmentService {
     private AppointmentRepository appointmentRepository;
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private ChatRoomRepository chatRoomRepository;
+
     @Autowired
     private MemberRepository memberRepository;
 
@@ -35,17 +42,18 @@ public class AppointmentService {
         Appointment appointment= new Appointment();
 
         Long postId = appointmentForm.getPostId();
+        Long roomId = appointmentForm.getChatRoomId();
+        Long memberId = appointmentForm.getMemberId();
 
         Post post =  postRepository.findById(postId).get();
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+        Member member = memberRepository.findById(memberId).get();
+        log.info("멤버 아이디" + memberId);
 
         int postQuantity = post.getQuantity();
         int reservationQuantity = post.getReservationQuantity(); // 현재 post 예약 수량
         int appointmentQuantity = appointmentForm.getAppointmentQuantity(); // 구매자가 원하는 수량
         int remainQuantity =  postQuantity - reservationQuantity;
-
-        Long memberId = appointmentForm.getMemberId();
-        Member member = memberRepository.findById(memberId).get();
-        log.info("멤버 아이디" + memberId);
 
         String dateString = appointmentForm.getDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -55,6 +63,7 @@ public class AppointmentService {
         if(appointmentQuantity <= remainQuantity ){
 
             appointment.setPost(post);
+            appointment.setChatRoom(chatRoom);
             appointment.setWanted(member);
             appointment.setProgress(Progress.RESERVING);
             appointment.setTimestamp(dateTime);
@@ -71,7 +80,10 @@ public class AppointmentService {
         }
     }
 
-//    public boolean isExceed(){
-//
-//    }
+    public List<Appointment> getAppointments(Long memberId){
+        Member member = memberRepository.findById(memberId).get();
+//        Appointment에 chatRoom id 넣어야되는지 고민 => 약속목록에서 제목 클릭 시 채팅방으로 이동되게하려면
+//        필요해보임
+        return appointmentRepository.getAppointments(member, member);
+    }
 }

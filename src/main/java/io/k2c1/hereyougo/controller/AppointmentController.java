@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -44,5 +42,11 @@ public class AppointmentController {
 
         model.addAttribute("message", message);
         return message;
+    }
+
+    @ResponseBody
+    @PutMapping("/{id}/status/cancel")
+    public void cancelAppointmentStatus(@PathVariable("id") Long appointmentId){
+        appointmentService.cancelAppointment(appointmentId);
     }
 }

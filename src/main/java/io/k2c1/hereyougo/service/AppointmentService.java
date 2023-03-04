@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo.service;
 
+import io.k2c1.hereyougo.constant.PostStatus;
 import io.k2c1.hereyougo.constant.Progress;
 import io.k2c1.hereyougo.domain.Appointment;
 import io.k2c1.hereyougo.domain.ChatRoom;
@@ -116,6 +117,10 @@ public class AppointmentService {
         post.minusReservationQuantity(completeQuantity);
         post.minusPostQuantity(completeQuantity);
         log.info("수량 적어진" + post.getReservationQuantity());
+
+        if(post.getQuantity() == 0){
+            post.setPostStatus(PostStatus.DONATING_DONE);
+        }
     }
 
 

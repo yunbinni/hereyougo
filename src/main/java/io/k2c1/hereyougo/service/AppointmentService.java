@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo.service;
 
+import io.k2c1.hereyougo.constant.PostStatus;
 import io.k2c1.hereyougo.constant.Progress;
 import io.k2c1.hereyougo.domain.Appointment;
 import io.k2c1.hereyougo.domain.ChatRoom;
@@ -101,4 +102,26 @@ public class AppointmentService {
         post.minusReservationQuantity(cancelQuantity);
         log.info("수량 적어진" + post.getReservationQuantity());
     }
+
+    public void completeAppointment(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+        Long postId = appointment.getPost().getId();
+        Post post = postRepository.findById(postId).get();
+
+        appointment.setProgress(Progress.DONE);
+
+        int completeQuantity = appointment.getAppointmentQuantity();
+
+        log.info("포스트 수량" + post.getReservationQuantity());
+
+        post.minusReservationQuantity(completeQuantity);
+        post.minusPostQuantity(completeQuantity);
+        log.info("수량 적어진" + post.getReservationQuantity());
+
+        if(post.getQuantity() == 0){
+            post.setPostStatus(PostStatus.DONATING_DONE);
+        }
+    }
+
+
 }

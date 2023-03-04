@@ -1,5 +1,8 @@
 package io.k2c1.hereyougo.controller;
 
+import io.k2c1.hereyougo.constant.SessionConst;
+import io.k2c1.hereyougo.domain.Appointment;
+import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.AppointmentForm;
 import io.k2c1.hereyougo.service.AppointmentService;
@@ -9,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -49,4 +54,22 @@ public class AppointmentController {
     public void cancelAppointmentStatus(@PathVariable("id") Long appointmentId){
         appointmentService.cancelAppointment(appointmentId);
     }
+
+    @ResponseBody
+    @PutMapping("/{id}/status/complete")
+    public void completeAppointment(@PathVariable("id") Long appointmentId){
+        appointmentService.completeAppointment(appointmentId);
+    }
+
+    @GetMapping("/list")
+    public String getAppointments(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        Long memberId = loginMember.getId();
+        List<Appointment> appointments = appointmentService.getAppointments(memberId);
+        model.addAttribute("member", loginMember);
+        model.addAttribute("member", loginMember);
+        model.addAttribute("appointments", appointments);
+        return "appointment/AppointmentList";
+    }
+
+
 }

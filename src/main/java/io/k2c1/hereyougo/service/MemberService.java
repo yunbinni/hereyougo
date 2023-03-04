@@ -9,6 +9,9 @@ import io.k2c1.hereyougo.repository.FavoriteCategoryRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,7 +93,7 @@ public class MemberService {
         Member member = findMember(memberId);
         myPageForm.setNickname(member.getNickname());
 
-        List<Post> posts = postRepository.findByWriter_Id(memberId);
+        List<Post> posts = postRepository.findFirst10ByWriter_Id(memberId);
         myPageForm.setPosts(posts);
 
         List<FavoriteCategory> favoriteCategories = favoriteCategoryRepository.findByMember_id(memberId);
@@ -98,7 +101,8 @@ public class MemberService {
 
 //        키워드 목록 Set하기
 //        약속 목록 Set하기
-        List<Appointment> appointments = appointmentRepository.getAppointments(member, member);
+        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.ASC, "timestamp");
+        List<Appointment> appointments = appointmentRepository.getAppointmentsLimit5(member, member,pageable);
         myPageForm.setAppointments(appointments);
 
         return myPageForm;

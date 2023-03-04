@@ -40,7 +40,7 @@ body{
      display: grid;
      justify-content: center;
      align-items: center;
-     height: 100vh;
+     min-height: 100vh;
 }
 
 div#root {
@@ -147,4 +147,24 @@ a.addFavoriteBtn {
     font-family: gsans-light;
     font-weight: 600;
     text-align : center;
+    padding: 15px 0px;
+    vertical-align: middle;
+}
+
+td.appointment-title{
+    text-align: left;
+}
+
+td.appointment-title a{
+    color : #000,
+    text-decoration : none;
+}
+
+.appointment-nickname, .appointment-quantity, .appointment-progress{
+    text-align: center;
+}
+
+button.appointment-complete-btn, button.appointment-cancel-btn {
+    padding: 10px 8px;
+    font-size: 13px;
 }

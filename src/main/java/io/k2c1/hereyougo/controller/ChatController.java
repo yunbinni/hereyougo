@@ -74,7 +74,6 @@ public class ChatController {
         model.addAttribute("roomId", roomId);
         model.addAttribute("writerId", chatRoom.getWriterId());
         model.addAttribute("chatRoom", chatRoom);
-        model.addAttribute("loginMember", loginMember);
         model.addAttribute("post", post);
         model.addAttribute("chatList", chatList);
         model.addAttribute("member", loginMember);

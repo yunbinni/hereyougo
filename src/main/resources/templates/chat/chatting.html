@@ -33,7 +33,7 @@
                         <div class="input-group">
                             <input type="hidden" id="postId" th:value="${post.id}">
                             <input type="hidden" id="chatRoomId" th:value="${roomId}">
-                            <input type="hidden" id="memberId" th:value="${loggedMemberId}">
+                            <input type="hidden" id="memberId" th:value="${member.id}">
                             <input type="hidden" id="writerId" th:value="${writerId}">
                             <input type="text" placeholder="메시지를 입력하세요" id="message" autofocus class="form-control">
                             <div class="input-group-append">
@@ -130,12 +130,6 @@
                 showChatMessage(JSON.parse(chatMessage.body))
 
                 var length = $(".chatMessage-container").children().length;
-
-                if(length < 1){
-                    $(".chatMessage-container").append('<div class="chatMessage-empty"><div class="empty-message">메시지 내역이 없습니다 ✉</div></div>');
-                }else{
-                    $(".chatMessage-empty").hide();
-                }
             })
         })
     }
@@ -152,9 +146,10 @@
 
         console.log('채팅방 메시지 보내지는지')
         roomId = $("#chatRoomId").val()
-
+        memberId =  $("#memberId").val()
         var length = $(".chatMessage-empty").children().length;
 
+        console.log("로그인한 멤버 아이디" + memberId);
         let jsonOb={
             chatRoomId : $("#chatRoomId").val(),
             sender : $("#memberId").val(),

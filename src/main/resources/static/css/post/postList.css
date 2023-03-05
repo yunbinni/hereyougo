@@ -36,8 +36,6 @@ body{
 }
 
 div#root {
-    display: grid;
-    align-content: center;
     align-self: center;
     width: 100%;
     margin: 0 auto;
@@ -46,8 +44,9 @@ div#root {
 /* 글 목록 전체 */
 .posts-container{
      display: grid;
-     justify-content: center;
      align-items: center;
+     width : 80%;
+     margin : 0 auto;
      margin-top: 5vh;
 }
 
@@ -87,4 +86,8 @@ div#root {
 
 .table-header.num{
     width : 15%;
+}
+
+.write-btn{
+    color : #fff;
 }

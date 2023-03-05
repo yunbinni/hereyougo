@@ -1,0 +1,93 @@
+
+@font-face {
+    font-family: 'gsans';
+    src: url('/font/GmarketSansTTFMedium.woff2') format('woff2'),
+        url('/font/GmarketSansTTFMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gsans-light';
+    src: url('/font/GmarketSansTTFLight.woff2') format('woff2'),
+        url('/font/GmarketSansTTFLight.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+
+}
+
+body{
+ font-family: gsans;
+}
+
+/* 페이지 타이틀 */
+.page-title{
+    text-align : center;
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+div#root {
+    align-self: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* 글 목록 전체 */
+.appointments-container{
+     display: grid;
+     align-items: center;
+     width : 80%;
+     margin : 0 auto;
+     margin-top: 5vh;
+}
+
+.table-container{
+    min-height : 500px;
+}
+
+/* 소제목 */
+.sub-title {
+    font-size: 1.1em;
+    margin-bottom: 2vh;
+}
+
+
+/* 게시글 제목 */
+.appointments-container table td a {
+    color: black;
+    text-underline-position: under;
+}
+
+
+.btn-container{
+    text-align : right;
+}
+
+.table-header.num{
+    width : 5%;
+}
+
+.table-header.title{
+    width : 20%;
+}
+
+.table-header.num{
+    width : 60%;
+}
+
+.table-header.num{
+    width : 15%;
+}
+
+.write-btn{
+    color : #fff;
+}

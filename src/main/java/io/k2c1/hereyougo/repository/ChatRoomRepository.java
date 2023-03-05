@@ -16,6 +16,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     /**
      * 채팅 목록 조회
      */
-    public List<ChatRoom> findByWriterIdOrMember_Id(Long writerId, Long memberId);
+    public List<ChatRoom> findByWriterIdOrMember_IdOrderByResentDateDesc(Long writerId, Long memberId);
 
 }

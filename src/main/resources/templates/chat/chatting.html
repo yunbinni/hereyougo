@@ -12,7 +12,9 @@
                         <div class="post-info">
                             <div class="post-thumbnail"><img
                                     src="https://vrthumb.imagetoday.co.kr/2018/07/19/tid269t000652.jpg"></div>
-                            <div class="post-title" th:text="${post.title}"></div>
+                            <div class="post-title">
+                                <a th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.title}"> </a>
+                            </div>
                         </div>
 
                         <!--   약속 잡기 버튼   -->
@@ -181,8 +183,10 @@
                 }
 
                 const dateTimeString = chatList[i].sendDate;
-                const date = new Date(dateTimeString);
-                const sendDate = date.toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/:\d{2}$/, '');
+                var sendDate = dateToKSTDate(dateTimeString)
+<!--                var date = new Date(Date.parse(dateTimeString));-->
+<!--                var options = { timeZone: 'Asia/Seoul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false};-->
+<!--                var sendDate = date.toLocaleString('ko-KR', options);-->
 
                 $(".chatMessage-container").append( containerTag +'<p class="card-text">'+chatList[i].message +'</p><p style="text-align: end;" class="card-text">'+sendDate+'</p></div>')
             }
@@ -190,13 +194,14 @@
      }
 
      function showChatMessage(chatMessage){
-
         console.log("타입"+typeof(chatMessage))
         console.log("날짜" + chatMessage.sendDate);
 
         const dateTimeString = chatMessage.sendDate;
-        const date = new Date(dateTimeString);
-        const sendDate = date.toISOString().replace(/T/, ' ').replace(/\..+/, '').replace(/:\d{2}$/, '');
+        var sendDate = dateToKSTDate(dateTimeString)
+<!--        var date = new Date(Date.parse(dateTimeString));-->
+<!--        var options = { timeZone: 'Asia/Seoul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };-->
+<!--        var sendDate = date.toLocaleString('ko-KR', options);-->
 
         $(".chatMessage-container").append(`<div class="chat-container"><p class="card-text">${chatMessage.message}</p><p style="text-align: end;" class="card-text">${sendDate}</p>`)
 
@@ -217,6 +222,14 @@
 
     function hideModal() {
         $('#staticBackdrop').hide();
+    }
+
+    function dateToKSTDate(sendDate){
+        var date = new Date(Date.parse(sendDate));
+        var options = { timeZone: 'Asia/Seoul', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+        var sendDate = date.toLocaleString('ko-KR', options);
+
+        return sendDate;
     }
 
     <!-- 약속 잡기 버튼 클릭 시 -->

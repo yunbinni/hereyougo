@@ -48,6 +48,9 @@ button.btn.btn-outline-primary {
 
 .chatMessage-container{
     min-height: 500px;
+    max-height: 500px;
+    overflow : scroll;
+    margin-bottom: 4vh;
 }
 
 .chat-container{
@@ -116,6 +119,11 @@ button#send {
 .post-info .post-title {
     align-self: center;
     margin-left: 2vw;
+}
+
+.post-title a{
+    color : #000;
+    text-decoration : none;
 }
 
  /* 약속잡기 팝업창*/

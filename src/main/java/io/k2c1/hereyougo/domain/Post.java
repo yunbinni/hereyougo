@@ -33,6 +33,7 @@ public class Post
 
     private Integer quantity; // 남은 수량
 
+    @ColumnDefault("0")
     private Integer reservationQuantity; // 예약 수량
 
     private Integer recommend; // 추천 수

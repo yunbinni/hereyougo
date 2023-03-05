@@ -1,8 +1,8 @@
 function onChangeTest(category){
 var parentId = category.value;
-alert(parentId);
+
 const data = {
-   parentId:parentId
+   firstCategoryId:parentId
 };
 
 $.ajax({
@@ -10,8 +10,6 @@ $.ajax({
      data: data,
      type: "GET",
 }).done(function (data){
-     console.log(JSON.stringify(data))
-<!--             alert(JSON.stringify(data))-->
      var html = '<option value="">중분류</option>';
      var len = data.length;
      for ( var i = 0; i < len; i++) {

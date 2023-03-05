@@ -42,7 +42,7 @@ div#root {
 }
 
 /* 글 목록 전체 */
-.posts-container{
+.appointments-container{
      display: grid;
      align-items: center;
      width : 80%;
@@ -62,7 +62,7 @@ div#root {
 
 
 /* 게시글 제목 */
-.posts-container table td a {
+.appointments-container table td a {
     color: black;
     text-underline-position: under;
 }

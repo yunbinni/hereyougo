@@ -2,7 +2,6 @@ package io.k2c1.hereyougo.controller;
 
 import io.k2c1.hereyougo.constant.SessionConst;
 import io.k2c1.hereyougo.domain.Category;
-import io.k2c1.hereyougo.domain.FavoriteCategory;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.dto.CategoryForm;
 import io.k2c1.hereyougo.dto.FavoriteCategoryForm;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping("/favorites")
 @Controller
@@ -68,7 +65,7 @@ public class FavoritesController {
 //            model.addAttribute("error", "이미 신청한 카테고리입니다");
 //        }
 //        model.addAttribute("categoryies", categoryRepository.findByParentCategoryIsNull());
-        return "redirect:/members/";
+        return "redirect:/members/mypage";
     }
 
     /**

@@ -1,0 +1,47 @@
+<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: appointmentList}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<div class="appointments-container">
+    <div id="root">
+        <div class="sub-title">약속 목록</div>
+        <div class="table-container">
+            <table class="table postList">
+                <thead>
+                <tr>
+                    <th scope="col table-header title">거래명</th>
+                    <th scope="col table-header nickname">거래자명</th>
+                    <th scope="col table-header appointmentQuantity">거래수량</th>
+                    <th scope="col table-header appointmentDate">약속날짜</th>
+                    <th scope="col table-header appointmentStatus">거래상태</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="appointment : ${appointments}">
+                    <td><a th:href="@{/chat/{roomId}(roomId = ${appointment.chatRoom.id})}"><span th:text="${appointment.post.title}"></span></a></td>
+                    <th:block th:if="${appointment.wanted.id == member.id}">
+                        <td th:text="${appointment.post.writer.nickname}" scope="row"></td>
+                    </th:block>
+                    <th:block th:if="${appointment.wanted.id != member.id}">
+                        <td th:text="${appointment.wanted.nickname}" scope="row"></td>
+                    </th:block>
+                    <td th:text="${appointment.appointmentQuantity}" scope="row"></td>
+                    <!-- ${#dates.format(item.createDt, 'yyyy-MM-dd HH:mm:ss')}-->
+                    <td th:text="${#temporals.format(appointment.timestamp,'yyyy-MM-dd')}"></td>
+                    <th:block th:switch="${appointment.progress.toString()}">
+                        <td th:case="RESERVING" th:text="예약완료"></td>
+                        <td th:case="CANCEL" th:text="예약취소"></td>
+                        <td th:case="DONE" th:text="전달완료"></td>
+                    </th:block>
+                    <th:block th:if="${appointment.progress.toString().equals('RESERVING')}">
+                        <td>
+                            <button  th:if="${appointment.wanted.id == member.id}" class="appointmentStatus styled" type="button" th:appointment=${appointment.id}  th:onclick="completeAppointment(this.getAttribute('appointment'))">전달 완료</button>
+                            <button class="appointmentStatus styled" type="button" th:appointment=${appointment.id}  th:onclick="cancelAppointment(this.getAttribute('appointment'))">약속 취소</button>
+                        </td>
+                    </th:block>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

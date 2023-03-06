@@ -17,3 +17,5 @@ function removeFavoriteCategory(id){
         });
     }
 }
+
+

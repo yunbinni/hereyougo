@@ -38,9 +38,10 @@ body{
 /* 마이페이지 전체 */
 .mypage-container{
      display: grid;
-     justify-content: center;
      align-items: center;
-     height: 100vh;
+     min-height: 100vh;
+     width : 60%;
+     margin : 0 auto;
 }
 
 div#root {
@@ -139,7 +140,16 @@ a.addFavoriteBtn {
     margin-top: 5vh;
 }
 
+.mypage-container .posts-container {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 5vh;
+}
+
 .appointments-container th, .posts-container th{
+    text-align : center;
 }
 
 .appointments-container td, .posts-container td{
@@ -147,4 +157,58 @@ a.addFavoriteBtn {
     font-family: gsans-light;
     font-weight: 600;
     text-align : center;
+    padding: 15px 0px;
+    vertical-align: middle;
+}
+
+td.appointment-title{
+    text-align: left;
+}
+
+td.appointment-title a{
+    color : #000;
+    text-decoration : none;
+}
+
+.appointment-nickname, .appointment-quantity, .appointment-progress{
+    text-align: center;
+}
+
+button.appointment-complete-btn, button.appointment-cancel-btn {
+    padding: 10px 8px;
+    font-size: 13px;
+}
+
+
+a.appointment-list-btn{
+    text-decoration: none;
+    color: white;
+    background: #acacac;
+    padding: 10px;
+    font-family: 'gsans-light';
+    font-weight: 600;
+    font-size: 0.9em;
+    width: 15%;
+    text-align: center;
+}
+
+a.post-list-btn {
+    text-decoration: none;
+    color: white;
+    background: #acacac;
+    padding: 10px;
+    font-family: 'gsans-light';
+    font-weight: 600;
+    font-size: 0.9em;
+    width: 13%;
+    text-align: center;
+}
+
+.all-display-btn{
+    text-align : right;
+    margin-top : 5vh;
+}
+
+table {
+    min-height: 150px;
 }

@@ -27,10 +27,23 @@ public class Appointment
     @JoinColumn(name = "wanted_id")
     private Member wanted;
 
-    @OneToOne
+//    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
+
+    /**
+     * 약속 목록에서 항목을 클릭할 경우
+     * 채팅방으로 이동되게 하기위해 chatroom_id를 선언
+     */
+    @ManyToOne
+    @JoinColumn(name = "chatroom_id")
+    private ChatRoom chatRoom;
+
+    private int appointmentQuantity; // 예약 수량
 
     private LocalDateTime timestamp; // 약속한 일/시
 
+    @Enumerated(EnumType.STRING)
     private Progress progress;
 }

@@ -1,6 +1,7 @@
 package io.k2c1.hereyougo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.k2c1.hereyougo.constant.PostStatus;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -32,9 +33,13 @@ public class Post
 
     private Integer quantity; // 남은 수량
 
-    private Integer reserveQuantity; // 예약 수량
+    @ColumnDefault("0")
+    private Integer reservationQuantity; // 예약 수량
 
     private Integer recommend; // 추천 수
+
+    @Enumerated(EnumType.STRING)
+    private PostStatus postStatus;
 
     @Embedded
     private Address address;
@@ -57,4 +62,20 @@ public class Post
     public void plusViews() {
         this.views++;
     }
+
+    public void plusReservationQuantity(int reservationQuantity) {
+        this.reservationQuantity += reservationQuantity;
+    }
+
+    public void minusReservationQuantity(int reservationQuantity) {
+        this.reservationQuantity -= reservationQuantity;
+    }
+
+    public void plusPostQuantity(int quantity){
+        this.quantity += quantity;
+    }
+    public void minusPostQuantity(int quantity){
+        this.quantity -= quantity;
+    }
+
 }

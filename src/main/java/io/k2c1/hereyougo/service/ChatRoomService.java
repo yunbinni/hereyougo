@@ -66,7 +66,7 @@ public class ChatRoomService {
      * 채팅방 목록 조회
      */
     public List<ChatRoom> getChatRoomList(Long writerId, Long memberId){
-        return chatRoomRepository.findByWriterIdOrMember_Id(writerId, memberId);
+        return chatRoomRepository.findByWriterIdOrMember_IdOrderByResentDateDesc(writerId, memberId);
     }
 
     public void updateRecentMessage(Long roomId, String message){

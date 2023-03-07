@@ -82,6 +82,11 @@ button.editBtn {
     background: transparent;
     border: 1px solid #acacac;
     padding: 0.5vw 1vw;
+    margin-left: 2vw;
+    font-size: 14px;
+}
+.write-btn{
+    background : #00AA7D
 }
 
 .addFavoriteBtn-Container{
@@ -93,7 +98,7 @@ button.editBtn {
 a.addFavoriteBtn {
     text-decoration: none;
     color: white;
-    background: #acacac;
+    background: #8AC452;
     padding: 10px;
     font-family: 'gsans-light';
     font-weight: 600;
@@ -177,13 +182,14 @@ td.appointment-title a{
 button.appointment-complete-btn, button.appointment-cancel-btn {
     padding: 10px 8px;
     font-size: 13px;
+    font-weight: 600;
 }
 
 
 a.appointment-list-btn{
     text-decoration: none;
     color: white;
-    background: #acacac;
+    background: #8AC452;
     padding: 10px;
     font-family: 'gsans-light';
     font-weight: 600;
@@ -195,7 +201,7 @@ a.appointment-list-btn{
 a.post-list-btn {
     text-decoration: none;
     color: white;
-    background: #acacac;
+    background: #8AC452;
     padding: 10px;
     font-family: 'gsans-light';
     font-weight: 600;
@@ -211,4 +217,29 @@ a.post-list-btn {
 
 table {
     min-height: 150px;
+}
+
+td.appointment-link {
+    text-align: center;
+}
+
+td.appointment-link a {
+    text-decoration: none;
+}
+
+button.appointment-complete-btn {
+    background: #00AA7D;
+    padding: 10px;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+button.appointment-cancel-btn {
+    background: #8AC452;
+    padding: 10px;
+    color: #fff;
+    border-radius: 10px;
+    margin-left: 5px;
 }

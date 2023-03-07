@@ -5,15 +5,18 @@
         <h2 class="page-title">마이페이지</h2>
 
         <div class="profile-container">
-            <div class="nickname"><span th:text="*{nickname}"></span><span class="greeting">님, 안녕하세요</span></div>
+            <div class="nickname">
+                    <span th:text="*{nickname}"></span>
+                    <span class="greeting">님, 안녕하세요</span>
+                    <button class="editBtn" th:onclick="|location.href='@{/members/edit}'|"><i class="fa fa-pencil" aria-hidden="true"></i> 프로필 수정</button>
+            </div>
             <div class="d-flex justify-content-between">
-                <div><button class="editBtn" th:onclick="|location.href='@{/members/edit}'|"><i class="fa fa-pencil" aria-hidden="true"></i> 프로필 수정</button></div>
-                <div><button class="btn btn-success" th:onclick="|location.href='@{/posts/add}'|"> 글쓰기</button></div>
+                <div><button class="btn btn-success write-btn" th:onclick="|location.href='@{/posts/add}'|"> 글쓰기</button></div>
             </div>
         </div>
 
         <div class="keywords-container">
-            <div class="sub-title">관심 키워드 목록</div>
+            <div class="sub-title">관심 카테고리 목록</div>
             <div class="keywordList">
                 <div class="keyword-item" th:each="category : ${mypage.favoriteCategories}">
                     <span th:text="${category.categoryName}"></span>
@@ -28,21 +31,23 @@
         </div>
 
         <div class="appointments-container">
-            <div class="sub-title">약속 목록</div>
+            <div class="sub-title">예약 목록</div>
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">거래명</th>
+                    <th scope="col">예약명</th>
+                    <th scope="col">해당 글 링크</th>
                     <th scope="col">거래자명</th>
-                    <th scope="col">거래수량</th>
-                    <th scope="col">약속날짜</th>
-                    <th scope="col">거래상태</th>
+                    <th scope="col">예약수량</th>
+                    <th scope="col">예약날짜</th>
+                    <th scope="col">예약상태</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="appointment : ${mypage.appointments}">
                     <td class="appointment-title"><a th:href="@{/chat/{roomId}(roomId = ${appointment.chatRoom.id})}"><span th:text="${appointment.post.title}"></span></a></td>
+                    <td class="appointment-link"><a th:href="@{/posts/{postId}(postId = ${appointment.post.id})}" target="_blank">🔗</a></td>
                     <th:block th:if="${appointment.wanted.id == member.id}">
                         <td th:text="${appointment.post.writer.nickname}" scope="row"></td>
                     </th:block>
@@ -61,7 +66,7 @@
                     </td>
                     <td>
                         <th:block th:if="${appointment.progress.toString().equals('RESERVING')}">
-                            <button class="appointment-complete-btn btn-primary" th:if="${appointment.wanted.id == member.id}"  type="button" th:appointment=${appointment.id}  th:onclick="completeAppointment(this.getAttribute('appointment'))">전달 완료</button>
+                            <button class="appointment-complete-btn" th:if="${appointment.wanted.id == member.id}"  type="button" th:appointment=${appointment.id}  th:onclick="completeAppointment(this.getAttribute('appointment'))">전달 완료</button>
                             <button class="appointment-cancel-btn styled" type="button" th:appointment=${appointment.id}  th:onclick="cancelAppointment(this.getAttribute('appointment'))">약속 취소</button>
                         </th:block>
                     </td>
@@ -69,13 +74,13 @@
                 </tbody>
             </table>
             <div class="all-display-btn">
-                <a class="appointment-list-btn" th:href="@{/appointments/list}">전체 약속 보기</a>
+                <a class="appointment-list-btn" th:href="@{/appointments/list}">전체 예약 보기</a>
             </div>
 <!--            <button class="appointment-list-btn" type="button"  th:onclick="|location.href='@{/appointments/list}'|">전체 약속 보기</button>-->
         </div>
 
         <div class="posts-container">
-            <div class="sub-title">내가 쓴 글 목록</div>
+            <div class="sub-title">나의 최신 글</div>
             <table class="table">
                 <thead>
                 <tr>

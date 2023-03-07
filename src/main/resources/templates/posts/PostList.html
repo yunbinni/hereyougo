@@ -1,7 +1,12 @@
 <!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: postList}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 <div class="posts-container">
     <div id="root">
-        <div class="sub-title">내가 쓴 글 목록</div>
+        <div class="d-flex justify-content-between">
+            <div class="sub-title">내가 쓴 글 목록</div>
+            <div class="btn-container">
+                <button class="btn btn-info write-btn" th:onclick="|location.href='@{/posts/add}'|">글쓰기</button>
+            </div>
+        </div>
         <div class="table-container">
             <table class="table postList">
                 <thead>
@@ -24,9 +29,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="btn-container">
-            <button class="btn btn-info" th:onclick="|location.href='@{/posts/add}'|">글쓰기</button>
-        </div>
+
     </div>
 </div>
 </body>

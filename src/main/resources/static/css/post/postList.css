@@ -52,14 +52,20 @@ div#root {
 
 .table-container{
     min-height : 500px;
+    margin-top: 5vh;
 }
 
 /* 소제목 */
 .sub-title {
     font-size: 1.1em;
-    margin-bottom: 2vh;
+    padding-top: 1vh;
+    align-self: center;
 }
 
+.write-btn{
+   background: #00aa7d;
+   color: white;
+}
 
 /* 게시글 제목 */
 .posts-container table td a {
@@ -86,8 +92,4 @@ div#root {
 
 .table-header.num{
     width : 15%;
-}
-
-.write-btn{
-    color : #fff;
 }

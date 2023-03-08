@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="modal-container">
-                        <p class="sub-title">수량</p>
+                        <p class="sub-title">수량 <span class="available-quantity" th:text="|(예약 가능한 수량 : ${post.quantity - post.reservationQuantity})|"></span></p>
                         <input type="number" id="appointmentQuantity" class="appointmentQuantity"/>
                     </div>
 
@@ -163,6 +163,15 @@
         $("input#message").val('');
      }
 
+
+    document.getElementById('message').addEventListener('keyup', function(event) {
+        if (event.keyCode === 13)
+        {
+            event.preventDefault();
+            sendChatMessage()
+        }
+    });
+
      function loadChat(chatList){
         var length = $(".chatMessage-container").children().length;
 
@@ -190,6 +199,7 @@
 
                 $(".chatMessage-container").append( containerTag +'<p class="card-text">'+chatList[i].message +'</p><p style="text-align: end;" class="card-text">'+sendDate+'</p></div>')
             }
+            $('.chatMessage-container').scrollTop($('.chatMessage-container')[0].scrollHeight);
         }
      }
 
@@ -214,6 +224,7 @@
          }else{
                 $('.chat-container:last-child').addClass( 'gray' );
         }
+        $('.chatMessage-container').scrollTop($('.chatMessage-container')[0].scrollHeight);
     }
 
     function showModal() {

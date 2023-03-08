@@ -44,6 +44,8 @@ body{
 
 button.btn.btn-outline-primary {
     margin-top: 3vh;
+    border: 2px solid #004EA1;
+    color: #004EA1;
 }
 
 .chatMessage-container{
@@ -72,7 +74,8 @@ button.btn.btn-outline-primary {
 }
 
 .chat-container.blue{
-   background : #3A96EE;
+   /* background : #3A96EE; */
+   background : #00A0E2;
    color: white;
 }
 
@@ -99,7 +102,8 @@ input#message {
 button#send {
     padding: 1.2vw 3vw;
     margin-left: 2vw;
-    background: #2F80ED;
+    /* background: #2F80ED; */
+    background: #004EA1;
     color: white;
 }
 
@@ -131,6 +135,11 @@ button#send {
     margin-top: 3vh;
 }
 
+div#registrationForm {
+    margin: 0 auto;
+    width: 80%;
+}
+
  /* 약속잡기 팝업창 소제목*/
 .sub-title{
     font-family: 'gsans-light';
@@ -144,16 +153,21 @@ button#send {
  }
 
  /* 약속잡기 팝업창 날짜, 시간 선택 버튼*/
- input.appoint-date,input.appoint-time {
-     width: 80%;
+input.appoint-date, input.appoint-time, #appointmentQuantity{
+     width: 100%;
      border: 1px solid #ccc;
-     padding: 1.5vw;
+     padding: 0.8vw;
      border-radius: 5px;
  }
 
  /* 약속잡기 팝업창 등록 버튼*/
  button.btn.btn-primary.appoint-btn {
-     width: 80%;
+     width: 100%;
      margin-top: 5vh;
      margin-bottom: 3vh;
+ }
+
+ .available-quantity{
+    color: #717171;
+    font-size: 13px;
  }

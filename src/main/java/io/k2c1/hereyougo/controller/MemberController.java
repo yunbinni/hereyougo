@@ -5,26 +5,31 @@ import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
+import io.k2c1.hereyougo.service.EmailService;
 import io.k2c1.hereyougo.service.MemberService;
 import io.k2c1.hereyougo.service.PostService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RequestMapping("/members")
+@RequiredArgsConstructor
 @Controller
 public class MemberController {
 
-    private MemberService memberService;
-    private PostService postService;
+    private final MemberService memberService;
+    private final PostService postService;
+    private final EmailService emailService;
 
-    public MemberController(MemberService memberService, PostService postService){
-        this.memberService = memberService;
-        this.postService = postService;
-    }
+    private Map<String, String> authCodeRepo = new HashMap<>(); // <요청email, 전송된 authCode>
 
     /***
      * 회원가입
@@ -37,9 +42,21 @@ public class MemberController {
 
     @PostMapping("/join")
     public String join(JoinForm joinForm){
+
+        isWrongAuthCode(joinForm.getAuthCode(), authCodeRepo.get(joinForm.getEmail()));
+
         memberService.join(joinForm);
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/auth")
+    @ResponseBody
+    public String sendAuthEmail(@RequestParam String to) throws Exception {
+        String code = emailService.sendSimpleMessage(to);
+        authCodeRepo.put(to, code);
+        log.info("code : {}", code);
+        return code;
     }
 
     /***
@@ -111,5 +128,12 @@ public class MemberController {
         memberService.deleteMember(memberService.findMember(memberId));
 
         return "redirect:/";
+    }
+
+    public void isWrongAuthCode(String formCode, String realCode) {
+        if (!formCode.equals(realCode)) {
+            log.info("{} == {}", formCode, realCode);
+            throw new IllegalStateException("입력한 인증번호가 다릅니다.");
+        }
     }
 }

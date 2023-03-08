@@ -8,6 +8,7 @@ import io.k2c1.hereyougo.repository.AppointmentRepository;
 import io.k2c1.hereyougo.repository.FavoriteCategoryRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,28 +17,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 @Transactional
+@RequiredArgsConstructor
 @Service
 public class MemberService {
-    private MemberRepository memberRepository;
-    private AppointmentRepository appointmentRepository;
-    private PostRepository postRepository;
-    private FavoriteCategoryRepository favoriteCategoryRepository;
 
-    public MemberService(MemberRepository memberRepository, AppointmentRepository appointmentRepository, PostRepository postRepository, FavoriteCategoryRepository favoriteCategoryRepository) {
-        this.memberRepository = memberRepository;
-        this.appointmentRepository = appointmentRepository;
-        this.postRepository = postRepository;
-        this.favoriteCategoryRepository = favoriteCategoryRepository;
-    }
+    private final MemberRepository memberRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final PostRepository postRepository;
+    private final FavoriteCategoryRepository favoriteCategoryRepository;
 
     /***
      * 회원가입
      */
-    public Long join(JoinForm joinForm){
+    public Long join(JoinForm joinForm) {
 
         Member member = new Member();
         member.setEmail(joinForm.getEmail());
@@ -114,7 +111,6 @@ public class MemberService {
     public void deleteMember(Member member){
         memberRepository.delete(member);
     }
-
 
     /***
      * 회원가입 시 이메일 중복 검사

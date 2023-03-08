@@ -134,7 +134,7 @@ public class SampleDataInit {
 //        Image image = new Image("post3.jpg", "post3.jpg", post);
 //        imageRepository.save(image);
 //
-//        post.addImage(image);
+//        post.addImage(image);ㅓㅐㅑ
 
         return post;
     }

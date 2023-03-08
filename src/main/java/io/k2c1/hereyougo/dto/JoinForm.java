@@ -1,11 +1,11 @@
 package io.k2c1.hereyougo.dto;
 
-import io.k2c1.hereyougo.domain.Address;
 import lombok.Data;
 
 @Data
 public class JoinForm {
     private String email;
+    private String authCode;
     private String password;
     private String confirmPassword;
     private String nickname;

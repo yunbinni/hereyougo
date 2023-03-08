@@ -15,7 +15,7 @@ public class LoginCheckFilter implements Filter
 {
     private static final String[] whitelist = {"/",
             "/login", "/logout", "/join",
-            "/jusoPopup", "/members/join", "/members/login", "https://business.juso.go.kr/*",
+            "/jusoPopup", "/members/join", "/members/login", "/members/auth", "https://business.juso.go.kr/*",
             "/categories/child", "/posts/filtered",
             "favicon.ico", "/css/*", "/js/*", "/font/*", "/images/*"
     };
@@ -51,7 +51,7 @@ public class LoginCheckFilter implements Filter
         }
         finally
         {
-            log.info("인증 체크 필터 종료 {}", requestURI);
+//            log.info("인증 체크 필터 종료 {}", requestURI);
         }
     }
 

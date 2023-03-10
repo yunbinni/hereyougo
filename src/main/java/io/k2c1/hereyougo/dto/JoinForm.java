@@ -17,7 +17,7 @@ public class JoinForm {
 
     private String nickname;
 
-    private String businessType;
+    private String categoryId;
 
     private String roadAddrPart1;
     private String roadAddrPart2;

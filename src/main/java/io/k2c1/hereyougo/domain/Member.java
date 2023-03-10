@@ -17,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "member")
 public class Member {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
@@ -24,7 +25,9 @@ public class Member {
     private String email;
     private String password;
     private String nickname;
-    private String businessType; // 업종
+
+    @OneToOne
+    private Category category;
 
     @Embedded
     private Address address;
@@ -41,34 +44,41 @@ public class Member {
      */
 //    private List<String> keywords;
 
-    public Member(Long id, String email, String password, String nickname, String businessType) {
+    public Member(Long id, String email, String password, String nickname, Category category) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.businessType = businessType;
+        this.category = category;
     }
 
-    public void updateMemberInfo(String password, String nickname, String businessType){
+    public void updateMemberInfo(String password, String nickname, Category category){
         this.password= password;
         this.nickname = nickname;
-        this.businessType = businessType;
+        this.category = category;
     }
 
-    public Member(Long id, String email, String password, String nickname, String businessType, Address address) {
+    public Member(Long id, String email, String password, String nickname, Category category, Address address) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.businessType = businessType;
+        this.category = category;
         this.address = address;
     }
 
-    public Member(String email, String password, String nickname, String businessType, Address address) {
+    public Member(String email, String password, String nickname, Category category, Address address) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.businessType = businessType;
+        this.category = category;
+        this.address = address;
+    }
+
+    public Member(String email, String password, String nickname, Address address) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
         this.address = address;
     }
 }

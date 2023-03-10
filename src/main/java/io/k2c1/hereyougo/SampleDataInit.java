@@ -50,8 +50,8 @@ public class SampleDataInit {
             .zipNo("03150")
             .build();
 
-    Member member1 = new Member("test@naver.com", "1234", "test1", "한식", address1);
-    Member member2 = new Member("test2@naver.com", "1234", "test2", "서비스", address2);
+    Member member1 = new Member("test@naver.com", "1234", "test1", address1);
+    Member member2 = new Member("test2@naver.com", "1234", "test2", address2);
 
     private static long MEMBER_LID = 0L;
     private static long POST_LID = 0L;

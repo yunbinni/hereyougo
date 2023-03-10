@@ -5,6 +5,7 @@ import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.dto.JoinForm;
 import io.k2c1.hereyougo.dto.MemberUpdateForm;
 import io.k2c1.hereyougo.dto.MyPageForm;
+import io.k2c1.hereyougo.service.CategoryService;
 import io.k2c1.hereyougo.service.EmailService;
 import io.k2c1.hereyougo.service.MemberService;
 import io.k2c1.hereyougo.service.PostService;
@@ -27,6 +28,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final PostService postService;
+    private final CategoryService categoryService;
     private final EmailService emailService;
 
     private Map<String, String> authCodeRepo = new HashMap<>(); // <요청email, 전송된 authCode>
@@ -35,8 +37,9 @@ public class MemberController {
      * 회원가입
      */
     @GetMapping("/join")
-    public String joinForm(@ModelAttribute("joinForm") JoinForm joinForm) {
+    public String joinForm(@ModelAttribute("joinForm") JoinForm joinForm, Model model) {
 //        memberService.join(joinForm);
+        model.addAttribute("secondCategories", categoryService.getAllChildCategories());
         return "members/join";
     }
 
@@ -79,7 +82,7 @@ public class MemberController {
         updateForm.setId(member.getId());
         updateForm.setEmail(member.getEmail());
         updateForm.setNickname(member.getNickname());
-        updateForm.setBusinessType(member.getBusinessType());
+        updateForm.setCategory(member.getCategory());
 
         model.addAttribute("member", loginMember);
         model.addAttribute("updateForm", updateForm);

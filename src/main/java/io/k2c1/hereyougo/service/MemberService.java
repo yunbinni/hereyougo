@@ -28,6 +28,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final AppointmentRepository appointmentRepository;
+    private final CategoryService categoryService;
     private final PostRepository postRepository;
     private final FavoriteCategoryRepository favoriteCategoryRepository;
 
@@ -40,7 +41,10 @@ public class MemberService {
         member.setEmail(joinForm.getEmail());
         member.setPassword(joinForm.getPassword());
         member.setNickname(joinForm.getNickname());
-        member.setBusinessType(joinForm.getBusinessType());
+
+        Category formCategory = categoryService.getCategory(Long.valueOf(joinForm.getCategoryId()));
+
+        member.setCategory(formCategory);
 
         Address address= Address.builder()
                 .sido(joinForm.getSiNm())
@@ -66,7 +70,7 @@ public class MemberService {
         result.updateMemberInfo(
                 updateForm.getPassword(),
                 updateForm.getNickname(),
-                updateForm.getBusinessType()
+                updateForm.getCategory()
         );
     }
 

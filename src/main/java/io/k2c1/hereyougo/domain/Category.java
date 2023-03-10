@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Category {
+
     @Id @GeneratedValue
     @Column(name = "category_id")
     private Long id;

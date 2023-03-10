@@ -73,3 +73,8 @@ button.btn.btn-primary {
 input#detailAddress {
     margin-top: 20px;
 }
+
+#jusoInputBtn {
+    background-color: LightSkyBlue;
+    color: white;
+}

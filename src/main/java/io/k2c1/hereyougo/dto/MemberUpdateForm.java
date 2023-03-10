@@ -1,5 +1,6 @@
 package io.k2c1.hereyougo.dto;
 
+import io.k2c1.hereyougo.domain.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,5 +10,5 @@ public class MemberUpdateForm {
     private String email;
     private String password;
     private String nickname;
-    private String businessType;
+    private Category category;
 }

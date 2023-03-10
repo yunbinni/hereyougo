@@ -153,6 +153,7 @@ public class PostController
                 .quantity(form.getQuantity())
                 .address(address)
                 .recommend(0)
+                .reservationQuantity(0)
                 .category(categoryService.getCategory(form.getCategoryId()))
                 .build();
 

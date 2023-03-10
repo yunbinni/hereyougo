@@ -46,7 +46,10 @@ public class HomeController {
         if (loginMember == null)
             return "home";
         else
+        {
             model.addAttribute("member", loginMember);
+            model.addAttribute("nearPosts", postService.getNearPosts(loginMember));
+        }
 
         return "home";
     }

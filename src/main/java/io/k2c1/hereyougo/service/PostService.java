@@ -2,6 +2,7 @@ package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.dto.PostMarkerDTO;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,12 @@ public class PostService {
 
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
+
+    public List<PostMarkerDTO> getNearPosts(Member member) {
+        return postRepository.findByAddressSidoAndAddressSgg(member.getAddress().getSido(), member.getAddress().getSgg()).stream()
+                .map(post -> new PostMarkerDTO(post.getId(), post.getTitle(), post.getAddress().getDoro()))
+                .collect(Collectors.toList());
+    }
 
     public List<Post> getRecentPopularPosts()
     {

@@ -45,6 +45,19 @@
                 </tbody>
             </table>
         </div>
+
+        <nav aria-label="page navigation" class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${1 == appointments.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/posts/list(page=${appointments.pageable.pageNumber - 1})}" href="#">이전</a>
+                </li>
+                <li class="page-item" th:classappend="${i == appointments.pageable.pageNumber + 1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#" th:href="@{/appointments/list(page=${i - 1})}" th:text="${i}"></a></li>
+                <li class="page-item" th:classappend="${appointments.totalPages == appointments.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/appointments/list(page=${appointments.pageable.pageNumber + 1})}">다음</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 </body>

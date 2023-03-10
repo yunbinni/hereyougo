@@ -1,0 +1,14 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+footer.d-flex.justify-content-center {
+    padding: 20px;
+}
+
+.page-navigation{
+    margin-top : 5vh;
+}
+

@@ -59,10 +59,6 @@ public class Post
         image.setPost(this);
     }
 
-    public void plusViews() {
-        this.views++;
-    }
-
     public void plusReservationQuantity(int reservationQuantity) {
         this.reservationQuantity += reservationQuantity;
     }

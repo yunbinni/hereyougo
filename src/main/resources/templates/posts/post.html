@@ -41,6 +41,10 @@
 
     <p class="d-flex justify-content-center text-center">❤ [[${post.recommend}]]</p><br><br>
 
+    <div class="d-flex justify-content-center">
+        <button>추천하기</button>
+    </div>
+
     <p class="d-flex justify-content-center text-center">조회수 : [[${post.views}]]</p><br><br>
 
     <th:block th:if="${member.id == post.writer.id}">

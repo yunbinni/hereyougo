@@ -44,11 +44,13 @@ public class MemberController {
     public String join(JoinForm joinForm){
 
         isWrongAuthCode(joinForm.getAuthCode(), authCodeRepo.get(joinForm.getEmail()));
+        isPasswordCorrect(joinForm);
 
         memberService.join(joinForm);
 
         return "redirect:/login";
     }
+
 
     @GetMapping("/auth")
     @ResponseBody
@@ -72,7 +74,7 @@ public class MemberController {
     {
         // 현재 회원 정보 출력
         Member member = memberService.findMember(1L);
-        
+
         MemberUpdateForm updateForm = new MemberUpdateForm();
         updateForm.setId(member.getId());
         updateForm.setEmail(member.getEmail());
@@ -130,10 +132,16 @@ public class MemberController {
         return "redirect:/";
     }
 
+    private void isPasswordCorrect(JoinForm form) {
+
+        if(!form.getPassword().equals(form.getConfirmPassword())) {
+        }
+    }
+
     public void isWrongAuthCode(String formCode, String realCode) {
         if (!formCode.equals(realCode)) {
-            log.info("{} == {}", formCode, realCode);
             throw new IllegalStateException("입력한 인증번호가 다릅니다.");
         }
     }
+
 }

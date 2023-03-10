@@ -21,5 +21,9 @@ public interface PostRepository extends JpaRepository<Post, Long>
     @Query("update Post p set p.views = p.views + 1 where p.id = :id")
     int updateViews(@Param("id") Long Id);
 
+    @Modifying
+    @Query("update Post p set p.recommend = p.recommend + 1 where p.id = :id")
+    int updateRecommend(@Param("id") Long Id);
+
     List<Post> findFirst10ByWriter_Id(Long memberId);
 }

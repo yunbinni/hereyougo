@@ -80,6 +80,39 @@ public class PostController
         }
     }
 
+    @GetMapping("/updateRecommend")
+    private String updateRecommend(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam("postId") Long postId) throws IOException
+    {
+        log.info("postId = {}", postId);
+
+        Post getPost = postRepository.findById(postId).get();
+
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("postRecommend"))
+                    oldCookie = cookie;
+            }
+        }
+
+        if (oldCookie == null) {
+            if (!getPost.getWriter().equals(loginMember)) {
+                postService.updateRecommend(getPost.getId());
+            }
+            Cookie newCookie = new Cookie("postRecommend", getPost.getId().toString());
+            newCookie.setMaxAge(24 * 60 * 60);
+            response.addCookie(newCookie);
+        }
+
+        return "redirect:/posts/" + postId.toString();
+    }
+
     @GetMapping("/add")
     public String addForm(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,

@@ -36,6 +36,7 @@ public class Post
     @ColumnDefault("0")
     private Integer reservationQuantity; // 예약 수량
 
+    @ColumnDefault("0")
     private Integer recommend; // 추천 수
 
     @Enumerated(EnumType.STRING)

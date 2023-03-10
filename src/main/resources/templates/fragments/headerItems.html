@@ -13,7 +13,11 @@
 <link th:fragment="updateMemberForm" th:href="@{/css/member/updateForm.css}" rel="stylesheet" />
 
 <script th:fragment="addPost1" th:src="@{/js/post/addPost1.js}"></script>
-<link th:fragment="postList" th:href="@{/css/post/postList.css}" rel="stylesheet" />
+
+<th:block th:fragment="post">
+    <link th:fragment="postList" th:href="@{/css/post/postList.css}" rel="stylesheet" />
+    <script th:src="@{/js/post/post.js}"></script>
+</th:block>
 
 <link th:fragment="chatRoomList" th:href="@{/css/chat/chatRoomList.css}" rel="stylesheet" />
 

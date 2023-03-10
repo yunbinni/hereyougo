@@ -49,4 +49,8 @@ public class PostService {
     public int updateView(Long Id) {
         return postRepository.updateViews(Id);
     }
+
+    public int updateRecommend(Long Id) {
+        return postRepository.updateRecommend(Id);
+    }
 }

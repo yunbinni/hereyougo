@@ -22,5 +22,5 @@ public interface PostRepository extends JpaRepository<Post, Long>
     @Query("delete from Post p where p.writer = :writer ")
     void deleteByWriter(@Param("writer") Member member);
 
-    List<Post> findFirst10ByWriter_Id(Long memberId);
+    List<Post> findFirst5ByWriter_Id(Long memberId);
 }

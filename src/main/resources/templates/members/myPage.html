@@ -84,7 +84,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">제목</th>
                     <th scope="col">내용</th>
                     <th scope="col">작성일</th>
@@ -92,7 +91,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="post : ${mypage.posts}">
-                    <td th:text="${post.id}" scope="row"></td>
                     <td><a th:href="@{/posts/{postId}(postId = ${post.id})}"><span th:text="${post.title}"></span></a></td>
                     <td th:text="${post.content}"></td>
                     <!-- ${#dates.format(item.createDt, 'yyyy-MM-dd HH:mm:ss')}-->

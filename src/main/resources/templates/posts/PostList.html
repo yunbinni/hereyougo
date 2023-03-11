@@ -11,7 +11,6 @@
             <table class="table postList">
                 <thead>
                 <tr>
-                    <th scope="col table-header num"></th>
                     <th scope="col table-header title">제목</th>
                     <th scope="col table-header content">내용</th>
                     <th scope="col table-header date">작성일</th>
@@ -19,24 +18,23 @@
                 </thead>
                 <tbody>
                 <tr th:each="post : ${posts}">
-                    <td th:text="${post.id}" scope="row"></td>
                     <td><a th:href="@{/posts/{postId}(postId = ${post.id})}"><span th:text="${post.title}"></span></a>
                     </td>
                     <td th:text="${post.content}"></td>
                     <!-- ${#dates.format(item.createDt, 'yyyy-MM-dd HH:mm:ss')}-->
-                    <td th:text="${#temporals.format(post.timestamp,'yyyy-MM-dd')}"></td>
+                    <td class="date" th:text="${#temporals.format(post.timestamp,'yyyy-MM-dd')}"></td>
                 </tr>
                 </tbody>
             </table>
 
             <nav aria-label="page navigation" class="d-flex justify-content-center">
                 <ul class="pagination">
-                    <li class="page-item" th:classappend="${1 == posts.pageable.pageNumber + 1} ? 'disabled'">
+                    <li class="page-item previous" th:classappend="${1 == posts.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link" th:href="@{/posts/list(page=${posts.pageable.pageNumber - 1})}" href="#">이전</a>
                     </li>
-                    <li class="page-item" th:classappend="${i == posts.pageable.pageNumber + 1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)}">
+                    <li class="page-item page-num" th:classappend="${i == posts.pageable.pageNumber + 1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)}">
                         <a class="page-link" href="#" th:href="@{/posts/list(page=${i - 1})}" th:text="${i}"></a></li>
-                    <li class="page-item" th:classappend="${posts.totalPages == posts.pageable.pageNumber + 1} ? 'disabled'">
+                    <li class="page-item next" th:classappend="${posts.totalPages == posts.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link" href="#" th:href="@{/posts/list(page=${posts.pageable.pageNumber + 1})}">다음</a>
                     </li>
                 </ul>

@@ -93,3 +93,15 @@ div#root {
 .table-header.num{
     width : 15%;
 }
+
+table.table.postList th {
+    text-align : center;
+}
+
+table.table.postList td {
+    padding: 1.3vw;
+}
+
+table.table.postList td.date {
+    text-align : center;
+}

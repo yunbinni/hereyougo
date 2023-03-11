@@ -1,9 +1,10 @@
 package io.k2c1.hereyougo.repository;
 
 import io.k2c1.hereyougo.domain.ChatRoom;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
@@ -16,6 +17,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     /**
      * 채팅 목록 조회
      */
-    public List<ChatRoom> findByWriterIdOrMember_IdOrderByResentDateDesc(Long writerId, Long memberId);
+    public Page<ChatRoom> findByWriterIdOrMember_IdOrderByResentDateDesc(Long writerId, Long memberId, Pageable pageable);
 
 }

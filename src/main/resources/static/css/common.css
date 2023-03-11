@@ -12,3 +12,39 @@ footer.d-flex.justify-content-center {
     margin-top : 5vh;
 }
 
+li.page-item.page-num.disabled a {
+    background: #8AC452;
+    color: white;
+}
+
+li.page-item.disabled a {
+    background: transparent;
+    color: #ACB0B3;
+}
+
+.pagination .page-item:nth-child(2) a {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+li.page-item.page-num a {
+    color: #b7babc;
+    border-radius: 5px;
+}
+
+li.page-item.page-num {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+li.page-item.previous {
+    margin-right: 15px;
+}
+
+li.page-item.next {
+    margin-left: 15px;
+}
+
+li.page-item.previous a, li.page-item.next a {
+    color: #acb0b2;
+}

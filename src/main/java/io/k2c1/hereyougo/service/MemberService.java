@@ -94,7 +94,7 @@ public class MemberService {
         Member member = findMember(memberId);
         myPageForm.setNickname(member.getNickname());
 
-        List<Post> posts = postRepository.findFirst10ByWriter_Id(memberId);
+        List<Post> posts = postRepository.findFirst5ByWriter_Id(memberId);
         myPageForm.setPosts(posts);
 
         List<FavoriteCategory> favoriteCategories = favoriteCategoryRepository.findByMember_id(memberId);

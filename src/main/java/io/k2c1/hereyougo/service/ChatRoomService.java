@@ -9,10 +9,11 @@ import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -65,8 +66,8 @@ public class ChatRoomService {
     /**
      * 채팅방 목록 조회
      */
-    public List<ChatRoom> getChatRoomList(Long writerId, Long memberId){
-        return chatRoomRepository.findByWriterIdOrMember_IdOrderByResentDateDesc(writerId, memberId);
+    public Page<ChatRoom> getChatRoomList(Long writerId, Long memberId, Pageable pageable){
+        return chatRoomRepository.findByWriterIdOrMember_IdOrderByResentDateDesc(writerId, memberId, pageable);
     }
 
     public void updateRecentMessage(Long roomId, String message){

@@ -1,17 +1,21 @@
 package io.k2c1.hereyougo.controller;
 
+import io.k2c1.hereyougo.config.FileUploader;
 import io.k2c1.hereyougo.constant.SessionConst;
 import io.k2c1.hereyougo.domain.Address;
+import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.dto.PostSaveForm;
-import io.k2c1.hereyougo.config.FileUploader;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.CategoryService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -232,13 +236,19 @@ public class PostController
 
     @GetMapping("/list")
     public String getPostsByMember(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-            Model model)
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember
+            , @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "") String searchText, Model model)
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
 
-        List<Post> posts = postRepository.findByWriter_Id(loginMember.getId());
+        Page<Post> posts = postRepository.findByWriter_Id(loginMember.getId(), pageable);
 
+        int startPage = Math.max(1,posts.getPageable().getPageNumber() -4);
+        int endPage = Math.min(posts.getTotalPages(),posts.getPageable().getPageNumber() + 4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("posts", posts);
 
         return "posts/postList";

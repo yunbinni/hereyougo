@@ -33,6 +33,18 @@
                 </a>
             </div>
         </div>
+        <nav aria-label="page navigation" class="d-flex justify-content-center page-navigation">
+            <ul class="pagination">
+                <li class="page-item previous" th:classappend="${1 == chatRoomList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/chatroom/roomList(page=${chatRoomList.pageable.pageNumber - 1})}" href="#">이전</a>
+                </li>
+                <li class="page-item page-num" th:classappend="${i == chatRoomList.pageable.pageNumber + 1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#" th:href="@{/chatroom/roomList(page=${i - 1})}" th:text="${i}"></a></li>
+                <li class="page-item next" th:classappend="${chatRoomList.totalPages == chatRoomList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/chatroom/roomList(page=${chatRoomList.pageable.pageNumber + 1})}">다음</a>
+                </li>
+            </ul>
+        </nav>
     </div><br><br>
     <script th:src="@{/js/chat/chatRoomList.js}"></script>
 </div>

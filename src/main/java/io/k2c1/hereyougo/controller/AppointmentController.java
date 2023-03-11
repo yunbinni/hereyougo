@@ -9,11 +9,13 @@ import io.k2c1.hereyougo.service.AppointmentService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -62,9 +64,17 @@ public class AppointmentController {
     }
 
     @GetMapping("/list")
-    public String getAppointments(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String getAppointments(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+             @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable, Model model){
         Long memberId = loginMember.getId();
-        List<Appointment> appointments = appointmentService.getAppointments(memberId);
+        Page<Appointment> appointments = appointmentService.getAppointments(memberId, pageable);
+
+        int startPage = Math.max(1,appointments.getPageable().getPageNumber() -4);
+        int endPage = Math.min(appointments.getTotalPages(),appointments.getPageable().getPageNumber() + 4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         model.addAttribute("member", loginMember);
         model.addAttribute("member", loginMember);
         model.addAttribute("appointments", appointments);

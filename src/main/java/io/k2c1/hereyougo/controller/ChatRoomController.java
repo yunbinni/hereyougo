@@ -12,6 +12,10 @@ import io.k2c1.hereyougo.service.MemberService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -95,10 +99,17 @@ public class ChatRoomController {
      * 채팅방 목록
      */
     @GetMapping("/roomList")
-    public String roomList(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+    public String roomList(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                           @PageableDefault(size = 2, direction = Sort.Direction.DESC) Pageable pageable, Model model){
         Long writerId = loginMember.getId();
         Long memberId = loginMember.getId();
-        List<ChatRoom> chatRoomList = chatRoomService.getChatRoomList(writerId, memberId);
+        Page<ChatRoom> chatRoomList = chatRoomService.getChatRoomList(writerId, memberId, pageable);
+
+        int startPage = Math.max(1,chatRoomList.getPageable().getPageNumber() -4);
+        int endPage = Math.min(chatRoomList.getTotalPages(),chatRoomList.getPageable().getPageNumber() + 4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
 //        log.info("로그인 멤버" + loginMember);
         model.addAttribute("loginMember", loginMember);

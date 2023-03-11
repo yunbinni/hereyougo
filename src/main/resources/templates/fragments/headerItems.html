@@ -4,7 +4,6 @@
 
 <link th:fragment="login" th:href="@{/css/login.css}" rel="stylesheet" />
 <link th:fragment="mypage" th:href="@{/css/member/mypage.css}" rel="stylesheet" />
-<link th:fragment="join" th:href="@{/css/member/join.css}" rel="stylesheet" />
 <link th:fragment="updateMemberForm" th:href="@{/css/member/updateForm.css}" rel="stylesheet" />
 
 <script th:fragment="addPost1" th:src="@{/js/post/addPost1.js}"></script>
@@ -22,6 +21,11 @@
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <!--    <script src="/js/chat_script.js"></script>-->
     <link th:href="@{/css/chat/chatting.css}" rel="stylesheet"/>
+</th:block>
+
+<th:block th:fragment="join">
+    <script th:src="@{/js/members/join.js}"></script>
+    <link th:href="@{/css/member/join.css}" rel="stylesheet" />
 </th:block>
 
 <th:block th:fragment="myPage">

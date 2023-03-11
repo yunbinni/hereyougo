@@ -13,12 +13,13 @@ import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Slf4j
 @Transactional
@@ -81,11 +82,11 @@ public class AppointmentService {
         }
     }
 
-    public List<Appointment> getAppointments(Long memberId){
+    public Page<Appointment> getAppointments(Long memberId, Pageable pageable){
         Member member = memberRepository.findById(memberId).get();
 //        Appointment에 chatRoom id 넣어야되는지 고민 => 약속목록에서 제목 클릭 시 채팅방으로 이동되게하려면
 //        필요해보임
-        return appointmentRepository.getAppointments(member, member);
+        return appointmentRepository.getAppointments(member, member, pageable);
     }
 
     public void cancelAppointment(Long appointmentId){

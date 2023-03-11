@@ -73,3 +73,23 @@ button.btn.btn-primary {
 input#detailAddress {
     margin-top: 20px;
 }
+
+#joinBtn{
+    background : #00AA7D;
+}
+
+#password-message, #confirm-message{
+    margin-top: -5px;
+}
+
+#notMatch{
+    margin-top: -10px;
+}
+
+#password-message, #confirm-length, #notMatch{
+    display : none;
+    color: #3c3c3c;
+    font-size: 0.8em;
+    font-family: 'gsans-light';
+    font-weight: 600;
+}

@@ -1,15 +1,23 @@
 package io.k2c1.hereyougo.dto;
 
-import io.k2c1.hereyougo.domain.Address;
 import lombok.Data;
+
+import javax.validation.constraints.Min;
 
 @Data
 public class JoinForm {
     private String email;
+    private String authCode;
+
+    @Min(6)
     private String password;
+
+    @Min(6)
     private String confirmPassword;
+
     private String nickname;
-    private String businessType;
+
+    private String categoryId;
 
     private String roadAddrPart1;
     private String roadAddrPart2;

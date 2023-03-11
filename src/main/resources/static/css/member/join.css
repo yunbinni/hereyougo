@@ -93,3 +93,8 @@ input#detailAddress {
     font-family: 'gsans-light';
     font-weight: 600;
 }
+
+#jusoInputBtn {
+    background-color: LightSkyBlue;
+    color: white;
+}

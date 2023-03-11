@@ -1,4 +1,4 @@
-<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: postList}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<!doctype html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: post}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
 <div class="container">
     <div class="d-flex justify-content-center">
@@ -17,9 +17,9 @@
 
     <div class="d-flex justify-content-center">
         <ul class="list-group list-group-horizontal">
-<!--                <div th:each="image : ${post.images}">-->
-<!--                    <li class="list-group-item"><img th:src="@{/images/{img}(img=${image.storedFilename})}" style="width: 300px; height: 300px; border: 2px solid red" /></li>-->
-<!--                </div>-->
+            <div th:each="image : ${post.images}">
+                <li class="list-group-item"><img th:src="@{/images/{img}(img=${image.storedFilename})}" style="width: 300px; height: 300px; border: 2px solid red" /></li>
+            </div>
         </ul>
     </div><br><br>
 
@@ -39,7 +39,10 @@
         <script th:inline="javascript" th:src="@{/js/post/postKakaoMap.js}"></script>
     </div><br>
 
-    <p class="d-flex justify-content-center text-center">❤ [[${post.recommend}]]</p><br><br>
+    <div class="d-flex justify-content-center">
+        <p class="me-2" th:text="|❤ ${post.recommend}|">추천수</p>
+        <button th:onclick="updateRecommend()">추천하기</button>
+    </div><br><br>
 
     <p class="d-flex justify-content-center text-center">조회수 : [[${post.views}]]</p><br><br>
 

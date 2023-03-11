@@ -25,11 +25,72 @@
     </ul><br><br>
 
     <h3>내 주변 보기</h3>
-    <th:block th:if="${member != null}"><input type="hidden" id="juso" th:value="${member.address.doro}"></th:block>
+    <th:block th:if="${member} != null"><input type="hidden" id="memberDoro" th:value="${member.address.doro}" readonly></th:block>
     <div class="d-flex justify-content-center">
         <div id="map" style="width: 600px; height: 500px; border: 2px solid green"></div>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f1ad9b5adce2cf7e772b667dde656195&libraries=services"></script>
-        <script type="text/javascript" th:src="@{/js/home/homeKakaoMap.js}"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f1ad9b5adce2cf7e772b667dde656195&libraries=services,clusterer"></script>
+        <script type="text/javascript" th:inline="javascript">
+            // 주소-좌표 변환 객체를 생성합니다
+            var geocoder = new kakao.maps.services.Geocoder();
+
+            var map = new kakao.maps.Map(document.getElementById('map'), {
+                center: new kakao.maps.LatLng(36.38, 127.51),
+                level : 13
+            });
+
+            var posts = [[${nearPosts}]];
+
+            // 마커 클러스터러를 생성합니다
+            var clusterer = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+                minLevel: 10 // 클러스터 할 최소 지도 레벨
+            });
+
+            var markers = posts.map(function(data) {
+
+                geocoder.addressSearch(data.doro, function(result, status) {
+                    if(status === kakao.maps.services.Status.OK) {
+
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        map.setCenter(coords);
+                        map.setLevel(7);
+
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            clickable: true,
+                            position: coords
+                        });
+
+                        var postId = data.Id;
+                        var title = data.title;
+                        var iwContent =
+                            `<div style="
+                                padding:5px;
+                                display: inline-block;
+                                width: 200px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;">
+                                    <a href="/posts/${postId}" target="_blank">${title}</a>
+                            </div>`;
+                        var infowindow = new kakao.maps.InfoWindow({
+                            position : coords,
+                            content : iwContent,
+                            removable : true
+                        });
+
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                              infowindow.open(map, marker); // 마커 위에 인포윈도우를 표시합니다
+                        });
+
+                        clusterer.addMarker(marker);
+                    }
+                });
+            });
+
+        </script>
     </div><br><br>
 
     <h3>전체 기부참여 보기</h3><br>

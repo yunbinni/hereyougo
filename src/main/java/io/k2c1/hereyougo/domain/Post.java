@@ -36,6 +36,7 @@ public class Post
     @ColumnDefault("0")
     private Integer reservationQuantity; // 예약 수량
 
+    @ColumnDefault("0")
     private Integer recommend; // 추천 수
 
     @Enumerated(EnumType.STRING)
@@ -57,10 +58,6 @@ public class Post
     public void addImage(Image image) {
         this.images.add(image);
         image.setPost(this);
-    }
-
-    public void plusViews() {
-        this.views++;
     }
 
     public void plusReservationQuantity(int reservationQuantity) {

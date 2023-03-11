@@ -2,8 +2,10 @@ package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.dto.PostMarkerDTO;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +15,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Transactional
 @Service
 public class PostService {
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private PostRepository postRepository;
+
+    private final MemberRepository memberRepository;
+    private final PostRepository postRepository;
+
+    public List<PostMarkerDTO> getNearPosts(Member member) {
+        return postRepository.findByAddressSidoAndAddressSgg(member.getAddress().getSido(), member.getAddress().getSgg()).stream()
+                .map(post -> new PostMarkerDTO(post.getId(), post.getTitle(), post.getAddress().getDoro()))
+                .collect(Collectors.toList());
+    }
 
     public List<Post> getRecentPopularPosts()
     {
@@ -43,5 +51,13 @@ public class PostService {
 
     public Optional<Post> getPost(Long postId){
         return postRepository.findById(postId);
+    }
+
+    public int updateView(Long Id) {
+        return postRepository.updateViews(Id);
+    }
+
+    public int updateRecommend(Long Id) {
+        return postRepository.updateRecommend(Id);
     }
 }

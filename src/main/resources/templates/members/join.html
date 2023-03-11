@@ -26,8 +26,16 @@
             <form role="form" id="form" th:action="@{/members/join}" th:object="${joinForm}" method="post">
                 <div class="mb-3">
                     <label th:for="email" class="form-label">이메일 주소</label>
-                    <input type="email" class="form-control" th:field="*{email}" placeholder="이메일을 입력하세요." required>
+                    <input id="email" type="text" class="form-control mb-3" th:field="*{email}" placeholder="이메일을 입력하세요." required>
+                    <div id="mailCheckBtn" th:onclick="verify()" style="cursor: pointer;">이메일 인증하기(클릭)</div>
+                    <input class="form-control mail-check-input" th:field="*{authCode}" placeholder="인증번호를 입력해주세요!">
                 </div>
+
+                <div class="mb-3">
+                    <label th:for="type" class="form-label">닉네임</label>
+                    <input type="text" class="form-control" th:field="*{nickname}" placeholder="닉네임을 입력하세요">
+                </div>
+
                 <div class="mb-3">
                     <label th:for="password" class="form-label">비밀번호</label>
                     <input type="password" class="form-control" th:field="*{password}" placeholder="6자이상 입력하세요" required onkeyup="isMoreSix()">
@@ -36,9 +44,6 @@
                     <p id="password-length" class="invalid">최소 <b>6자 이상</b> 입력하세요</p>
                 </div>
 
-                <!--         비밀번호 확인은 프론트 단에서 검증하기
-                             비밀번호가 일치하지않으면, 회원가입 버튼 비활성화
-                   -->
                 <div class="mb-3">
                     <label th:for="confirmPassword" class="form-label">비밀번호 확인</label>
                     <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="다시 한번 더 입력하세요" onkeyup="validateConfirmPassword()" required>
@@ -53,17 +58,34 @@
                     <label th:for="type" class="form-label">닉네임</label>
                     <input type="text" class="form-control" th:field="*{nickname}" placeholder="닉네임을 입력하세요" required>
                 </div>
-
+                
                 <div class="mb-3">
-                    <label th:for="type" class="form-label">업종</label>
-                    <input type="text" class="form-control" th:field="*{businessType}" placeholder="업종을 입력하세요">
+                    <label th:for="type" class="form-label">내가 속한 업종</label>
+                    <div class="d-flex justify-content-center">
+                        <select id="firstCategory" name="firstCategory" class="form-select-inline">
+                            <option value="1">외식</option>
+                            <option value="2">도소매</option>
+                            <option value="3">서비스</option>
+                        </select>
+
+                        <select id="secondCategory" name="secondCategory" class="form-select-inline" th:field="*{categoryId}">
+                            <th:block th:each="secondCategory : ${secondCategories}">
+                                <th:block th:if="${secondCategory.id > 3 and secondCategory.id < 18}">
+                                    <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}" hidden="hidden"></option>
+                                </th:block>
+                                <th:block th:if="${secondCategory.id <= 3 or secondCategory.id >= 18}">
+                                    <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}"></option>
+                                </th:block>
+                            </th:block>
+                        </select>
+                    </div><br><br>
                 </div>
 
                 <div class="mb-3">
-                    <label th:for="address" class="form-label">주소</label>
-                    <input type="button" onclick="goPopup();" value="주소입력기" />
+                    <label th:for="address" class="form-label me-2">주소</label>
+                    <input type="button" id="jusoInputBtn" onclick="goPopup();" value="주소입력기" />
                     <input type="text" id="roadAddrPart1" name="roadAddrPart1" class="form-control" placeholder="도로명주소" readonly th:field="*{roadAddrPart1}">
-                    <input type="text" id="roadAddrPart2" name="roadAddrPart2" class="form-control" placeholder="도로명주소 참고항목" readonly th:field="*{roadAddrPart2}">
+                    <input type="text" id="roadAddrPart2" name="roadAddrPart2" class="form-control" placeholder="도로명주소 참고항목" hidden readonly th:field="*{roadAddrPart2}">
                     <input type="text" id="roadFullAddr" name="roadFullAddr" class="form-control" placeholder="도로명주소Full" hidden th:field="*{roadFullAddr}">
                     <input type="text" id="jibunAddr" name="jibunAddr" class="form-control" placeholder="지번주소" hidden th:field="*{jibunAddr}">
                     <input type="text" id="addrDetail" name="addrDetail" class="form-control" placeholder="상세주소" readonly th:field="*{addrDetail}">
@@ -74,6 +96,6 @@
 
                 <button type="submit" class="btn btn-primary" id="joinBtn">회원가입</button>
             </form>
-        </div>
+        </div><script th:src="@{/js/post/addPost2.js}"></script>
     </div>
 </html>

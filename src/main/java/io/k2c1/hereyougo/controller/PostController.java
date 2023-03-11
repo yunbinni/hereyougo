@@ -9,6 +9,7 @@ import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.PostSaveForm;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.service.CategoryService;
+import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -34,6 +38,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 public class PostController
 {
+    private final PostService postService;
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final FileUploader fileUploader;
@@ -42,16 +47,74 @@ public class PostController
     public String getPost(
             @PathVariable("postId") Long postId,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            HttpServletRequest request,
+            HttpServletResponse response,
             Model model)
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
 
         Post getPost = postRepository.findById(postId).get();
         log.info("Getting Post - ID: {}, TITLE : {}", getPost.getId(), getPost.getTitle());
+
+        updateViews(loginMember, request, response, getPost);
+
         model.addAttribute("post", getPost);
-        getPost.plusViews();
 
         return "posts/post";
+    }
+
+    private void updateViews(Member loginMember, HttpServletRequest request, HttpServletResponse response, Post getPost) {
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("postView"))
+                    oldCookie = cookie;
+            }
+        }
+
+        if (oldCookie == null) {
+            if (!getPost.getWriter().equals(loginMember)) {
+                postService.updateView(getPost.getId());
+            }
+            Cookie newCookie = new Cookie("postView", getPost.getId().toString());
+            newCookie.setMaxAge(24 * 60 * 60);
+            response.addCookie(newCookie);
+        }
+    }
+
+    @GetMapping("/updateRecommend")
+    private String updateRecommend(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam("postId") Long postId) throws IOException
+    {
+        log.info("postId = {}", postId);
+
+        Post getPost = postRepository.findById(postId).get();
+
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("postRecommend"))
+                    oldCookie = cookie;
+            }
+        }
+
+        if (oldCookie == null) {
+            if (!getPost.getWriter().equals(loginMember)) {
+                postService.updateRecommend(getPost.getId());
+            }
+            Cookie newCookie = new Cookie("postRecommend", getPost.getId().toString());
+            newCookie.setMaxAge(24 * 60 * 60);
+            response.addCookie(newCookie);
+        }
+
+        return "redirect:/posts/" + postId.toString();
     }
 
     @GetMapping("/add")
@@ -94,6 +157,7 @@ public class PostController
                 .quantity(form.getQuantity())
                 .address(address)
                 .recommend(0)
+                .reservationQuantity(0)
                 .category(categoryService.getCategory(form.getCategoryId()))
                 .build();
 

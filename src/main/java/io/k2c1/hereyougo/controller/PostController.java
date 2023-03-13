@@ -199,6 +199,14 @@ public class PostController
         return "redirect:/";
     }
 
+    @GetMapping("/search")
+    public String search(Model model) {
+        model
+                .addAttribute("secondCategories", categoryService.getAllChildCategories())
+                .addAttribute("posts", postService.getAllPosts());
+        return "posts/search";
+    }
+
     @GetMapping("/filtered")
     public String getFilteredPosts(
             @RequestParam("sido") String sido,
@@ -231,21 +239,21 @@ public class PostController
 
         model.addAttribute("posts", posts);
 
-        return "fragments/filtered";
+        return "fragments/postTable";
     }
 
     @GetMapping("/list")
     public String getPostsByMember(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember
-            , @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "") String searchText, Model model)
-    {
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "") String searchText, Model model) {
+
         if (loginMember != null) model.addAttribute("member", loginMember);
 
         Page<Post> posts = postRepository.findByWriter_Id(loginMember.getId(), pageable);
 
-        int startPage = Math.max(1,posts.getPageable().getPageNumber() -4);
-        int endPage = Math.min(posts.getTotalPages(),posts.getPageable().getPageNumber() + 4);
+        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

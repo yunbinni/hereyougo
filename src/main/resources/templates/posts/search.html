@@ -1,0 +1,45 @@
+<!DOCTYPE HTML><html th:replace="~{layout/base :: base(~{fragments/headerItems :: search}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+<div class="container">
+    <h3>전체 기부참여 보기</h3><br>
+    <div th:onchange="getFilteredPost()">
+        <select id="sido" name="sido" class="form-select-inline">
+        </select>
+
+        <select id="sgg" name="sgg" class="form-select-inline">
+        </select>
+
+        <select id="firstCategory" name="firstCategory" class="form-select-inline">
+            <option value="0" selected="selected">업종 전체</option>
+            <option value="1">외식</option>
+            <option value="2">도소매</option>
+            <option value="3">서비스</option>
+        </select>
+
+        <select id="secondCategory" name="secondCategory" class="form-select-inline">
+            <option value="0" selected="selected">(업종 전체)</option>
+            <th:block th:each="secondCategory : ${secondCategories}">
+                <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}" hidden></option>
+            </th:block>
+        </select><br><br>
+
+        <div th:replace="~{fragments/postTable :: postTable}"></div><br><br>
+
+        <nav id="pagination" class="d-flex justify-content-center" aria-label="...">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div><br><br>
+    <script type="text/javascript" th:src="@{/js/home/selectBoxes.js}"></script>
+</div>
+</html>

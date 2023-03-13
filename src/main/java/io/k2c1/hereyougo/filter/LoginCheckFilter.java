@@ -16,7 +16,7 @@ public class LoginCheckFilter implements Filter
     private static final String[] whitelist = {"/",
             "/login", "/logout", "/join",
             "/jusoPopup", "/members/join", "/members/login", "/members/auth", "https://business.juso.go.kr/*", "//dapi.kakao.com/v2/maps/sdk.js",
-            "/categories/child", "/posts/filtered",
+            "/categories/child", "/posts/filtered", "/posts/search",
             "favicon.ico", "/css/*", "/js/*", "/font/*", "/images/*"
             ,"/download/*"
     };

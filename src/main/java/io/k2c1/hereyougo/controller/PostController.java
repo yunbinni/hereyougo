@@ -13,6 +13,7 @@ import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -200,14 +201,25 @@ public class PostController
     }
 
     @GetMapping("/search")
-    public String search(Model model) {
+    public String search(
+            @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model
+    ) {
+        Page<Post> posts = postService.getAllPosts(pageable);
+
+        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
+
         model
                 .addAttribute("secondCategories", categoryService.getAllChildCategories())
-                .addAttribute("posts", postService.getAllPosts());
+                .addAttribute("startPage", startPage)
+                .addAttribute("endPage", endPage)
+                .addAttribute("posts", postService.getAllPosts(pageable));
+
         return "posts/search";
     }
 
-    @GetMapping("/filtered")
+//    @GetMapping("/filtered")
     public String getFilteredPosts(
             @RequestParam("sido") String sido,
             @RequestParam("sgg") String sgg,
@@ -242,11 +254,36 @@ public class PostController
         return "fragments/postTable";
     }
 
+    @GetMapping("/filtered")
+    public String getFilteredPostsV2(
+            @RequestParam("sido") String sido,
+            @RequestParam("sgg") String sgg,
+            @RequestParam("categoryId") Long categoryId,
+            @PageableDefault(size = 16, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model
+    ) {
+        log.info("sido = {}", sido);
+        log.info("sgg = {}", sgg);
+        log.info("categoryId = {}", categoryId);
+
+        Page<Post> posts = postRepository.findByAddressSidoAndAddressSggAndCategory_Id(sido, sgg, categoryId, pageable);
+
+        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("posts", posts);
+
+        return "fragments/postTable";
+    }
+
     @GetMapping("/list")
     public String getPostsByMember(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "") String searchText, Model model) {
+            @RequestParam(required = false, defaultValue = "") String searchText, Model model
+    ) {
 
         if (loginMember != null) model.addAttribute("member", loginMember);
 

@@ -64,8 +64,11 @@ public class AppointmentController {
     }
 
     @GetMapping("/list")
-    public String getAppointments(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-             @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable, Model model){
+    public String getAppointments(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
+            Model model
+    ) {
         Long memberId = loginMember.getId();
         Page<Appointment> appointments = appointmentService.getAppointments(memberId, pageable);
 

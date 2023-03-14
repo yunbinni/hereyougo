@@ -3,17 +3,19 @@ package io.k2c1.hereyougo.service;
 import io.k2c1.hereyougo.domain.ChatRoom;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
+import io.k2c1.hereyougo.dto.ChatExitForm;
+import io.k2c1.hereyougo.dto.ChatForm;
 import io.k2c1.hereyougo.dto.RoomForm;
+import io.k2c1.hereyougo.repository.ChatMessageRepository;
 import io.k2c1.hereyougo.repository.ChatRoomRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -22,6 +24,10 @@ import java.util.Optional;
 public class ChatRoomService {
     @Autowired
     private ChatRoomRepository chatRoomRepository;
+
+    @Autowired
+    private ChatMessageRepository chatMessageRepository;
+
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -66,8 +72,8 @@ public class ChatRoomService {
     /**
      * 채팅방 목록 조회
      */
-    public Page<ChatRoom> getChatRoomList(Long writerId, Long memberId, Pageable pageable){
-        return chatRoomRepository.findByWriterIdOrMember_IdOrderByResentDateDesc(writerId, memberId, pageable);
+    public List<ChatRoom> getChatRoomList(Long writerId, Long memberId){
+        return chatRoomRepository.findByWriterIdOrMember_IdOrderByResentDateDesc(writerId, memberId);
     }
 
     public void updateRecentMessage(Long roomId, String message){
@@ -75,4 +81,51 @@ public class ChatRoomService {
         chatRoom.updateRecentMessage(message);
     }
 
+    public void exitRoom(ChatExitForm chatExitForm){
+        ChatForm chatMessage = new ChatForm();
+
+        Long writerId = chatExitForm.getWriterId();
+        Long memberId = chatExitForm.getMemberId(); // 로그인된 멤버 아이디
+        Long chatRoomId = chatExitForm.getChatRoomId();
+
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).get();
+
+
+        if(writerId == memberId){
+            chatRoom.deleteWriter();
+            Member writer = memberRepository.findById(writerId).get();
+//            String writerNickName = writer.getNickname();
+//            String exitMessage = writerNickName + "님이 채팅방을 나가셨습니다";
+//
+//            chatMessage.setChatRoomId(chatRoomId);
+//            chatMessage.setMessage(exitMessage);
+//
+//            ChatMessage message = ChatMessage.builder()
+//                    .message(exitMessage)
+//                    .chatRoom(chatRoom)
+//                    .build();
+//
+//            chatMessageRepository.save(message);
+        }else{
+            Member loginedMember = memberRepository.findById(memberId).get();
+//            String writerNickName = loginedMember.getNickname();
+//            String exitMessage = writerNickName + "님이 채팅방을 나가셨습니다";
+//
+//            chatMessage.setChatRoomId(chatRoomId);
+//            chatMessage.setMessage(exitMessage);
+//
+//            ChatMessage message = ChatMessage.builder()
+//                    .message(exitMessage)
+//                    .chatRoom(chatRoom)
+//                    .build();
+
+//            chatMessageRepository.save(message);
+            chatRoom.deleteMember();
+        }
+
+        if(chatRoom.getWriterId() == null && chatRoom.getMember() == null){
+            chatMessageRepository.deleteByChatRoom_id(chatRoomId);
+            chatRoomRepository.deleteById(chatRoomId);
+        }
+    }
 }

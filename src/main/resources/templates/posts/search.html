@@ -2,28 +2,98 @@
 
 <div class="container">
     <h3>전체 기부참여 보기</h3><br>
-    <div th:onchange="getFilteredPost()">
-        <select id="sido" name="sido" class="form-select-inline">
-        </select>
+    <form class="row g-2" method="get">
 
-        <select id="sgg" name="sgg" class="form-select-inline">
-        </select>
+        <div class="col-auto">
+            <select id="sido" name="sido" class="form-select">
+                <optgroup label="전국 선택">
+                    <option value="전국">전국</option>
+                </optgroup>
+                <optgroup label="시/도 선택">
+                    <option value="서울특별시">서울특별시</option>
+                    <option value="부산광역시">부산광역시</option>
+                    <option value="인천광역시">인천광역시</option>
+                    <option value="대구광역시">대구광역시</option>
+                    <option value="대전광역시">대전광역시</option>
+                    <option value="광주광역시">광주광역시</option>
+                    <option value="울산광역시">울산광역시</option>
+                    <option value="세종특별자치시">세종특별자치시</option>
+                    <option value="경기도">경기도</option>
+                    <option value="강원도">강원도</option>
+                    <option value="충청북도">충청북도</option>
+                    <option value="충청남도">충청남도</option>
+                    <option value="전라북도">전라북도</option>
+                    <option value="전라남도">전라남도</option>
+                    <option value="경상북도">경상북도</option>
+                    <option value="경상남도">경상남도</option>
+                    <option value="제주특별자치도">제주특별자치도</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select id="sgg" name="sgg" class="form-select">
+                <option value="전국 전체">전국 전체</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select id="categoryId" name="categoryId" class="form-select" required="false">
+                <optgroup label="전체 선택">
+                    <option value="0" selected="selected">전체</option>
+                    <option value="1">외식 전체</option>
+                    <option value="2">도소매 전체</option>
+                    <option value="3">서비스 전체</option>
+                </optgroup>
+                <optgroup label="외식">
+                    <option value="4">한식</option>
+                    <option value="5">분식</option>
+                    <option value="6">중식</option>
+                    <option value="7">일식</option>
+                    <option value="8">서양식</option>
+                    <option value="9">기타외국식</option>
+                    <option value="10">치킨</option>
+                    <option value="11">피자</option>
+                    <option value="12">제과제빵</option>
+                    <option value="13">아이스크림/빙수</option>
+                    <option value="14">커피</option>
+                    <option value="15">음료(커피 외)</option>
+                    <option value="16">주점</option>
+                    <option value="17">기타 외식</option>
+                </optgroup>
+                <optgroup label="도소매 상세 선택">
+                    <option value="18">의류/패션</option>
+                    <option value="19">화장품</option>
+                    <option value="20">농수산물</option>
+                    <option value="21">건강식품</option>
+                    <option value="22">종합소매점</option>
+                    <option value="23">기타도소매</option>
+                </optgroup>
+                <optgroup label="서비스 상세 선택">
+                    <option value="24">교육(교과)</option>
+                    <option value="25">교육(외국어)</option>
+                    <option value="26">교육(기타)</option>
+                    <option value="27">유아 관련</option>
+                    <option value="28">부동산 중개</option>
+                    <option value="29">임대</option>
+                    <option value="30">숙박</option>
+                    <option value="31">스포츠 관련</option>
+                    <option value="32">자동차 관련</option>
+                    <option value="33">PC방</option>
+                    <option value="34">오락</option>
+                    <option value="35">배달</option>
+                    <option value="36">안경</option>
+                    <option value="37">세탁</option>
+                    <option value="38">운송</option>
+                    <option value="39">반려동물</option>
+                    <option value="40">약국</option>
+                    <option value="41">기타 서비스</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" id="submitBtn" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </form><br>
 
-        <select id="firstCategory" name="firstCategory" class="form-select-inline">
-            <option value="1" selected="selected">외식</option>
-            <option value="2">도소매</option>
-            <option value="3">서비스</option>
-        </select>
-
-        <select id="secondCategory" name="secondCategory" class="form-select-inline">
-            <th:block th:each="secondCategory : ${secondCategories}">
-                <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}" hidden></option>
-            </th:block>
-        </select><br><br>
-
-        <div th:replace="~{fragments/postTable :: postTable}"></div><br><br>
-    </div><br><br>
-
-    <script type="text/javascript" th:src="@{/js/home/selectBoxes.js}"></script>
+    <div th:replace="~{fragments/postTable :: postTable}"></div><br><br>
 </div>
 </html>

@@ -17,11 +17,24 @@ public interface PostRepository extends JpaRepository<Post, Long>
 
 //    Page<Post> findByWriter_IdAndTitleContainingOrContentContaining(String title, String content, Pageable pageable);
 
-    List<Post> findByAddressSidoAndAddressSgg(String sido, String sgg);
-
     Page<Post> findAll(Pageable pageable);
 
-    Page<Post> findByAddressSidoAndAddressSggAndCategory_Id(String sido, String sgg, Long categoryId, Pageable pageable);
+    Page<Post> findByCategoryParent_Id(Long parentId, Pageable pageable);
+
+    Page<Post> findByCategoryId(Long categoryId, Pageable pageable);
+
+    Page<Post> findByAddressSido(String sido, Pageable pageable);
+
+    Page<Post> findByAddressSidoAndCategoryParent_Id(String sio, Long categoryId, Pageable pageable);
+
+    Page<Post> findByAddressSidoAndCategoryId(String sido, Long categoryId, Pageable pageable);
+
+    Page<Post> findByAddressSidoAndAddressSgg(String sido, String sgg, Pageable pageable);
+    List<Post> findByAddressSidoAndAddressSgg(String sido, String sgg);
+
+    Page<Post> findByAddressSidoAndAddressSggAndCategoryParent_Id(String sido, String sgg, Long categoryId, Pageable pageable);
+
+    Page<Post> findByAddressSidoAndAddressSggAndCategoryId(String sido, String sgg, Long categoryId, Pageable pageable);
 
     @Modifying
     @Query("delete from Post p where p.writer = :writer ")

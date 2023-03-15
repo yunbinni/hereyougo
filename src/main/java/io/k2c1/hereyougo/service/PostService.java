@@ -44,17 +44,8 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll().stream()
                 .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
-                .limit(16)
+                .limit(8)
                 .collect(Collectors.toList());
-    }
-
-    public Page<Post> getAllPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
-    }
-
-    public Page<Post> getPostTable(String sido, String sgg, Long categoryId, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 16, Sort.by(Sort.Direction.DESC, "Id"));
-        return postRepository.findByAddressSidoAndAddressSggAndCategory_Id(sido, sgg, categoryId, pageRequest);
     }
 
     public void deleteByWriter(Long memberId){

@@ -24,7 +24,7 @@ $('document').ready(function() {
         $("option", sgg).remove(); // 구군 초기화
 
         const sido = $("option:selected",$(this)).text();
-        sgg.append("<option value='" + sido + "'>" + sido + " 전체" + "</option>");
+        sgg.append("<option value='전체'>" + sido + " 전체" + "</option>");
         $.each(eval(area), function() {
             sgg.append("<option value='"+this+"'>"+this+"</option>");
         });

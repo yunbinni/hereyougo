@@ -50,18 +50,19 @@ public class PostSearchRepository {
     }
 
     private BooleanExpression sidoCond(String sido) {
-        return sido == "전국" ? null : post.address.sido.eq(sido);
+        return sido.equals("전국") ? null : post.address.sido.eq(sido);
     }
 
     private BooleanExpression sggCond(String sgg) {
-        return sgg == "전체" ? null : post.address.sgg.eq(sgg);
+        return sgg.equals("전체") ? null : post.address.sgg.eq(sgg);
     }
 
     private BooleanExpression categoryIdCond(Long categoryId) {
-        if (categoryId >= 1L && categoryId <= 3L) {
+        if (categoryId == 0L) {
+            return null;
+        } else if (categoryId >= 1L && categoryId <= 3L) {
             return (post.category.id.eq(categoryId).or(post.category.parent.id.eq(categoryId)));
-        }
-        else {
+        } else {
             return post.category.id.eq(categoryId);
         }
     }

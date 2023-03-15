@@ -202,80 +202,58 @@ public class PostController
 
     @GetMapping("/search")
     public String search(
-            @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model
-    ) {
-        Page<Post> posts = postService.getAllPosts(pageable);
-
-        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
-        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
-
-        model
-                .addAttribute("secondCategories", categoryService.getAllChildCategories())
-                .addAttribute("startPage", startPage)
-                .addAttribute("endPage", endPage)
-                .addAttribute("posts", postService.getAllPosts(pageable));
-
-        return "posts/search";
-    }
-
-//    @GetMapping("/filtered")
-    public String getFilteredPosts(
-            @RequestParam("sido") String sido,
-            @RequestParam("sgg") String sgg,
-            @RequestParam("categoryId") Long categoryId,
-            Model model
-    ) {
-        List<Post> posts = postRepository.findAll().stream()
-                .filter(post -> {
-                    if(sido.equals("시/도 전체")) return true;
-                    else return post.getAddress().getSido().equals(sido);
-                })
-                .filter(post -> {
-                    if(sgg.equals("0")) return true;
-                    else return post.getAddress().getSgg().equals(sgg);
-                })
-                .filter(post -> {
-                    if(categoryId == 0L) return true;
-                    else {
-                        return categoryService.getParentAndChildCategories(categoryId)
-                                .contains(post.getCategory());
-                    }
-                })
-                .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
-                .collect(Collectors.toList());
-
-        log.info("sido = {}", sido);
-        log.info("sgg = {}", sgg);
-        log.info("categoryId = {}", categoryId);
-
-        model.addAttribute("posts", posts);
-
-        return "fragments/postTable";
-    }
-
-    @GetMapping("/filtered")
-    public String getFilteredPostsV2(
             @RequestParam("sido") String sido,
             @RequestParam("sgg") String sgg,
             @RequestParam("categoryId") Long categoryId,
             @PageableDefault(size = 16, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        log.info("sido = {}", sido);
-        log.info("sgg = {}", sgg);
-        log.info("categoryId = {}", categoryId);
+        Page<Post> posts;
 
-        Page<Post> posts = postRepository.findByAddressSidoAndAddressSggAndCategory_Id(sido, sgg, categoryId, pageable);
+        if (sido == "전국") {
+
+            if(categoryId == 0L)
+                posts = postRepository.findAll(pageable);
+
+            else if(categoryId >= 1L && categoryId <= 3L)
+                posts = postRepository.findByCategoryParent_Id(categoryId, pageable);
+
+            else
+                posts = postRepository.findByCategoryId(categoryId, pageable);
+        }
+
+        else if(sido == sgg) {
+
+            if (categoryId == 0L)
+                posts = postRepository.findByAddressSido(sido, pageable);
+
+            else if (categoryId >= 1L && categoryId <= 3L)
+                posts = postRepository.findByAddressSidoAndCategoryParent_Id(sido, categoryId, pageable);
+
+            else
+                posts = postRepository.findByAddressSidoAndCategoryId(sido, categoryId, pageable);
+        }
+
+        else {
+            if (categoryId == 0L)
+                posts = postRepository.findByAddressSidoAndAddressSgg(sido, sgg, pageable);
+
+            else if (categoryId >= 1L && categoryId <= 3L)
+                posts = postRepository.findByAddressSidoAndAddressSggAndCategoryParent_Id(sido, sgg, categoryId, pageable);
+
+            else
+                posts = postRepository.findByAddressSidoAndAddressSggAndCategoryId(sido, sgg, categoryId, pageable);
+        }
 
         int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
         int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
 
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("posts", posts);
+        model
+                .addAttribute("startPage", startPage)
+                .addAttribute("endPage", endPage)
+                .addAttribute("posts", posts);
 
-        return "fragments/postTable";
+        return "posts/search";
     }
 
     @GetMapping("/list")

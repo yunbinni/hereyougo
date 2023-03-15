@@ -34,10 +34,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model) {
+
         model
                 .addAttribute("recentPopularPosts", postService.getRecentPopularPosts())
                 .addAttribute("secondCategories", categoryService.getAllChildCategories())
-                .addAttribute("posts", postService.getAllPosts()); // 페이지네이션 필요
+                .addAttribute("posts", postService.getAllPosts());
 
         HttpSession session = request.getSession(false);
         if (session == null) return "home";

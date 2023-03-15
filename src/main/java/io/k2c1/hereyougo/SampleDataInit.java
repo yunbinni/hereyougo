@@ -85,7 +85,7 @@ public class SampleDataInit {
                 .reservationQuantity(0)
                 .recommend(5)
                 .address(member1.getAddress())
-                .category(categoryRepository.findById(4L).get())
+                .category(categoryRepository.findById(4L).get()) // 한식
                 .timestamp(LocalDateTime.now())
                 .build();
 
@@ -106,7 +106,7 @@ public class SampleDataInit {
                 .reservationQuantity(0)
                 .recommend(10)
                 .address(member1.getAddress())
-                .category(categoryRepository.findById(33L).get())
+                .category(categoryRepository.findById(4L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
 
@@ -127,7 +127,7 @@ public class SampleDataInit {
                 .reservationQuantity(0)
                 .recommend(12)
                 .address(member2.getAddress())
-                .category(categoryRepository.findById(2L).get())
+                .category(categoryRepository.findById(4L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
 
@@ -150,7 +150,7 @@ public class SampleDataInit {
                 .reservationQuantity(0)
                 .recommend(20)
                 .address(member2.getAddress())
-                .category(categoryRepository.findById(39L).get())
+                .category(categoryRepository.findById(4L).get())
                 .timestamp(LocalDateTime.now())
                 .build();
 

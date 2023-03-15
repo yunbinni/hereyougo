@@ -6,14 +6,15 @@ import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.dto.PostSaveForm;
+import io.k2c1.hereyougo.dto.post.PostSaveForm;
+import io.k2c1.hereyougo.dto.post.PostSearchDTO;
 import io.k2c1.hereyougo.repository.PostRepository;
+import io.k2c1.hereyougo.repository.PostSearchRepository;
 import io.k2c1.hereyougo.service.CategoryService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -43,6 +44,7 @@ public class PostController
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final FileUploader fileUploader;
+    private final PostSearchRepository postSearchRepository;
 
     @GetMapping("/{postId}")
     public String getPost(
@@ -202,13 +204,16 @@ public class PostController
 
     @GetMapping("/search")
     public String search(
+            @RequestParam("sido") String sido,
+            @RequestParam("sgg") String sgg,
+            @RequestParam("categoryId") Long categoryId,
             @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        Page<Post> posts = postService.getAllPosts(pageable);
+        Page<PostSearchDTO> content = postSearchRepository.findByConditions(sido, sgg, categoryId, pageable);
 
-        int startPage = Math.max(1, posts.getPageable().getPageNumber() - 4);
-        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
+        int startPage = Math.max(1, content.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(content.getTotalPages(), content.getPageable().getPageNumber() + 4);
 
         model
                 .addAttribute("secondCategories", categoryService.getAllChildCategories())

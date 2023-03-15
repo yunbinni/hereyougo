@@ -1,4 +1,4 @@
-package io.k2c1.hereyougo.dto;
+package io.k2c1.hereyougo.dto.post;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

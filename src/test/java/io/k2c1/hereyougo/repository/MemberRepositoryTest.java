@@ -124,7 +124,7 @@ class MemberRepositoryTest {
         member.setEmail(email);
         member.setPassword(password);
         member.setNickname(nickname);
-        member.setBusinessType(businessType);
+//        member.setBusinessType(businessType);
 
         return member;
     }
@@ -143,7 +143,7 @@ class MemberRepositoryTest {
             member.setEmail(email);
             member.setPassword(password);
             member.setNickname(nickname);
-            member.setBusinessType(businessType);
+//            member.setBusinessType(businessType);
 
             memberRepository.save(member);
             

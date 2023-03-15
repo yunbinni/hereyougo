@@ -1,8 +1,6 @@
 <!DOCTYPE html><html th:replace="~{layout/base :: base(~{fragments/headerItems :: home}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
 
 <div class="container"><br>
-    <a href="/posts/search?sido=서울특별시&sgg=종로구&categoryId=4">임시</a>
-
     <h3>최근 인기글</h3><br>
     <ul class="list-group tab-pane fade show active tabCon" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="post-item" th:each="post : ${recentPopularPosts}">

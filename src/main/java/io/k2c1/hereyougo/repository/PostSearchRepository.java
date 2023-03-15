@@ -25,7 +25,7 @@ public class PostSearchRepository {
         queryFactory = new JPAQueryFactory(em);
     }
 
-    public Page<PostSearchDTO> findByConditions(String sido, String sgg, Long categoryId, Pageable pageable) {
+    public Page<PostSearchDTO> findByConditions(String sido, String sgg, Long categoryId, String searchKey, Pageable pageable) {
 
         List<PostSearchDTO> content = queryFactory
                 .select(new QPostSearchDTO(post.id, post.title, post.quantity))
@@ -33,7 +33,8 @@ public class PostSearchRepository {
                 .where(
                         sidoCond(sido),
                         sggCond(sgg),
-                        categoryIdCond(categoryId)
+                        categoryIdCond(categoryId),
+                        searchKeyCond(searchKey)
                 )
                 .fetch();
 
@@ -43,7 +44,8 @@ public class PostSearchRepository {
                 .where(
                         sidoCond(sido),
                         sggCond(sgg),
-                        categoryIdCond(categoryId)
+                        categoryIdCond(categoryId),
+                        searchKeyCond(searchKey)
                 );
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
@@ -54,7 +56,7 @@ public class PostSearchRepository {
     }
 
     private BooleanExpression sggCond(String sgg) {
-        return sgg.equals("전체") ? null : post.address.sgg.eq(sgg);
+        return sgg.contains("전체") ? null : post.address.sgg.eq(sgg);
     }
 
     private BooleanExpression categoryIdCond(Long categoryId) {
@@ -65,5 +67,12 @@ public class PostSearchRepository {
         } else {
             return post.category.id.eq(categoryId);
         }
+    }
+
+    private BooleanExpression searchKeyCond(String searchKey) {
+        if(searchKey == null || searchKey.equals(""))
+            return null;
+
+        return post.title.contains(searchKey).or(post.content.contains(searchKey));
     }
 }

@@ -208,12 +208,13 @@ public class PostController
             @RequestParam(value = "sido", defaultValue = "전국") String sido,
             @RequestParam(value = "sgg", defaultValue = "전체") String sgg,
             @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
+            @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
             @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        PostSearchCondition condition = new PostSearchCondition(sido, sgg, categoryId);
+        PostSearchCondition condition = new PostSearchCondition(sido, sgg, categoryId, searchKey);
 
-        Page<PostSearchDTO> content = postSearchRepository.findByConditions(condition.getSido(), condition.getSgg(), condition.getCategoryId(), pageable);
+        Page<PostSearchDTO> content = postSearchRepository.findByConditions(condition.getSido(), condition.getSgg(), condition.getCategoryId(), condition.getSearchKey(), pageable);
 
         int startPage = Math.max(1, content.getPageable().getPageNumber() - 4);
         int endPage = Math.min(content.getTotalPages(), content.getPageable().getPageNumber() + 4);

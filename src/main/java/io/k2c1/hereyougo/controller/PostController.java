@@ -28,6 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -159,6 +160,7 @@ public class PostController
                 .recommend(0)
                 .reservationQuantity(0)
                 .category(categoryService.getCategory(form.getCategoryId()))
+                .timestamp(LocalDateTime.now())
                 .build();
 
         Post savedPost = postRepository.save(post);
@@ -240,12 +242,20 @@ public class PostController
             , @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") String searchText, Model model)
     {
+
+        int displayCount = 10;
+
         if (loginMember != null) model.addAttribute("member", loginMember);
 
         Page<Post> posts = postRepository.findByWriter_Id(loginMember.getId(), pageable);
 
         int startPage = Math.max(1,posts.getPageable().getPageNumber() -4);
-        int endPage = Math.min(posts.getTotalPages(),posts.getPageable().getPageNumber() + 4);
+        int endPage = Math.min(posts.getTotalPages() ,posts.getPageable().getPageNumber() + 4);
+
+        if(posts.getTotalElements()<= displayCount){
+            endPage = 1;
+        }
+        log.info("post Size" + posts.getTotalElements());
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

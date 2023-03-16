@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -53,5 +56,14 @@ public class FileUploader {
 
     private String getFullPath(String filename) {
         return fileDir + filename;
+    }
+
+    public void removeImage(Image image) throws IOException {
+        String imgUrl= fileDir + image.getStoredFilename();
+        Path filePath = Paths.get(imgUrl);
+
+        System.out.println("파일 이미지 경로" + imgUrl);
+
+        Files.delete(filePath);
     }
 }

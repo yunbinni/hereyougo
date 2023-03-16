@@ -1,15 +1,15 @@
 package io.k2c1.hereyougo.service;
 
+import io.k2c1.hereyougo.domain.Address;
+import io.k2c1.hereyougo.domain.Category;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.post.PostMarkerDTO;
+import io.k2c1.hereyougo.dto.post.PostUpdateForm;
+import io.k2c1.hereyougo.repository.CategoryRepository;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +25,8 @@ public class PostService {
 
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
+
+    private final CategoryRepository categoryRepository;
 
     public List<PostMarkerDTO> getNearPosts(Member member) {
         return postRepository.findByAddressSidoAndAddressSgg(member.getAddress().getSido(), member.getAddress().getSgg()).stream()
@@ -63,5 +65,32 @@ public class PostService {
 
     public int updateRecommend(Long Id) {
         return postRepository.updateRecommend(Id);
+    }
+
+    public void updatePost(PostUpdateForm updateForm, Member loginMember){
+        Address address;
+        Long postId = updateForm.getPostId();
+        Post post = postRepository.findById(postId).get();
+        Long categoryId = updateForm.getCategoryId();
+        Category category = categoryRepository.findById(categoryId).get();
+
+        String title = updateForm.getTitle();
+        String content = updateForm.getContent();
+        int quantity = updateForm.getQuantity();
+
+        if (updateForm.getRoadAddrPart1() == null || updateForm.getRoadAddrPart1().equals("")) {
+            address = loginMember.getAddress();
+        } else {
+            address = Address.builder()
+                    .sido(updateForm.getSiNm())
+                    .sgg(updateForm.getSggNm())
+                    .doro(updateForm.getRoadFullAddr())
+                    .jibun(updateForm.getJibunAddr())
+                    .zipNo(updateForm.getZipNo())
+                    .build();
+        }
+
+        post.updatePostInfo(title, content, quantity ,address, category);
+
     }
 }

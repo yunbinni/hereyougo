@@ -55,19 +55,12 @@ public class Post
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
 
-    public void addImage(Image image) {
-        this.images.add(image);
-        image.setPost(this);
-    }
-
     public void plusReservationQuantity(int reservationQuantity) {
         this.reservationQuantity += reservationQuantity;
     }
-
     public void minusReservationQuantity(int reservationQuantity) {
         this.reservationQuantity -= reservationQuantity;
     }
-
     public void plusPostQuantity(int quantity){
         this.quantity += quantity;
     }

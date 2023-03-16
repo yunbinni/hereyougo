@@ -1,6 +1,7 @@
 package io.k2c1.hereyougo.dto.post;
 
 import com.querydsl.core.annotations.QueryProjection;
+import io.k2c1.hereyougo.domain.Image;
 import lombok.Data;
 
 @Data

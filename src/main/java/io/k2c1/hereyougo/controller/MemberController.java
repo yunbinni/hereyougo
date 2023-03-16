@@ -39,7 +39,7 @@ public class MemberController {
     @GetMapping("/join")
     public String joinForm(@ModelAttribute("joinForm") JoinForm joinForm, Model model) {
 //        memberService.join(joinForm);
-        model.addAttribute("secondCategories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "members/join";
     }
 

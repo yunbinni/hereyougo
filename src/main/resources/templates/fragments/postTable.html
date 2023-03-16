@@ -4,9 +4,8 @@
 
     <div class="row row-cols-4 g-3">
         <div th:each="post : ${posts}" class="col" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
-            <div class="card" style="cursor: pointer;">
-                <img src="https://shop4.daumcdn.net/thumb/R500x500/?fname=http%3A%2F%2Fshop4.daumcdn.net%2Fshophow%2Fp%2FX20044838407.jpg%3Fut%3D20221122150556"
-                     class="card-img-top" alt="...">
+            <div class="card h-100" style="cursor: pointer;">
+                <img th:src="@{/images/{img}(img=${post.images[0].storedFilename})}" class="card-img-top cardImg" alt="...">
                 <hr>
                 <div class="card-body">
                     <h5 th:text="${post.title}" class="postTitle text-center">제목</h5>

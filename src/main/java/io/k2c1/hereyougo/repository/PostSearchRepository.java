@@ -3,6 +3,7 @@ package io.k2c1.hereyougo.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.post.PostSearchDTO;
 import io.k2c1.hereyougo.dto.post.QPostSearchDTO;
 import org.springframework.data.domain.Page;
@@ -25,11 +26,10 @@ public class PostSearchRepository {
         queryFactory = new JPAQueryFactory(em);
     }
 
-    public Page<PostSearchDTO> findByConditions(String sido, String sgg, Long categoryId, String searchKey, Pageable pageable) {
+    public Page<Post> findByConditions(String sido, String sgg, Long categoryId, String searchKey, Pageable pageable) {
 
-        List<PostSearchDTO> content = queryFactory
-                .select(new QPostSearchDTO(post.id, post.title, post.quantity))
-                .from(post)
+        List<Post> content = queryFactory
+                .selectFrom(post)
                 .where(
                         sidoCond(sido),
                         sggCond(sgg),
@@ -73,6 +73,9 @@ public class PostSearchRepository {
         if(searchKey == null || searchKey.equals(""))
             return null;
 
-        return post.title.contains(searchKey).or(post.content.contains(searchKey));
+        return post.title.contains(searchKey)
+                .or(post.content.contains(searchKey))
+                .or(post.address.doro.contains(searchKey))
+                .or(post.address.jibun.contains(searchKey));
     }
 }

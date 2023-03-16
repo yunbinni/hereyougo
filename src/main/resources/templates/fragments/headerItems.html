@@ -14,7 +14,7 @@
 
 <link th:fragment="updateMemberForm" th:href="@{/css/member/updateForm.css}" rel="stylesheet" />
 
-<script th:fragment="addPost1" th:src="@{/js/post/addPost1.js}"></script>
+<script th:fragment="addPost" th:src="@{/js/post/addPost.js}"></script>
 
 <th:block th:fragment="post">
     <link th:fragment="postList" th:href="@{/css/post/postList.css}" rel="stylesheet" />
@@ -22,6 +22,7 @@
 </th:block>
 
 <th:block th:fragment="search">
+    <link th:href="@{/css/post/search.css}" rel="stylesheet"/>
     <script th:src="@{/js/home/selectBoxes.js}"></script>
 </th:block>
 

@@ -7,7 +7,7 @@
             <li class="list-group-item" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
                 <div class="row">
                     <div class="col-1">
-                        <img th:src="@{images/{name}(name=post1.jpg)}" width="70px" height="85px">
+                        <img th:src="@{/images/{img}(img=${post.images[0].storedFilename})}" width="70px" height="85px">
                     </div>
                     <div class="col">
                         <h5 th:text="${post.title}">제목</h5>

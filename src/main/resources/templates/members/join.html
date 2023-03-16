@@ -61,25 +61,22 @@
                 
                 <div class="mb-3">
                     <label th:for="type" class="form-label">내가 속한 업종</label>
-                    <div class="d-flex justify-content-center">
-                        <select id="firstCategory" name="firstCategory" class="form-select-inline">
-                            <option value="1">외식</option>
-                            <option value="2">도소매</option>
-                            <option value="3">서비스</option>
+                        <select id="categoryId" name="categoryId" class="form-select">
+                            <optgroup label="전체 선택">
+                                <option value="0" selected="selected">업종 전체</option>
+                                <option th:each="category : ${categories}" th:if="${category.id le 3}" th:value="${category.id}" th:text="|${category.categoryName} 전체|"></option>
+                            </optgroup>
+                            <optgroup label="외식">
+                                <option th:each="category : ${categories}" th:if="${category.id ge 4 and category.id le 17}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                            </optgroup>
+                            <optgroup label="도소매 상세 선택">
+                                <option th:each="category : ${categories}" th:if="${category.id ge 18 and category.id le 23}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                            </optgroup>
+                            <optgroup label="서비스 상세 선택">
+                                <option th:each="category : ${categories}" th:if="${category.id ge 24 and category.id le 41}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                            </optgroup>
                         </select>
-
-                        <select id="secondCategory" name="secondCategory" class="form-select-inline" th:field="*{categoryId}">
-                            <th:block th:each="secondCategory : ${secondCategories}">
-                                <th:block th:if="${secondCategory.id > 3 and secondCategory.id < 18}">
-                                    <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}" hidden="hidden"></option>
-                                </th:block>
-                                <th:block th:if="${secondCategory.id <= 3 or secondCategory.id >= 18}">
-                                    <option th:value="${secondCategory.id}" th:text="${secondCategory.categoryName}"></option>
-                                </th:block>
-                            </th:block>
-                        </select>
-                    </div><br><br>
-                </div>
+                </div><br><br>
 
                 <div class="mb-3">
                     <label th:for="address" class="form-label me-2">주소</label>
@@ -96,6 +93,6 @@
 
                 <button type="submit" class="btn btn-primary" id="joinBtn">회원가입</button>
             </form>
-        </div><script th:src="@{/js/post/addPost2.js}"></script>
+        </div>
     </div>
 </html>

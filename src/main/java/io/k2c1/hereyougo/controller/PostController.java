@@ -10,6 +10,7 @@ import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.post.PostSaveForm;
 import io.k2c1.hereyougo.dto.post.PostSearchCondition;
 import io.k2c1.hereyougo.dto.post.PostSearchDTO;
+import io.k2c1.hereyougo.repository.ImageRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.repository.PostSearchRepository;
 import io.k2c1.hereyougo.service.CategoryService;
@@ -32,6 +33,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class PostController
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final FileUploader fileUploader;
+    private final ImageRepository imageRepository;
     private final PostSearchRepository postSearchRepository;
 
     @GetMapping("/{postId}")
@@ -118,7 +121,7 @@ public class PostController
             response.addCookie(newCookie);
         }
 
-        return "redirect:/posts/" + postId.toString();
+        return "posts/" + postId.toString();
     }
 
     @GetMapping("/add")
@@ -128,7 +131,7 @@ public class PostController
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
         model.addAttribute("form", new PostSaveForm());
-        model.addAttribute("secondCategories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "posts/addPost";
     }
 
@@ -145,13 +148,19 @@ public class PostController
             return "posts/addPost";
         }
 
-        Address address = Address.builder()
-                .sido(form.getSiNm())
-                .sgg(form.getSggNm())
-                .doro(form.getRoadFullAddr())
-                .jibun(form.getJibunAddr())
-                .zipNo(form.getZipNo())
-                .build();
+        Address address;
+
+        if (form.getRoadAddrPart1() == null || form.getRoadAddrPart1().equals("")) {
+            address = loginMember.getAddress();
+        } else {
+            address = Address.builder()
+                    .sido(form.getSiNm())
+                    .sgg(form.getSggNm())
+                    .doro(form.getRoadFullAddr())
+                    .jibun(form.getJibunAddr())
+                    .zipNo(form.getZipNo())
+                    .build();
+        }
 
         Post post = Post.builder()
                 .writer(loginMember)
@@ -163,12 +172,14 @@ public class PostController
                 .recommend(0)
                 .reservationQuantity(0)
                 .category(categoryService.getCategory(form.getCategoryId()))
+                .timestamp(LocalDateTime.now())
                 .build();
 
         Post savedPost = postRepository.save(post);
 
-        List<MultipartFile> files = form.getFiles();
+        List<MultipartFile> files = form.getImages();
         List<Image> images = fileUploader.uploadFiles(files, post);
+        imageRepository.saveAll(images);
         savedPost.setImages(images);
 
         log.info("id : {}", savedPost.getId());
@@ -210,11 +221,14 @@ public class PostController
             @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
             @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
             @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model
     ) {
+        if(loginMember != null) model.addAttribute("member", loginMember);
+
         PostSearchCondition condition = new PostSearchCondition(sido, sgg, categoryId, searchKey);
 
-        Page<PostSearchDTO> content = postSearchRepository.findByConditions(condition.getSido(), condition.getSgg(), condition.getCategoryId(), condition.getSearchKey(), pageable);
+        Page<Post> content = postSearchRepository.findByConditions(condition.getSido(), condition.getSgg(), condition.getCategoryId(), condition.getSearchKey(), pageable);
 
         int startPage = Math.max(1, content.getPageable().getPageNumber() - 4);
         int endPage = Math.min(content.getTotalPages(), content.getPageable().getPageNumber() + 4);

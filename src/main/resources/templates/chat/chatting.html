@@ -15,6 +15,9 @@
                             <div class="post-title">
                                 <a th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.title}"> </a>
                             </div>
+                            <div class="exit-btn-container">
+                                <button type="button" id="exitBtn" class="btn d-flex" th:onclick="exitChattingRoom()"> 채팅방 나가기</button>
+                            </div>
                         </div>
 
                         <!--   약속 잡기 버튼   -->
@@ -36,7 +39,7 @@
                             <input type="hidden" id="postId" th:value="${post.id}">
                             <input type="hidden" id="chatRoomId" th:value="${roomId}">
                             <input type="hidden" id="memberId" th:value="${member.id}">
-                            <input type="hidden" id="writerId" th:value="${writerId}">
+                            <input type="hidden" id="writerId" th:value="${writerId != null} ? ${writerId} : ''">
                             <input type="text" placeholder="메시지를 입력하세요" id="message" autofocus class="form-control">
                             <div class="input-group-append">
                                 <button class="btn send-btn" id="send">전송</button>
@@ -278,6 +281,31 @@
             }
         });
     })
+
+
+    function exitChattingRoom(){
+        const memberId = $('#memberId').val()
+        const writerId = $('#writerId').val()
+
+        const data = {
+           chatRoomId : roomId,
+           memberId : memberId,
+           writerId : writerId
+        };
+
+        var status = confirm("채팅방을 나가시겠습니까?");
+
+        if(status){
+            $.ajax({
+                url : "/chatroom/exit",
+                data : data,
+                type : "POST",
+                success : function (data){
+                    location.href = "/chatroom/roomList";
+                }
+            });
+        }
+    }
 
 
     $(function(){

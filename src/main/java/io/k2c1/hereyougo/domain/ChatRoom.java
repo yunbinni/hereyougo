@@ -51,4 +51,12 @@ public class ChatRoom {
     public void updateRecentDate(LocalDateTime resentDate){
         this.resentDate = resentDate;
     }
+
+    public void deleteMember(){
+        this.member = null;
+    }
+
+    public void deleteWriter(){
+        this.writerId = null;
+    }
 }

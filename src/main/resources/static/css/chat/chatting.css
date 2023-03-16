@@ -171,3 +171,14 @@ input.appoint-date, input.appoint-time, #appointmentQuantity{
     color: #717171;
     font-size: 13px;
  }
+
+.exit-btn-container{
+    margin-left: auto;
+}
+
+#exitBtn {
+     border: 1px solid #00A0E2;
+     color: #00A0E2;
+     font-size: 0.8em;
+     padding: 0.8vw 1vw;
+}

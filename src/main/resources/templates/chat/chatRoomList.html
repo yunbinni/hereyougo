@@ -11,7 +11,11 @@
                 <a class="chat-link" th:href="@{/chat/{roomId}(roomId = ${chat.id})}">
                     <div class="card-body">
                         <div class="profile-image">
-                            <img src="https://i.pinimg.com/originals/37/66/bd/3766bd2da443c2cca359ae87cf98b4a2.png"/>
+                            <svg width="60" height="60" viewBox="0 0 95 95" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="47.5" cy="47.5" r="47.5" fill="#D6D6D6"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M59.9212 33.887C59.9213 35.5208 59.5997 37.1387 58.9746 38.6482C58.3495 40.1577 57.4332 41.5294 56.278 42.6848C55.1229 43.8402 53.7514 44.7568 52.242 45.3822C50.7326 46.0076 49.1148 46.3295 47.481 46.3297C44.1813 46.33 41.0166 45.0196 38.6832 42.6866C36.3497 40.3536 35.0386 37.1892 35.0382 33.8895C35.0381 32.2557 35.3597 30.6378 35.9848 29.1283C36.6099 27.6187 37.5262 26.2471 38.6814 25.0917C41.0143 22.7582 44.1787 21.4471 47.4784 21.4468C50.7781 21.4464 53.9428 22.7569 56.2762 25.0899C58.6097 27.4229 59.9208 30.5873 59.9212 33.887ZM47.4797 50.1358C29.5635 50.1358 22.5942 61.5378 22.5942 66.8422C22.5942 72.1441 37.4299 73.5573 47.4797 73.5573C57.5294 73.5573 72.3652 72.1441 72.3652 66.8422C72.3652 61.5378 65.3959 50.1358 47.4797 50.1358Z" fill="#8B95A1"/>
+                            </svg>
                         </div>
                         <!--                    <a th:href="@{/chat/{roomId}(roomId = ${chat.id})}"><h5 class="card-title" th:text="${chat.post.title}"></h5></a>-->
                         <div class="chat-info">
@@ -33,18 +37,7 @@
                 </a>
             </div>
         </div>
-        <nav aria-label="page navigation" class="d-flex justify-content-center page-navigation">
-            <ul class="pagination">
-                <li class="page-item previous" th:classappend="${1 == chatRoomList.pageable.pageNumber + 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/chatroom/roomList(page=${chatRoomList.pageable.pageNumber - 1})}" href="#">이전</a>
-                </li>
-                <li class="page-item page-num" th:classappend="${i == chatRoomList.pageable.pageNumber + 1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)}">
-                    <a class="page-link" href="#" th:href="@{/chatroom/roomList(page=${i - 1})}" th:text="${i}"></a></li>
-                <li class="page-item next" th:classappend="${chatRoomList.totalPages == chatRoomList.pageable.pageNumber + 1} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/chatroom/roomList(page=${chatRoomList.pageable.pageNumber + 1})}">다음</a>
-                </li>
-            </ul>
-        </nav>
+
     </div><br><br>
     <script th:src="@{/js/chat/chatRoomList.js}"></script>
 </div>

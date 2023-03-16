@@ -30,10 +30,8 @@ public class AppointmentService {
     private AppointmentRepository appointmentRepository;
     @Autowired
     private PostRepository postRepository;
-
     @Autowired
     private ChatRoomRepository chatRoomRepository;
-
     @Autowired
     private MemberRepository memberRepository;
 

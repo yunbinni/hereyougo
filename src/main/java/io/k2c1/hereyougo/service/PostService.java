@@ -2,11 +2,14 @@ package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.dto.PostMarkerDTO;
+import io.k2c1.hereyougo.dto.post.PostMarkerDTO;
 import io.k2c1.hereyougo.repository.MemberRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +44,7 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll().stream()
                 .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
+                .limit(8)
                 .collect(Collectors.toList());
     }
 

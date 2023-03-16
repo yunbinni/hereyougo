@@ -1,16 +1,10 @@
 package io.k2c1.hereyougo.service;
 
 import io.k2c1.hereyougo.domain.Category;
-import io.k2c1.hereyougo.dto.CategoryForm;
-import io.k2c1.hereyougo.dto.FavoriteCategoryForm;
 import io.k2c1.hereyougo.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,7 +53,7 @@ public class CategoryService {
         return categoryRepository.getCategoriesByParentId(parentId);
     }
 
-    public List<Category> getAllChildCategories() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 

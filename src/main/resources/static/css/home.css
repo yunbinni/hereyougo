@@ -26,20 +26,7 @@ nav button a, nav button p {
     color: #666;
 }
 
-.postTable {
-    display: grid;
-    grid-template-columns: repeat(4, 23%);
-    grid-template-rows: repeat(4, 45vh);
-}
-
-.post {
-    margin: 1vh;
-    border: 1px solid black;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.post h5, .post p {
+.postTitle {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

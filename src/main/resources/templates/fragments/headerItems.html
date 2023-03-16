@@ -1,6 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<link th:fragment="home" th:href="@{/css/home.css}" rel="stylesheet" />
+<th:block th:fragment="home">
+    <link th:href="@{/css/home.css}" rel="stylesheet" />
+</th:block>
 
 <link th:fragment="login" th:href="@{/css/login.css}" rel="stylesheet" />
 <link th:fragment="mypage" th:href="@{/css/member/mypage.css}" rel="stylesheet" />
@@ -12,11 +14,16 @@
 
 <link th:fragment="updateMemberForm" th:href="@{/css/member/updateForm.css}" rel="stylesheet" />
 
-<script th:fragment="addPost1" th:src="@{/js/post/addPost1.js}"></script>
+<script th:fragment="addPost" th:src="@{/js/post/addPost.js}"></script>
 
 <th:block th:fragment="post">
     <link th:fragment="postList" th:href="@{/css/post/postList.css}" rel="stylesheet" />
     <script th:src="@{/js/post/post.js}"></script>
+</th:block>
+
+<th:block th:fragment="search">
+    <link th:href="@{/css/post/search.css}" rel="stylesheet"/>
+    <script th:src="@{/js/home/selectBoxes.js}"></script>
 </th:block>
 
 <link th:fragment="chatRoomList" th:href="@{/css/chat/chatRoomList.css}" rel="stylesheet" />

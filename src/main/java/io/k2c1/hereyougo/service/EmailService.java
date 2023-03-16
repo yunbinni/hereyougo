@@ -20,13 +20,15 @@ import java.io.UnsupportedEncodingException;
 public class EmailService {
 
     private final JavaMailSender sender;
-    private final String authCode = createAuthCode();
+
+    private String authCode;
 
     @Value("${spring.mail.username}")
     private String id;
 
     public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
         log.info("보내는 대상 : "+ to);
+        authCode = createAuthCode();
         log.info("인증 번호 : " + authCode);
         MimeMessage message = sender.createMimeMessage();
 
@@ -34,7 +36,7 @@ public class EmailService {
         message.setSubject("여기있소 회원가입 인증 코드: "); //메일 제목
 
         // 메일 내용 메일의 subtype을 html로 지정하여 html문법 사용 가능
-        String msg="";
+        String msg = "";
         msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">이메일 주소 확인</h1>";
         msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">아래 확인 코드를 회원가입 화면에서 입력해주세요.</p>";
         msg += "<div style=\"padding-right: 30px; padding-left: 30px; margin: 32px 0 40px;\"><table style=\"border-collapse: collapse; border: 0; background-color: #F4F4F4; height: 70px; table-layout: fixed; word-wrap: break-word; border-radius: 6px;\"><tbody><tr><td style=\"text-align: center; vertical-align: middle; font-size: 30px;\">";
@@ -48,8 +50,9 @@ public class EmailService {
     }
 
     public static String createAuthCode() {
-        // 임의의 숫자 6자리 인증코드 생성
-        return String.valueOf(Math.random()*10000000).substring(0, 6);
+        int random = (int)(Math.random() * 999999) + 1;
+//        return String.valueOf(random);
+        return "123456";
     }
 
     public String sendSimpleMessage(String to) throws Exception

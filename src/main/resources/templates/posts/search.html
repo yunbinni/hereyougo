@@ -1,0 +1,48 @@
+<!DOCTYPE HTML><html th:replace="~{layout/base :: base(~{fragments/headerItems :: search}, ~{::div})}" xmlns:th="http://www.thymeleaf.org">
+
+<div class="container">
+    <h3>전체 기부참여 보기</h3><br>
+    <form class="row g-2" method="get" th:object="${condition}">
+
+        <div class="col-auto">
+            <select class="form-select" th:field="*{sido}">
+                <optgroup label="시/도 선택">
+                    <option th:each="sido : ${sidoList}" th:value="${sido}" th:text="${sido}"></option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" th:field="*{sgg}">
+                <optgroup label="시/구/군 선택">
+                    <option th:each="sgg : ${sggList}" th:value="${sgg}" th:text="${sgg}"></option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select id="categoryId" name="categoryId" class="form-select" th:field="*{categoryId}">
+                <optgroup label="전체 선택">
+                    <option value="0" selected="selected">업종 전체</option>
+                    <option th:each="category : ${categoryList}" th:if="${category.id le 3}" th:value="${category.id}" th:text="|${category.categoryName} 전체|"></option>
+                </optgroup>
+                <optgroup label="외식">
+                    <option th:each="category : ${categoryList}" th:if="${category.id ge 4 and category.id le 17}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                </optgroup>
+                <optgroup label="도소매 상세 선택">
+                    <option th:each="category : ${categoryList}" th:if="${category.id ge 18 and category.id le 23}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                </optgroup>
+                <optgroup label="서비스 상세 선택">
+                    <option th:each="category : ${categoryList}" th:if="${category.id ge 24 and category.id le 41}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" placeholder="검색어를 입력하세요." th:field="*{searchKey}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" id="submitBtn" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </form><br>
+
+    <div th:replace="~{fragments/postTable :: postTable}"></div><br><br>
+</div>
+</html>

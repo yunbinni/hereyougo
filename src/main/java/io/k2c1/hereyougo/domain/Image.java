@@ -1,13 +1,12 @@
 package io.k2c1.hereyougo.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
 public class Image {
 
@@ -16,14 +15,12 @@ public class Image {
 
     private String originalFilename;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) @JoinColumn(name = "post_id")
+    @ManyToOne @JoinColumn(name = "post_id")
     private Post post;
 
     public Image(String storedFilename, String originalFilename, Post post) {
         this.storedFilename = storedFilename;
         this.originalFilename = originalFilename;
         this.post = post;
-
-        post.addImage(this);
     }
 }

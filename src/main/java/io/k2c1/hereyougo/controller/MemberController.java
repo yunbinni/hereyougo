@@ -39,7 +39,7 @@ public class MemberController {
     @GetMapping("/join")
     public String joinForm(@ModelAttribute("joinForm") JoinForm joinForm, Model model) {
 //        memberService.join(joinForm);
-        model.addAttribute("secondCategories", categoryService.getAllChildCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "members/join";
     }
 
@@ -59,7 +59,7 @@ public class MemberController {
     @ResponseBody
     public String sendAuthEmail(@RequestParam String to) throws Exception {
         String code = emailService.sendSimpleMessage(to);
-        authCodeRepo.put(to, code);
+//        authCodeRepo.put(to, code);
         log.info("code : {}", code);
         return code;
     }

@@ -2,12 +2,17 @@ package io.k2c1.hereyougo.controller;
 
 import io.k2c1.hereyougo.config.FileUploader;
 import io.k2c1.hereyougo.constant.SessionConst;
+import io.k2c1.hereyougo.constant.SidoSgg;
 import io.k2c1.hereyougo.domain.Address;
 import io.k2c1.hereyougo.domain.Image;
 import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.dto.PostSaveForm;
+import io.k2c1.hereyougo.dto.post.PostSaveForm;
+import io.k2c1.hereyougo.dto.post.PostSearchCondition;
+import io.k2c1.hereyougo.dto.post.PostSearchDTO;
+import io.k2c1.hereyougo.repository.ImageRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
+import io.k2c1.hereyougo.repository.PostSearchRepository;
 import io.k2c1.hereyougo.service.CategoryService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +34,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Comparator;
+
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -43,6 +48,8 @@ public class PostController
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final FileUploader fileUploader;
+    private final ImageRepository imageRepository;
+    private final PostSearchRepository postSearchRepository;
 
     @GetMapping("/{postId}")
     public String getPost(
@@ -115,7 +122,7 @@ public class PostController
             response.addCookie(newCookie);
         }
 
-        return "redirect:/posts/" + postId.toString();
+        return "posts/" + postId.toString();
     }
 
     @GetMapping("/add")
@@ -125,7 +132,7 @@ public class PostController
     {
         if (loginMember != null) model.addAttribute("member", loginMember);
         model.addAttribute("form", new PostSaveForm());
-        model.addAttribute("secondCategories", categoryService.getAllChildCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "posts/addPost";
     }
 
@@ -142,13 +149,19 @@ public class PostController
             return "posts/addPost";
         }
 
-        Address address = Address.builder()
-                .sido(form.getSiNm())
-                .sgg(form.getSggNm())
-                .doro(form.getRoadFullAddr())
-                .jibun(form.getJibunAddr())
-                .zipNo(form.getZipNo())
-                .build();
+        Address address;
+
+        if (form.getRoadAddrPart1() == null || form.getRoadAddrPart1().equals("")) {
+            address = loginMember.getAddress();
+        } else {
+            address = Address.builder()
+                    .sido(form.getSiNm())
+                    .sgg(form.getSggNm())
+                    .doro(form.getRoadFullAddr())
+                    .jibun(form.getJibunAddr())
+                    .zipNo(form.getZipNo())
+                    .build();
+        }
 
         Post post = Post.builder()
                 .writer(loginMember)
@@ -165,8 +178,9 @@ public class PostController
 
         Post savedPost = postRepository.save(post);
 
-        List<MultipartFile> files = form.getFiles();
+        List<MultipartFile> files = form.getImages();
         List<Image> images = fileUploader.uploadFiles(files, post);
+        imageRepository.saveAll(images);
         savedPost.setImages(images);
 
         log.info("id : {}", savedPost.getId());
@@ -201,54 +215,55 @@ public class PostController
         return "redirect:/";
     }
 
-    @GetMapping("/filtered")
-    public String getFilteredPosts(
-            @RequestParam("sido") String sido,
-            @RequestParam("sgg") String sgg,
-            @RequestParam("categoryId") Long categoryId,
+    @GetMapping("/search")
+    public String search(
+            @RequestParam(value = "sido", defaultValue = "전국") String sido,
+            @RequestParam(value = "sgg", defaultValue = "전체") String sgg,
+            @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
+            @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
+            @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model
     ) {
-        List<Post> posts = postRepository.findAll().stream()
-                .filter(post -> {
-                    if(sido.equals("시/도 전체")) return true;
-                    else return post.getAddress().getSido().equals(sido);
-                })
-                .filter(post -> {
-                    if(sgg.equals("0")) return true;
-                    else return post.getAddress().getSgg().equals(sgg);
-                })
-                .filter(post -> {
-                    if(categoryId == 0L) return true;
-                    else {
-                        return categoryService.getParentAndChildCategories(categoryId)
-                                .contains(post.getCategory());
-                    }
-                })
-                .sorted(Comparator.comparing((Post p) -> p.getId()).reversed())
-                .collect(Collectors.toList());
+        if(loginMember != null) model.addAttribute("member", loginMember);
 
-        log.info("sido = {}", sido);
-        log.info("sgg = {}", sgg);
-        log.info("categoryId = {}", categoryId);
+        PostSearchCondition condition = new PostSearchCondition(sido, sgg, categoryId, searchKey);
 
-        model.addAttribute("posts", posts);
+        Page<Post> content = postSearchRepository.findByConditions(condition.getSido(), condition.getSgg(), condition.getCategoryId(), condition.getSearchKey(), pageable);
 
-        return "fragments/filtered";
+        int startPage = Math.max(1, content.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(content.getTotalPages(), content.getPageable().getPageNumber() + 4);
+
+        List<SidoSgg> sidoList = Arrays.asList(SidoSgg.values());
+        List<String> sggList = getSggListBySido(sido);
+
+        model
+                .addAttribute("startPage", startPage)
+                .addAttribute("endPage", endPage)
+                .addAttribute("posts", content)
+                .addAttribute("condition", condition)
+                .addAttribute("sidoList", sidoList)
+                .addAttribute("sggList", sggList)
+                .addAttribute("categoryList", categoryService.getAllCategories());
+
+        return "posts/search";
+    }
+
+    private List<String> getSggListBySido(String sido) {
+        return SidoSgg.valueOf(sido).getSgg();
     }
 
     @GetMapping("/list")
     public String getPostsByMember(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember
-            , @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "") String searchText, Model model)
-    {
-
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "") String searchText, Model model
+    ) {
         int displayCount = 10;
-
+        
         if (loginMember != null) model.addAttribute("member", loginMember);
 
         Page<Post> posts = postRepository.findByWriter_Id(loginMember.getId(), pageable);
-
         int startPage = Math.max(1,posts.getPageable().getPageNumber() -4);
         int endPage = Math.min(posts.getTotalPages() ,posts.getPageable().getPageNumber() + 4);
 
@@ -263,4 +278,5 @@ public class PostController
 
         return "posts/postList";
     }
+
 }

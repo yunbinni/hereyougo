@@ -40,3 +40,19 @@ footer a {
     text-decoration: none;
     color: blue;
 }
+
+.post-item .list-group-item {
+    padding: 1vw 2vw;
+}
+
+.post-item .list-group-item .row{
+    align-items: center;
+}
+
+.post-item .list-group-item .row .text-end {
+    margin-top: 1vh;
+}
+
+.post-item .list-group-item .row .col {
+    margin-left: 2vh;
+}

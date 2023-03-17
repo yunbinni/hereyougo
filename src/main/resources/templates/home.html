@@ -14,9 +14,9 @@
                         <p th:text="${post.content}">내용</p>
                     </div>
                     <div class="col-2">
-                        <h6 class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도 시군구</h6><br>
-                        <p class="text-end" th:text="|👍${post.recommend}|"></p>
-                        <p class="text-end" th:text="|${post.quantity}개 남음|"></p>
+                        <div class="text-end" th:text="|${post.address.sido} ${post.address.sgg}|">시도 시군구</div>
+                        <div class="text-end" th:text="|👍${post.recommend}|"></div>
+                        <div class="text-end" th:text="|${post.quantity}개 남음|"></div>
                     </div>
                 </div>
             </li>

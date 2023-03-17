@@ -232,6 +232,12 @@ public class PostController
 
     @PostMapping("/{postId}/delete")
     public String deletePost(@PathVariable Long postId) throws IOException {
+        Post post = postRepository.findById(postId).get();
+        List<Image> images = post.getImages();
+
+        if(!images.isEmpty()){
+            imageService.removeImageFile(images);
+        }
         postRepository.deleteById(postId);
         return "redirect:/";
     }

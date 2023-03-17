@@ -9,11 +9,12 @@ import io.k2c1.hereyougo.domain.Member;
 import io.k2c1.hereyougo.domain.Post;
 import io.k2c1.hereyougo.dto.post.PostSaveForm;
 import io.k2c1.hereyougo.dto.post.PostSearchCondition;
-import io.k2c1.hereyougo.dto.post.PostSearchDTO;
+import io.k2c1.hereyougo.dto.post.PostUpdateForm;
 import io.k2c1.hereyougo.repository.ImageRepository;
 import io.k2c1.hereyougo.repository.PostRepository;
 import io.k2c1.hereyougo.repository.PostSearchRepository;
 import io.k2c1.hereyougo.service.CategoryService;
+import io.k2c1.hereyougo.service.ImageService;
 import io.k2c1.hereyougo.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +48,8 @@ public class PostController
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final FileUploader fileUploader;
+
+    private final ImageService imageService;
     private final ImageRepository imageRepository;
     private final PostSearchRepository postSearchRepository;
 
@@ -199,18 +201,43 @@ public class PostController
 
         Post post = postRepository.findById(postId).get();
         model.addAttribute("post", post);
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "posts/editPost";
     }
 
     @PostMapping("/{postId}/edit")
-    public String editPost(@PathVariable Long postId, @ModelAttribute Post post)
-    {
+    public String editPost(@PathVariable Long postId, @ModelAttribute PostUpdateForm updateForm,
+                           @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) throws IOException {
+        Post post = postRepository.findById(postId).get();
+        List<Image> images = post.getImages();
+
+//      제목, 내용, 카테고리, 주소 변경
+        updateForm.setPostId(postId);
+        postService.updatePost(updateForm, loginMember);
+
+//      기존 저장된 이미지 삭제
+        if(!images.isEmpty()){
+            imageService.removeImageFile(images);
+        }
+
+//      변경한 이미지 업로드 및 저장
+        List<MultipartFile> files = updateForm.getImages();
+        log.info("파일 정보" + files.size());
+        List<Image> updateImages = fileUploader.uploadFiles(files, post);
+        imageRepository.saveAll(updateImages);
+        post.setImages(updateImages);
+
         return "redirect:/posts/{postId}";
     }
 
     @PostMapping("/{postId}/delete")
-    public String deletePost(@PathVariable Long postId)
-    {
+    public String deletePost(@PathVariable Long postId) throws IOException {
+        Post post = postRepository.findById(postId).get();
+        List<Image> images = post.getImages();
+
+        if(!images.isEmpty()){
+            imageService.removeImageFile(images);
+        }
         postRepository.deleteById(postId);
         return "redirect:/";
     }

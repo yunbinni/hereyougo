@@ -8,10 +8,10 @@ function updateRecommend() {
     location.reload();
 }
 
-$('document').ready(function() {
-    history.pushState(null, null, location.href);
-
-    window.onpopstate = function(event) {
-        history.go(1);
-    };
-})
+//$('document').ready(function() {
+//    history.pushState(null, null, location.href);
+//
+//    window.onpopstate = function(event) {
+//        history.go(1);
+//    };
+//})

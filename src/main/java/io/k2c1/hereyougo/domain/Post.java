@@ -68,4 +68,12 @@ public class Post
         this.quantity -= quantity;
     }
 
+    public void updatePostInfo(String title, String content, int quantity, Address address, Category category){
+        this.title = title;
+        this.content = content;
+        this.quantity = quantity;
+        this.address = address;
+        this.category = category;
+    }
+
 }

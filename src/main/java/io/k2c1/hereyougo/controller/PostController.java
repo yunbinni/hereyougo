@@ -68,7 +68,8 @@ public class PostController
 
         updateViews(loginMember, request, response, getPost);
 
-        model.addAttribute("post", getPost);
+        model
+                .addAttribute("post", getPost);
 
         return "posts/post";
     }

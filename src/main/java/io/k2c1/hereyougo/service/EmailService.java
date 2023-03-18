@@ -51,8 +51,7 @@ public class EmailService {
 
     public static String createAuthCode() {
         int random = (int)(Math.random() * 999999) + 1;
-//        return String.valueOf(random);
-        return "123456";
+        return String.valueOf(random);
     }
 
     public String sendSimpleMessage(String to) throws Exception

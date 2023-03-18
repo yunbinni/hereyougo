@@ -59,7 +59,7 @@ public class MemberController {
     @ResponseBody
     public String sendAuthEmail(@RequestParam String to) throws Exception {
         String code = emailService.sendSimpleMessage(to);
-//        authCodeRepo.put(to, code);
+        authCodeRepo.put(to, code);
         log.info("code : {}", code);
         return code;
     }
@@ -143,6 +143,8 @@ public class MemberController {
 
     public void isWrongAuthCode(String formCode, String realCode) {
         if (!formCode.equals(realCode)) {
+            log.info("form에서 보내온 코드 : {}", formCode);
+            log.info("실제 생성한 코드 : {}", realCode);
             throw new IllegalStateException("입력한 인증번호가 다릅니다.");
         }
     }

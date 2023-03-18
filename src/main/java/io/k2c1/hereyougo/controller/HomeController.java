@@ -37,8 +37,9 @@ public class HomeController {
             return "home";
         else
         {
-            model.addAttribute("member", loginMember);
-            model.addAttribute("nearPosts", postService.getNearPosts(loginMember));
+            model
+                    .addAttribute("member", loginMember)
+                    .addAttribute("nearPosts", postService.getNearPosts(loginMember));
         }
 
         return "home";

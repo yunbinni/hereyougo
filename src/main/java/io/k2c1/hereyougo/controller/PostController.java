@@ -253,6 +253,8 @@ public class PostController
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model
     ) {
+        int displayCount = 10;
+
         if(loginMember != null) model.addAttribute("member", loginMember);
 
         PostSearchCondition condition = new PostSearchCondition(sido, sgg, categoryId, searchKey);
@@ -261,6 +263,10 @@ public class PostController
 
         int startPage = Math.max(1, content.getPageable().getPageNumber() - 4);
         int endPage = Math.min(content.getTotalPages(), content.getPageable().getPageNumber() + 4);
+
+        if(content.getTotalElements()<= displayCount){
+            endPage = 1;
+        }
 
         List<SidoSgg> sidoList = Arrays.asList(SidoSgg.values());
         List<String> sggList = getSggListBySido(sido);

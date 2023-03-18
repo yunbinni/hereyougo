@@ -5,9 +5,16 @@
     <div class="row row-cols-4 g-3">
         <div th:each="post : ${posts}" class="col" th:onclick="|location.href='@{/posts/{postId}(postId=${post.id})}'|">
             <div class="card h-100" style="cursor: pointer;">
+                <th:block th:if="${post.images.size <= 0}" >
+                    <img th:src="@{/images/boxes.png}" class="card-img-top cardImg" alt="..." style="padding: 1vw 2.5vw;">
+                </th:block>
+                <th:block th:if="${post.images.size > 0}" >
                 <img th:src="@{/images/{img}(img=${post.images[0].storedFilename})}" class="card-img-top cardImg" alt="...">
+                </th:block>
+
                 <hr>
                 <div class="card-body">
+
                     <h5 th:text="${post.title}" class="postTitle text-center">제목</h5>
                     <hr>
                     <p th:text="|${post.quantity}개 남음|" class="text-center"></p>

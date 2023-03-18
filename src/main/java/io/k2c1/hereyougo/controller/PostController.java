@@ -290,7 +290,7 @@ public class PostController
     @GetMapping("/list")
     public String getPostsByMember(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-            @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") String searchText, Model model
     ) {
         int displayCount = 10;

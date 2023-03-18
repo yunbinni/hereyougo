@@ -1,5 +1,5 @@
 function goPopup(){
-    var pop = window.open("http://localhost:8080/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+    var pop = window.open("http://3.38.181.136/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
     //var pop = window.open("jusoPopup","pop","scrollbars=yes, resizable=yes"); // 모바일 웹
 }
 

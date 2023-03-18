@@ -25,7 +25,7 @@
 
     <h4 class="d-flex justify-content-center">내용</h4>
     <div class="d-flex justify-content-center">
-        <div th:text="${post.content}" style="width: 750px; border: 2px solid yellow;">
+        <div th:text="${post.content}" class="mt-1 text-center" style="width: 80vw;">
             내용
         </div>
     </div><br><br>
@@ -34,7 +34,7 @@
     <p class="d-flex justify-content-center text-center" th:text="|${post.address.doro}|">주소</p><input type="hidden" id="juso" th:value="${post.address.doro}">
 
     <div class="d-flex justify-content-center">
-        <div id="map" style="width: 600px; height: 500px; border: 2px solid green"></div>
+        <div id="map" style="width: 600px; height: 500px; border: 1px solid gray;"></div>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f1ad9b5adce2cf7e772b667dde656195&libraries=services,clusterer"></script>
         <script th:inline="javascript" th:src="@{/js/post/postKakaoMap.js}"></script>
     </div><br><br>

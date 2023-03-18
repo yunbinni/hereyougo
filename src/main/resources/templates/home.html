@@ -26,7 +26,7 @@
     <h3>내 주변 보기</h3>
     <th:block th:if="${member} != null"><input type="hidden" id="memberDoro" th:value="${member.address.doro}" readonly></th:block>
     <div class="d-flex justify-content-center">
-        <div id="map" style="width: 600px; height: 500px; border: 2px solid green"></div>
+        <div id="map" style="width: 600px; height: 500px;"></div>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f1ad9b5adce2cf7e772b667dde656195&libraries=services,clusterer"></script>
         <script type="text/javascript" th:inline="javascript">
             // 주소-좌표 변환 객체를 생성합니다

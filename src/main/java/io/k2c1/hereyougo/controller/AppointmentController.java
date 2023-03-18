@@ -64,13 +64,15 @@ public class AppointmentController {
     }
 
     @GetMapping("/list")
-    public String getAppointments(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-             @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable, Model model){
+    public String getAppointments(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable, Model model
+    ) {
         int displayCount = 10;
         Long memberId = loginMember.getId();
         Page<Appointment> appointments = appointmentService.getAppointments(memberId, pageable);
 
-        int startPage = Math.max(1,appointments.getPageable().getPageNumber() -4);
+        int startPage = Math.max(1,appointments.getPageable().getPageNumber() - 4);
         int endPage = Math.min(appointments.getTotalPages(),appointments.getPageable().getPageNumber() + 4);
 
         if(appointments.getTotalElements()<= displayCount){

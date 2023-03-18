@@ -69,6 +69,7 @@
                         <input type="hidden" name="postId" th:value="${post.id}">
                         <input type="hidden" name="writerId" th:value="${post.writer.id}">
                         <input type="hidden" name="memberId" th:value="${loggedMemberId}">
+                        <input type="hidden" id="wantedId" name="wantedId" th:value="${chatRoom.member.id}">
                     </div>
                     <div class="modal-container">
                         <p class="sub-title">약속 날짜</p>
@@ -248,7 +249,17 @@
 
     <!-- 약속 잡기 버튼 클릭 시 -->
     $(".appoint-btn").click(function(){
+        const writerId = $('#writerId').val()
+        const wantedId = $('#wantedId').val()
         const memberId = $('#memberId').val()
+
+        var appointMemberId;
+
+        if(writerId == memberId){
+            appointMemberId = wantedId;
+        }else{
+            appointMemberId = memberId;
+        }
         const postId = $('#postId').val()
         const appointmentQuantity = $('#appointmentQuantity').val()
 
@@ -266,7 +277,7 @@
         const data = {
            chatRoomId : roomId,
            postId : postId,
-           memberId : memberId,
+           memberId : appointMemberId,
            dateTime: dateTimeValue,
            appointmentQuantity : appointmentQuantity
         };

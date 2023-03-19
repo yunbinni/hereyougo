@@ -249,7 +249,7 @@ public class PostController
             @RequestParam(value = "sgg", defaultValue = "전체") String sgg,
             @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
             @RequestParam(value = "searchKey", defaultValue = "") String searchKey,
-            @PageableDefault(size = 16, sort = "Id", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 16, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model
     ) {
@@ -298,10 +298,10 @@ public class PostController
         if (loginMember != null) model.addAttribute("member", loginMember);
 
         Page<Post> posts = postRepository.findByWriter_Id(loginMember.getId(), pageable);
-        int startPage = Math.max(1,posts.getPageable().getPageNumber() -4);
-        int endPage = Math.min(posts.getTotalPages() ,posts.getPageable().getPageNumber() + 4);
+        int startPage = Math.max(1,posts.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(posts.getTotalPages(), posts.getPageable().getPageNumber() + 4);
 
-        if(posts.getTotalElements()<= displayCount){
+        if(posts.getTotalElements() <= displayCount){
             endPage = 1;
         }
         log.info("post Size" + posts.getTotalElements());
@@ -312,5 +312,4 @@ public class PostController
 
         return "posts/postList";
     }
-
 }

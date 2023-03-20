@@ -100,7 +100,7 @@
 
 1. 예약하기
    <!-- ![예약하기](https://user-images.githubusercontent.com/47100801/226205514-da0b0731-4f64-4155-b434-630775d5bd1b.png) -->
-   <img src="https://user-images.githubusercontent.com/47100801/226261722-05f915b8-6420-406a-8851-d1ba5e61a074.png" width="600" height="500"/>   
+   <img src="https://user-images.githubusercontent.com/47100801/226349822-7191a608-dd20-4b26-89c9-ba1fac0f143d.png" width="600" height="500"/>   
 
 2. 문의하기(채팅)
    <!-- ![채팅하기](https://user-images.githubusercontent.com/47100801/226205447-9b5de027-994f-49e9-8d89-c266d5b3f51e.png) -->

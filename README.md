@@ -2,7 +2,7 @@
 
 ## 소개
 - 저희는 폐업으로 인한 자영업자들의 물품을 기부하는 플랫폼을 만들었습니다.
-- [바로가기](ec2-3-38-181-136.ap-northeast-2.compute.amazonaws.com)
+- [바로가기](https://ec2-3-34-196-183.ap-northeast-2.compute.amazonaws.com)
 - 개발인원 : [조윤빈](https://github.com/yunbinni), [김도희](https://github.com/KIM-DO-HEE)
 - 개발기간 :
 - 맡은 역할
@@ -25,17 +25,17 @@
 ![BOOTSTRAP](https://img.shields.io/badge/Bootstrap_5-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![KAKAOMAP](https://img.shields.io/badge/kakao_map-ffcd00?style=for-the-badge)
 
 ### Tools and Infra
-![AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![AMAZON EC2](https://img.shields.io/badge/Amazon_EC2-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white)
 ![GIT](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 ![GITHUB](https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=GitHub&logoColor=white)
 
----
+### Etc
+![KAKAOMAP](https://img.shields.io/badge/kakao_map-ffcd00?style=for-the-badge&logo=Kakao&logoColor=black)
+![SOCKET](https://img.shields.io/badge/Socket-010101?style=for-the-badge&logo=socket.io)
 
-## 프로젝트 주요 기능 (+ 화면 이미지 첨부 + API 주소 첨부)
+## 프로젝트 주요 기능
 
 ## 1. 최근 인기글
 
@@ -120,16 +120,16 @@
 
 1. 예약하기
    <!-- ![예약하기](https://user-images.githubusercontent.com/47100801/226205514-da0b0731-4f64-4155-b434-630775d5bd1b.png) -->
-   <img src="https://user-images.githubusercontent.com/47100801/226349822-7191a608-dd20-4b26-89c9-ba1fac0f143d.png" width="600" height="500"/>   
+   <img src="https://user-images.githubusercontent.com/47100801/226349822-7191a608-dd20-4b26-89c9-ba1fac0f143d.png" width="700" height="700"/>   
 
 2. 문의하기(채팅)
    <!-- ![채팅하기](https://user-images.githubusercontent.com/47100801/226205447-9b5de027-994f-49e9-8d89-c266d5b3f51e.png) -->
-   <img src="https://user-images.githubusercontent.com/47100801/226205447-9b5de027-994f-49e9-8d89-c266d5b3f51e.png" width="600" height="500"/>
+   <img src="https://user-images.githubusercontent.com/47100801/226205447-9b5de027-994f-49e9-8d89-c266d5b3f51e.png" width="800" height="600"/>
    
-3. 글 검색
-  <img src="https://user-images.githubusercontent.com/59231602/226599981-0e2f39fe-dfe9-491b-9eec-1f705b97d0a5.svg" width="600" height="500"/>
+3. 글 검색  
+
+   <img src="https://user-images.githubusercontent.com/59231602/226616188-11cf1999-eb85-49ab-b58d-b11666083375.png" width="700" height="700"/>
 
 4. 내 근처 보기
-  <img src="https://user-images.githubusercontent.com/59231602/226600153-673089ec-6b0b-4873-b99f-92df4ebb97af.svg" width="600" height="500"/>
-기
+  <img src="https://user-images.githubusercontent.com/59231602/226616328-dc66f108-c238-41d3-abc4-97a78253eb76.png" width="800" height="600"/>
 

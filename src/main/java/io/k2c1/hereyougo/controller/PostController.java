@@ -268,6 +268,10 @@ public class PostController
             endPage = 1;
         }
 
+        for (Post post : content) {
+            log.info("{}", post.getId());
+        }
+
         List<SidoSgg> sidoList = Arrays.asList(SidoSgg.values());
         List<String> sggList = getSggListBySido(sido);
 

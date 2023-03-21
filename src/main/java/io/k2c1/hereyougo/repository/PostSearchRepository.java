@@ -4,8 +4,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.k2c1.hereyougo.domain.Post;
-import io.k2c1.hereyougo.dto.post.PostSearchDTO;
-import io.k2c1.hereyougo.dto.post.QPostSearchDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -36,6 +34,7 @@ public class PostSearchRepository {
                         categoryIdCond(categoryId),
                         searchKeyCond(searchKey)
                 )
+                .orderBy(post.id.desc())
                 .fetch();
 
         JPAQuery<Long> countQuery = queryFactory

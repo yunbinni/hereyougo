@@ -42,9 +42,13 @@
 * 홈 화면에서 최근 올라온 글 중 인기있는 글을 보여줍니다.
 * 최근 생성된 글 중 추천수 10 이상을 받으면 보여집니다.
 
+  <img src="https://user-images.githubusercontent.com/59231602/226596306-2ff6575f-4de7-49d5-bae8-a4dc38dd6db0.png" width="700" height="400"/>
+
 ## 2. 내 주변 보기
 * 회원가입시 입력한 주소와 시/도, 시/구/군이 같은 지역의 글들을 마커로 보여줍니다.
 * 마커를 클릭하면 해당 글로 리다이렉트됩니다.
+
+  <img src="https://user-images.githubusercontent.com/59231602/226599352-205775a9-a1bf-4048-a118-e003bbbd7569.gif" width="700" height="400"/>
 
 ## 3. 회원가입
 * 회원은 회원 정보를 입력하여 가입하면, 여기있소 서비스를 이용할 수 있습니다.
@@ -59,8 +63,11 @@
 * 가지고 있는 물품 수량을 입력할 수 있습니다.
 * 사진을 첨부할 수 있습니다.
 * 주소를 입력하면 자동으로 카카오맵에 표시됩니다. (기본주소는 회원가입시 주소)
+  <img src="https://user-images.githubusercontent.com/59231602/226597407-266e5d62-2386-4fdb-bb67-81a75927abe9.gif" width="700" height="400"/>
 
 ## 5. 물품 검색
+* 지역, 업종, 검색어로 원하는 조건을 충족하는 물품을 검색할 수 있습니다.
+  <img src="https://user-images.githubusercontent.com/59231602/226597419-03c1d922-47ec-4558-8122-b2ad220399f5.gif" width="700" height="400"/>
 
 ## 6. 채팅
 - Web Socket, STOMP을 활용하여 채팅 기능 구현
@@ -118,3 +125,11 @@
 2. 문의하기(채팅)
    <!-- ![채팅하기](https://user-images.githubusercontent.com/47100801/226205447-9b5de027-994f-49e9-8d89-c266d5b3f51e.png) -->
    <img src="https://user-images.githubusercontent.com/47100801/226205447-9b5de027-994f-49e9-8d89-c266d5b3f51e.png" width="600" height="500"/>
+   
+3. 글 검색
+  <img src="https://user-images.githubusercontent.com/59231602/226599981-0e2f39fe-dfe9-491b-9eec-1f705b97d0a5.svg" width="600" height="500"/>
+
+4. 내 근처 보기
+  <img src="https://user-images.githubusercontent.com/59231602/226600153-673089ec-6b0b-4873-b99f-92df4ebb97af.svg" width="600" height="500"/>
+기
+

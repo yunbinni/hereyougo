@@ -4,7 +4,7 @@
 - 저희는 폐업으로 인한 자영업자들의 물품을 기부하는 플랫폼을 만들었습니다.
 - [바로가기](https://ec2-3-34-196-183.ap-northeast-2.compute.amazonaws.com)
 - 개발인원 : [조윤빈](https://github.com/yunbinni), [김도희](https://github.com/KIM-DO-HEE)
-- 개발기간 :
+- 개발기간 : 2023년 1월 12일 ~ 3월 16일
 - 맡은 역할
   - 공통 : ERD 설계
   - 조윤빈 : 게시글 관련, 카카오맵 API
